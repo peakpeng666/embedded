@@ -1,0 +1,22 @@
+{
+  "target": "STM32L496VET6",
+  "flash_address": "0x08010000",
+  "initial_stack": "0x20010000",
+  "reset_vector": "0x8010201",
+  "image_bytes": 2724,
+  "sha256": "231683d50a998b4049ab6d5d939e86cf33b15599c28d222b3fb2cdfc777cec27",
+  "load_regions": [
+    {
+      "load_address": "0x8010000",
+      "file_bytes": 2720
+    },
+    {
+      "load_address": "0x8010aa0",
+      "file_bytes": 4
+    }
+  ],
+  "vector_and_address_checks": "passed",
+  "host_logic_tests": "See docs/validation.md",
+  "validation_scope": "offline_image_only",
+  "hardware_results": "docs/hardware_validation.json (if present)"
+}

@@ -1,0 +1,6 @@
+* text=auto eol=lf
+firmware/*.bin binary
+docs/*.pdf binary
+# Preserve the published HEX and upstream CMSIS bytes exactly for SHA-256 checks.
+firmware/*.hex -text whitespace=cr-at-eol
+lab1/vendor/** -text whitespace=-blank-at-eol,-blank-at-eof

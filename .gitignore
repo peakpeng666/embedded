@@ -1,0 +1,12 @@
+.venv/
+backups/
+logs/
+__pycache__/
+.toolchains/
+.local_archive/
+lab1/build/
+lab1/references/
+tmp/
+output/
+*.py[cod]
+.DS_Store

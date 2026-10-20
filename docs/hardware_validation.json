@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Asia/Tokyo",
+  "target": "STM32L496VET6",
+  "scope": "One onboard RGB LED, seven basic digital RGB combinations.",
+  "status": "rgb_cycle_and_exti_off_passed",
+  "image_sha256": "231683d50a998b4049ab6d5d939e86cf33b15599c28d222b3fb2cdfc777cec27",
+  "flash_address": "0x08010000",
+  "flash_bytes": 2724,
+  "erase_range": [
+    "0x08010000",
+    "0x08010fff"
+  ],
+  "full_512_kib_readback_verified": true,
+  "bootloader_and_option_bytes_unchanged": true,
+  "rollback_original_full_sha256": "18b55e23284658dd10fe83259900c99e0479a75a3094362e85b7939ecc05fc3d",
+  "original_rtthread_boot_after_restore": "passed",
+  "gpio_masks_observed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "expected_frame_masks": [
+    1,
+    0,
+    2,
+    0,
+    4,
+    0,
+    3,
+    0,
+    6,
+    0,
+    5,
+    0,
+    7,
+    0
+  ],
+  "complete_cycles_captured": 3,
+  "observed_full_cycles": [
+    {
+      "start_seconds": 15.5155,
+      "frame_masks": [
+        1,
+        0,
+        2,
+        0,
+        4,
+        0,
+        3,
+        0,
+        6,
+        0,
+        5,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "start_seconds": 19.707,
+      "frame_masks": [
+        1,
+        0,
+        2,
+        0,
+        4,
+        0,
+        3,
+        0,
+        6,
+        0,
+        5,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "start_seconds": 48.5526,
+      "frame_masks": [
+        1,
+        0,
+        2,
+        0,
+        4,
+        0,
+        3,
+        0,
+        6,
+        0,
+        5,
+        0,
+        7,
+        0
+      ]
+    }
+  ],
+  "nominal_frame_ms": 300,
+  "mean_sampled_frame_ms": 300.009,
+  "frame_intervals_measured": 68,
+  "sampling_note": "Host timestamps from SWD GPIO polling; per-edge readings have sampling and USB timing uncertainty. Interrupted partial frames are excluded from the mean.",
+  "exti9_on_pd9_enabled_exti10_disabled": true,
+  "key0_restarts_at_red_verified": 4,
+  "key1_stops_verified": 4,
+  "off_intervals_seconds": [
+    8.893,
+    23.741,
+    2.178,
+    31.345
+  ],
+  "final_counters": {
+    "mode": "OFF",
+    "poll_presses": 4,
+    "exti_presses": 4,
+    "irq_edges": 8,
+    "tx_dropped": 0
+  },
+  "physical_user_confirmation": "Seven colours cycle; KEY1 turns all channels off; KEY0 restarts at red.",
+  "host_logic_tests": "Six groups passed with AddressSanitizer and UndefinedBehaviorSanitizer.",
+  "long_hold_scope": "Long-hold behavior passed host tests; this RGB hardware capture contains short presses. Prior red-only build also passed physical long-hold tests.",
+  "raw_logs": "Kept locally under logs/; original flash backups are not distributed.",
+  "flash_summary": "应用区两页写入；全 512 KiB 比对通过，引导区及选项字节保持原值",
+  "physical_summary": "实测七种颜色及熄灭间隔，记录 3 个完整七色周期；平均每帧约 300.0 ms。\nKEY0 启动/重启 4 次，均从红色开始；KEY1 全灭 4 次，停止期间保持熄灭。\n用户确认七色、灭灯和重启符合；串口计数对应，tx_dropped=0。"
+}

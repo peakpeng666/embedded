@@ -2,6 +2,7 @@
 """Create the experiment design and circuit drawings as a four-page PDF."""
 from pathlib import Path
 import json
+import os
 from xml.sax.saxutils import escape
 
 from reportlab.pdfgen import canvas
@@ -15,8 +16,16 @@ from reportlab.platypus import Paragraph, Table, TableStyle
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT.parent / "docs/lab1_design.pdf"
 OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-pdfmetrics.registerFont(TTFont("CJK", "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf"))
-pdfmetrics.registerFont(TTFont("Latin", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"))
+windows_fonts = Path(os.environ.get("WINDIR", "C:/Windows")) / "Fonts"
+def available_font(paths):
+    for path in paths:
+        if Path(path).is_file():
+            return str(path)
+    raise RuntimeError("Required system font missing; use the prebuilt docs/lab1_design.pdf or install a Chinese TrueType font.")
+pdfmetrics.registerFont(TTFont("CJK", available_font([
+    "/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf", windows_fonts / "simsun.ttc"]), subfontIndex=0))
+pdfmetrics.registerFont(TTFont("Latin", available_font([
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", windows_fonts / "arial.ttf"])))
 W, H = landscape(A4)
 NAVY = colors.HexColor("#17354a")
 TEAL = colors.HexColor("#087f8c")
@@ -25,9 +34,9 @@ PALE = colors.HexColor("#eef5f7")
 c = canvas.Canvas(str(OUTPUT), pagesize=(W, H))
 c.setTitle("实验1：查询与外部中断 - 单灯验证")
 c.setAuthor("STM32L4 实验项目")
-manifest = json.loads((ROOT / "build/validation.json").read_text())
+manifest = json.loads((ROOT / "build/validation.json").read_text(encoding="utf-8"))
 hardware_path = ROOT.parent / "docs/hardware_validation.json"
-hardware = json.loads(hardware_path.read_text()) if hardware_path.exists() else {}
+hardware = json.loads(hardware_path.read_text(encoding="utf-8")) if hardware_path.exists() else {}
 if hardware.get("image_sha256") != manifest["sha256"]:
     hardware = {}  # A prior firmware's measurements must not label a new image.
 

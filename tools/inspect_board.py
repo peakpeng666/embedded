@@ -10,6 +10,7 @@ import argparse
 from datetime import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -37,7 +38,7 @@ def inspect(backup=False):
         connect_mode="attach",
         auto_unlock=False,
         resume_on_disconnect=False,
-        **{"pack.debug_sequences.enable": False, "user_script": "/dev/null"},
+        **{"pack.debug_sequences.enable": False, "user_script": os.devnull},
     )
     if session is None:
         raise RuntimeError("The expected ATK debug probe was not found.")

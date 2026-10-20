@@ -35,8 +35,9 @@ embedded/
 - [本地连接与原温湿度演示说明](docs/board_setup.md)
 - [固件文件与校验值](firmware/README.md)
 - [工具说明](tools/README.md)
+- [Windows 接续与完整备份下载](docs/windows.md)
 
-原固件备份、完整现场日志、历史版本、Python 环境和编译器保留在本地，均已加入 `.gitignore`。
+Git 历史只跟踪工程文件；完整资料与回退备份另作为 Release 附件上传。Windows 接续请先看 [Windows 指南](docs/windows.md)，下载 [完整交接包](https://github.com/peakpeng666/embedded/releases/tag/v1.0.0)。
 
 ## 编译
 

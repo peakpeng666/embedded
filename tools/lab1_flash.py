@@ -8,6 +8,7 @@ import argparse
 from datetime import datetime
 import hashlib
 import json
+import os
 from pathlib import Path
 import time
 
@@ -153,7 +154,7 @@ def run(action):
         target_override="stm32l496vetx", frequency=100000, connect_mode="halt",
         auto_unlock=False, resume_on_disconnect=False,
         **{"pack": str(PACK), "pack.debug_sequences.enable": False,
-           "dap_protocol": "swd", "user_script": "/dev/null", "cache.enable_memory": False,
+           "dap_protocol": "swd", "user_script": os.devnull, "cache.enable_memory": False,
            "cmsis_dap.limit_packets": True, "cmsis_dap.deferred_transfers": False,
            "cache.enable_register": False, "cache.read_code_from_elf": False,
            "chip_erase": "sector", "keep_unwritten": True, "smart_flash": False,

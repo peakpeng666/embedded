@@ -3,6 +3,7 @@
 import argparse
 from datetime import datetime
 import json
+import os
 from pathlib import Path
 import signal
 import time
@@ -35,7 +36,7 @@ def observe(seconds):
         unique_id="ATK-03262021", blocking=False, auto_open=False, no_config=True,
         target_override="cortex_m", frequency=100000, connect_mode="attach",
         auto_unlock=False, resume_on_disconnect=False,
-        **{"pack.debug_sequences.enable": False, "user_script": "/dev/null",
+        **{"pack.debug_sequences.enable": False, "user_script": os.devnull,
            "cmsis_dap.limit_packets": True, "cmsis_dap.deferred_transfers": False})
     port = open_serial()
     dp = session.target.dp

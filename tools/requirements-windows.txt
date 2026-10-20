@@ -1,0 +1,4 @@
+-r requirements.txt
+-r requirements-docs.txt
+# Explicit for cross-platform dependency resolution and CMSIS-DAP v1 on Windows.
+hidapi>=0.10.1,<1.0

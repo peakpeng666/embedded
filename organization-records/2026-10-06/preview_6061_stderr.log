@@ -1,0 +1,8 @@
+[20:41:22] [INFO] svg_editor: running at http://127.0.0.1:6061 (live preview (auto-startup))
+[20:41:22] [INFO] svg_editor: project: D:\Peak\Desktop\嵌入式\02_课程作业\时钟之迹\制作源文件
+[20:41:22] [INFO] svg_editor: svg_output: D:\Peak\Desktop\嵌入式\02_课程作业\时钟之迹\制作源文件\svg_output (12 slides)
+[20:41:22] [INFO] svg_editor: idle timeout: 7200s (0 = disabled)
+[20:41:22] [INFO] svg_editor: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:6061
+[20:41:22] [INFO] svg_editor: [33mPress CTRL+C to quit[0m
+[20:41:56] [INFO] svg_editor: 127.0.0.1 - - [06/Oct/2026 20:41:56] "GET / HTTP/1.1" 200 -

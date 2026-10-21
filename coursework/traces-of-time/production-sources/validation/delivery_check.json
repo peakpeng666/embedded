@@ -1,0 +1,13 @@
+{
+  "slides": 12,
+  "speaker_notes": 12,
+  "editable_shapes": 291,
+  "pdf_pages": 12,
+  "source_statements_verified": 23,
+  "source_audit": "passed",
+  "render_engine": "Microsoft PowerPoint",
+  "contact_sheets": [
+    "contact_1.png",
+    "contact_2.png"
+  ]
+}

@@ -1,0 +1,360 @@
+[P] 嵌入式系统作业2
+[P] Cortex-M4体系结构与STM32基础  彭俊杰  智装备241  2024306100324
+[P] 本作业按课程题目依次说明Cortex-M4的存储器与异常机制、STM32F407的总线、时钟及复位电路，再结合教师CH5EX01例程与四份参考工程分析启动、GPIO和SysTick。器件参数分别按STM32F407ZGT6和STM32L496VET6核对；代码计算、历史编译记录和实际运行结果分别说明。
+[P] 第1题 英文缩写
+[TABLE START]
+缩写 | 英文名称 | 含义与作用
+ARM | Acorn RISC Machine；后称 Advanced RISC Machines | 历史名称；本课程指 Arm 处理器架构及其内核，Cortex-M4 是其中一种内核。
+AHB | Advanced High-performance Bus | 高级高性能总线，连接处理器、存储器和较高速外设。
+AHB-Lite | AHB Lite | AHB 的单主设备接口子集；系统仍可通过总线矩阵组合多个主设备。
+APB | Advanced Peripheral Bus | 高级外设总线，接口较简单，常连接控制类和较低速外设。
+PPB | Private Peripheral Bus | 私有外设总线；对应内核私有外设与调试部件的地址区域。
+DAP | Debug Access Port | 调试访问端口；允许调试器访问处理器与系统资源。
+JTAG | Joint Test Action Group | 联合测试工作组名称，通常指 IEEE 1149.1 测试与调试接口。
+SWD | Serial Wire Debug | 串行线调试，主要使用 SWDIO 与 SWCLK 两根信号线。
+MPU | Memory Protection Unit | 存储器保护单元；给地址区域设置访问权限与属性，不等同于地址转换MMU。
+FPU | Floating-Point Unit | 浮点运算单元；两款所选器件的 Cortex-M4F 支持单精度浮点。
+[TABLE END]
+[P] 术语依据：内核编程手册及厂商器件资料 [1–4]。DAP 是调试系统的组成部分，JTAG、SWD 是可采用的调试访问接口。
+[P] 第1题 英文缩写续
+[TABLE START]
+缩写 | 英文名称 | 含义与作用
+NVIC | Nested Vectored Interrupt Controller | 嵌套向量中断控制器，管理外部中断的使能、挂起、优先级和抢占。
+ISR | Interrupt Service Routine | 中断服务程序，处理中断事件后返回原程序。
+Bit-band | Bit-banding | 位带：把支持区域中的一个位映射到别名区中的一个字地址，便于按位访问。
+SCS | System Control Space | 系统控制空间，包含系统控制块、NVIC、SysTick等寄存器。
+SysTick | System Tick Timer | 系统滴答定时器，24位递减计数器，可作为周期时基。
+MSP | Main Stack Pointer | 主栈指针，复位后使用，异常处理时使用MSP。
+PC | Program Counter | 程序计数器，R15；与当前执行和下一步取指位置有关。
+SP | Stack Pointer | 栈指针，R13；可指向MSP或PSP所管理的栈。
+GPIO | General-Purpose Input/Output | 通用输入输出端口，可配置输入、输出、复用和模拟模式。
+TIM | Timer | 定时器；可用于定时、计数、捕获、比较和PWM输出。
+UART | Universal Asynchronous Receiver/Transmitter | 通用异步收发器；通过TX、RX等引脚收发串行数据。
+CAN Bus | Controller Area Network Bus | 控制器局域网络总线；常用于节点间可靠通信，芯片CAN控制器通常还需外部收发器。
+[TABLE END]
+[P] 几组容易混淆的概念
+[P] NVIC是硬件控制器，ISR是软件处理程序；SysTick是内核定时器，TIM2是芯片外设定时器。UART只强调异步通信，USART还可支持同步方式，因此 USART1 的名称不能直接改写成 UART1。
+[P] 地址区域由体系结构规定，区域中具体实现哪些存储器和外设由芯片决定。不能看到“SRAM区有512 MB地址空间”，就认为芯片装有512 MB SRAM。
+[P] 第2题 存储器映射与外设地址
+[P] Cortex-M4 使用32位地址，统一编址范围为 0x00000000 至 0xFFFFFFFF，共4 GB。指令、数据和寄存器都可通过地址定位，主要分区如下 [2–3]。
+[P] 图1 Cortex-M4存储器映射示意图 地址框大小不按容量比例绘制
+[TABLE START]
+对象 | 地址或范围 | 所在区域
+GPIOA / GPIOF | 0x40020000 / 0x40021400 | 片上外设区，AHB1
+CAN1 / CAN2 | 0x40006400 / 0x40006800 | 片上外设区，APB1
+SysTick | 0xE000E010—0xE000E01C | 系统区中的SCS，属于内核私有外设
+F407主Flash | 0x08000000—0x080FFFFF | 代码区，ZGT6容量1 MB
+F407 SRAM1和SRAM2 | 0x20000000—0x2001FFFF | SRAM区，合计128 KB
+F407 CCM数据RAM | 0x10000000—0x1000FFFF | 落在代码区地址范围，容量64 KB
+[TABLE END]
+[P] 位带补充：SRAM位带区前1 MB位于0x20000000起，别名区从0x22000000起；外设位带区从0x40000000起，别名区从0x42000000起。位带功能和具体可访问地址均须按所选芯片核对。CCM并不因为名字含RAM就位于0x20000000区，也不能直接用作F407通用DMA缓冲区。
+[P] 第3题 中断与异常向量表
+[P] 中断使处理器在事件发生时暂时转去执行处理程序，处理后再返回。Cortex-M4把复位、故障、系统服务和外部中断统一纳入异常机制；外部中断只是异常的一类 [3]。
+[P] 图2 外部中断从请求到返回的处理过程
+[P] 关键词：中断源、请求、使能、屏蔽、挂起、激活、优先级、抢占、嵌套、现场保护、ISR、清除标志、异常返回。挂起表示请求已记录，激活表示正在服务；同一中断也可同时处于激活和挂起状态。可配置优先级通常是数值越小、优先级越高。
+[P] 向量表为什么能找到处理程序
+[P] 向量表是一张入口地址表，每项占4字节。第0项保存初始MSP，后续项保存各异常处理函数地址。硬件根据异常编号定位入口，不需要程序逐个判断所有中断源。复位向量不是初始栈顶。
+[TABLE START]
+向量表偏移 | 项目 | 作用
+0x00 | 初始MSP | 建立主栈的起始栈顶
+0x04 | Reset_Handler | 复位后执行的入口
+0x08 / 0x0C | NMI / HardFault | 不可屏蔽中断 / 硬故障
+0x3C | SysTick_Handler | 异常号15的系统滴答入口
+0x40起 | 外部IRQ向量 | 异常号为IRQn+16
+0xB0 | TIM2_IRQHandler | TIM2_IRQn=28，偏移4×(16+28)
+[TABLE END]
+[P] 异常进入时，硬件基本栈帧保存R0—R3、R12、LR、PC和xPSR；浮点上下文可能增加额外保存。ISR应按外设规则清除中断源，否则返回后可能再次进入。VTOR可设置向量表基址，搬移时必须满足对齐与地址要求。
+[P] 第4题 STM32F407片上总线
+[P] 总线矩阵的主、从端口与AHB1、AHB2、AHB3、APB1、APB2这组外设总线名称属于不同层次。STM32F407采用多层AHB矩阵连接8个主端口与7个从端口；下页列出矩阵端口。本页先回答GPIO、TIM2与USART1挂在哪条外设总线上 [2，RM0090第2.1节]。
+[P] 图3 STM32F407片上外设总线的简化连接
+[TABLE START]
+模块 | 所属总线 | 使能位置与基址
+GPIOA—GPIOI | AHB1 | RCC_AHB1ENR；GPIOA基址0x40020000
+TIM2 | APB1 | RCC_APB1ENR.TIM2EN；基址0x40000000
+USART1 | APB2 | RCC_APB2ENR.USART1EN；基址0x40011000
+[TABLE END]
+[P] 从连接关系理解初始化
+[P] 访问外设前先开启其所属总线上的外设时钟。例如配置GPIOF，需要使能AHB1上的GPIOF时钟；配置TIM2和USART1则分别使能APB1和APB2中的对应位。芯片已运行不代表每个外设时钟都已打开。 F407ZGT6的LQFP144封装实际引出A–H共8组、114个GPIO（H仅PH0/PH1），没有PI引脚；A–I是系列寄存器视图。
+[P] AHB1上的GPIO寄存器通过总线访问，但引脚电平变化还受GPIO输出速度配置、负载、电气条件和软件访问方式影响，不能把168 MHz总线频率直接写成GPIO输出方波频率。
+[P] AHB-Lite是单主接口协议，不意味着整个芯片只能有一个主设备。多层矩阵把多个这样的主接口连接到不同从端口，允许对不同目标的访问并行进行。
+[P] 第4题 总线矩阵的主从端口
+[P] 总线矩阵的主端口发起访问，从端口响应访问。以下名称按RM0090 Rev19第2.1节及其系统结构图列出，避免把一个DMA控制器只算作一个端口，或把AHB到APB桥重复算成独立矩阵从端口。
+[TABLE START]
+主端口 | 访问用途
+1 Cortex-M4 I-bus | 指令取指
+2 Cortex-M4 D-bus | 代码区的数据访问
+3 Cortex-M4 S-bus | 系统存储器与外设访问
+4 DMA1 memory bus | DMA1存储器访问
+5 DMA2 memory bus | DMA2存储器访问
+6 DMA2 peripheral bus | DMA2外设访问
+7 Ethernet DMA | 以太网DMA访问
+8 USB OTG HS DMA | USB高速控制器DMA访问
+[TABLE END]
+[TABLE START]
+从端口 | 响应目标
+1 Flash ICode | Flash指令接口
+2 Flash DCode | Flash数据接口
+3 SRAM1 | 112 KB SRAM
+4 SRAM2 | 16 KB SRAM
+5 AHB1 peripherals | AHB1外设，包含AHB到APB桥及其后方外设
+6 AHB2 peripherals | AHB2外设
+7 FSMC | 外部存储器控制器
+[TABLE END]
+[P] 64 KB CCM数据RAM不在上述矩阵中，由内核的专用路径访问，因此不能把CCM加入这7个从端口，也不能把它当作普通DMA可达的SRAM。GPIO仍属于AHB1，TIM2属于APB1，USART1属于APB2。
+[P] 第5题 时钟源与系统时钟
+[TABLE START]
+类别 | 时钟源 | 标称值或范围与用途
+高速内部 | HSI | 16 MHz RC，可直接作为SYSCLK或作为主PLL输入
+高速外部 | HSE | 晶体/陶瓷谐振器通常4—26 MHz；外部有源时钟走旁路方式并核对电气限制
+低速内部 | LSI | 约32 kHz RC，主要供IWDG，也可供RTC
+低速外部 | LSE | 32.768 kHz晶体，常用于RTC
+[TABLE END]
+[P] 图4 STM32F407的主要时钟来源与分配路径
+[P] SYSCLK可选择HSI、HSE或主PLL输出。主PLL以HSI/HSE为输入，先经M分频、N倍频，再经P分频，得到系统候选时钟：fPLL＝f输入÷M×N÷P。RCC_CFGR中的SW发出切换请求，SWS反映实际已切换到的来源 [2]。
+[P] 上限：AHB1所属HCLK最高168 MHz，APB1的PCLK1最高42 MHz，APB2的PCLK2最高84 MHz。达到最高频率还要满足供电、稳压等级和Flash等待周期等条件，不能只修改PLL参数。
+[P] 计算例：假设HSE＝8 MHz，取M＝8、N＝336、P＝2，则VCO输入1 MHz、VCO输出336 MHz、SYSCLK＝168 MHz。AHB不分频，APB1四分频，APB2二分频，即HCLK＝168、PCLK1＝42、PCLK2＝84 MHz；Q＝7可得到48 MHz输出。
+[P] TIM2挂在APB1，但本例APB1分频不为1，故TIM2内核时钟为2×42＝84 MHz。上电复位后默认使用HSI，168 MHz并不是芯片无需配置就自动得到的工作频率。
+[P] 电源条件须另行核对：STM32F407的VDD应用范围为1.8至3.6 V。开发板的USB/5 V入口经过稳压器后才供给芯片；不能把板级输入电压或某些5 V容忍I/O的能力当成VDD额定值。
+[P] 第6题 复位引脚与典型电路
+[P] STM32F407ZGT6中的Z表示144引脚，T表示LQFP封装。查DS8626 Rev12的LQFP144顶视图和引脚表可知，NRST在第25脚；第14脚是PF4。LQFP100封装的NRST才是第14脚，不能混用 [1，图14及表7]。
+[P] 图5 STM32F407ZGT6外部复位电路 依据厂家建议连接方式绘制
+[P] 名称含义与动作过程
+[P] NRST中的N表示低电平有效，RST表示Reset。平时上拉使NRST保持高电平，芯片正常运行；按下常开按键时NRST被拉至地，触发系统复位；松开后电容经上拉路径充电，NRST恢复高电平，处理器重新执行复位启动过程。
+[P] 芯片内部已有弱上拉，外接10 kΩ上拉是常见设计选择，并非所有板卡都必须外加。100 nF电容应靠近NRST与地，帮助抑制干扰；具体复位脉宽和电平阈值按数据手册核验。图中的10 kΩ与100 nF名义乘积为1 ms，但这不等于准确的复位保持时间。
+[P] 调试器的NRST可接入同一复位网络，驱动方式应避免与芯片或其他复位器件争用。除了外部引脚复位，芯片还有上电、掉电、欠压、看门狗和软件等复位来源；复位后可读取RCC中的复位原因标志帮助定位问题。
+[P] 硬件检查顺序：先确认芯片完整丝印与封装，再按顶视图找到1脚方向，沿引脚编号定位25脚，最后用原理图网络名核对。不要按开发板排针编号代替芯片引脚编号。
+[P] 第7题 两款主芯片的数据手册与特征
+[P] 本题采用STM32F407ZGT6和STM32L496VET6。本题按讨论题可选型号使用L496VET6；若实物板丝印不同，应另查对应器件手册，不能直接套用参数。两个官方PDF均随作业保留在sources目录。
+[TABLE START]
+比较项目 | STM32F407ZGT6 | STM32L496VET6
+内核 | Cortex-M4，单精度FPU，DSP，MPU
+最高主频 | 168 MHz | 80 MHz
+Flash | 1 MB，型号容量码G | 512 KB，型号容量码E
+SRAM | 192 KB，含64 KB CCM；另有4 KB备份SRAM | 320 KB，含64 KB带硬件奇偶校验的SRAM2
+封装 | LQFP144，Z=144脚 | LQFP100，V=100脚
+温度等级6 | −40至+85 ℃
+主电源范围 | VDD 1.8—3.6 V | 使用内部LDO时VDD 1.71—3.6 V
+模拟外设 | 3个12位ADC，2路12位DAC | 3个12位ADC，2路12位DAC，运放、比较器
+通信与扩展 | CAN、USART/UART、SPI、I²C、USB OTG、以太网MAC、FSMC等 | CAN、USART/UART/LPUART、SPI、I²C、USB OTG FS、QUADSPI、LCD等
+主要特点 | 较高主频，网络接口与外部存储扩展丰富 | 更大SRAM容量，多种低功耗模式及低功耗外设
+[TABLE END]
+[P] F407的以太网模块是MAC，实际连网还需要PHY与相关电路；其USB高速功能需要外部ULPI PHY。L496的数据手册标题写“最高1 MB Flash”是系列上限，而VET6的实际Flash为512 KB。外设是否引出到板上还要查封装复用表与板级原理图 [1，4]。
+[P] STM32F407ZG官方数据手册 DS8626
+[P] STM32L496VE官方数据手册 DS11585
+[P] 阅读顺序：先读Features和器件对照表，核对完整型号；再读Pinouts和Memory map；最后结合具体外设查参考手册。数据手册主要给参数、引脚和电气条件，参考手册给寄存器与使用流程。
+[P] 第8题 扩展练习一 最小系统
+[P] 最小系统至少应具备稳定供电、去耦、复位、启动电平与下载调试通路。外部晶体并非启动程序的必要条件，可先用内部HSI检查供电、复位和SWD；需要准确频率时再配置HSE。
+[P] 图6 STM32F407ZGT6最小系统组成 用于读图与核对连接
+[P] VDD、VDDA、VSS、VSSA等同类引脚要逐一连接，不能只接其中一对。VCAP1和VCAP2是内部稳压器的电容端，各按手册配置2.2 μF低ESR电容，不作为外部负载电源。BOOT0下拉用于选择主Flash启动；SWD保留PA13、PA14和公共地，建议同时引出NRST与目标电压参考。 常规内部复位开启时，PDR_ON（LQFP144第143脚）接VDD并保持高电平，不能悬空；依据DS8626 Rev12第3.15.1节与引脚表。
+[P] 课程原理图来源
+[P] 采用课程资料提供的普中F407-T100开发板原理图，主芯片为STM32F407ZGT6。图6是依据器件手册整理的最小系统连接示意；下一页给出原理图局部，assets目录保留完整图。两种图各自注明性质，便于从系统组成转到实际网络连接。
+[P] 课程资料 普中F407-T100开发板原理图
+[P] 第8题 扩展练习一 原理图局部
+[P] 下图摘自课程提供的普中F407-T100开发板原理图，保留原图标注。用它对照芯片引脚、电源和时钟相关网络；完整单页图另附在assets目录。来源按课程资料标注。
+[P] 图7 课程资料中普中F407-T100主芯片电路局部
+[P] 读图时先按网络名追踪VDD、VSS、VDDA、VSSA、VCAP、BOOT0和NRST，再检查HSE与LSE连接。LED0与KEY0的网络关系用于后面的GPIO练习，不能由芯片型号推断所有开发板都采用相同接法。
+[P] 原始课程文件 普中F407-T100开发板原理图
+[P] 第8题 扩展练习二 实际工程结构
+[P] 标准外设库SPL和硬件抽象库HAL都在寄存器之上提供接口。本节先说明已有四份参考工程，再单列教师CH5EX01 HAL/STD。它们使用同一类芯片，却不采用相同的板级引脚、晶振和延时实现，不能拼接成一个目标。
+[TABLE START]
+工程 | 实际分组或关键文件 | 本次阅读重点
+SPL时钟系统 | User、Startup、StdPeriph_Driver、CMSIS、APP | main中调用RCC_HSE_Config；PF9输出翻转
+SPL SysTick | 除上述分组外增加Public；SysTick.c位于Public | SystemInit设置时钟；轮询SysTick完成延时
+HAL最小工程 | User、CMSIS、STM32F4xx_HAL_Driver | main、HAL时基、PF9/PF10输出与PE4输入
+CubeMX生成工程 | Application/MDK-ARM、Application/User、Drivers及::CMSIS | clock168_gpio.ioc、Src/main.c、Src/gpio.c
+[TABLE END]
+[P] 模板固定了什么
+[P] SPL器件宏为STM32F40_41xxx，库开关为USE_STDPERIPH_DRIVER。HAL最小工程的宏为USE_HAL_DRIVER、STM32F407xx和HSE_VALUE=8000000。CubeMX目标使用USE_HAL_DRIVER、STM32F407xx，晶振设置需对照IOC及配置头文件。宏、启动文件、Include路径和驱动版本必须配套。
+[P] Keil中的group用于组织工程文件，不必与磁盘目录一一对应。例如HAL工程把启动文件放在CMSIS组中，不能仅凭组名判断它是否存在。真正参与构建的文件由.uvprojx目标配置决定。
+[P] 本次环境与结果范围
+[P] 上传的历史构建记录中的环境为µVision 5.35、Arm Compiler 5.06 update 7 build 960、STM32F4xx_DFP 2.16.0；CubeMX为6.18.1，STM32CubeF4固件包为V1.28.3。构建结果依据2026年10月4日上传的原始日志，详细结果见后文。
+[P] 没有实体开发板。现有证据包括源码、上传的AC5历史构建日志与仿真受阻截图；本轮未重新运行Keil目标编译，也未完成GPIO、PLL或SysTick的板上测量。修订源码的正确性还需在匹配工具链和硬件条件下验证。
+[P] 第8题 扩展练习三 启动文件与复位序列
+[P] 实际HAL工程使用startup_stm32f407xx.s。图8直接摘录该文件，保留源文件行号；省略号只表示未在图中展示的行，真实工程中的向量项没有删除。
+[P] 图8 实际HAL启动源码摘录 第33 44 61至76和170至178行选录
+[P] 从复位到main
+[P] 硬件先读取向量表第0项作为初始MSP，再读取第1项进入Reset_Handler。图中DCD放置32位地址；第61、62行分别对应初始栈顶和复位入口。SysTick向量位于第76行，仍是入口地址而不是处理函数体。
+[P] 第175至178行先调用SystemInit，再跳入Arm C运行库入口__main，完成数据段初始化和C运行环境准备后进入main。该HAL工程的SystemInit主要配置FPU和VTOR；168 MHz的PLL配置在main调用的SystemClock_Config中完成。两个普中参考SPL工程则在SystemInit内调用SetSysClock。
+[P] 本文件Stack_Size=0x400，即1 KB；Heap_Size=0x200，即512 B。它们是本工程的栈、堆预留值，不是芯片固定容量。异常嵌套和较深的函数调用会增加栈需求，不能以“编译成功”代替栈余量评估。
+[P] 第8题 扩展练习四 HAL GPIO初始化
+[P] HAL最小工程将PF9和PF10配置为推挽输出，将PE4配置为上拉输入。课程普中F407-T100接法中，LED低电平点亮、按键按下接地；换板时仍需核对原理图。下面摘录实际main.c中的初始化函数。
+[P] 图9 实际HAL main.c第110至133行选录 保留原行号的代码摘录
+[P] 按照硬件使用顺序读代码
+[P] 第115、116行打开GPIOF和GPIOE的AHB1外设时钟。第119行先把PF9/PF10写为高电平，再切换为输出模式，使低电平有效的LED初始关闭；第122至126行设置输出模式、无上下拉和低输出速度。
+[P] 第129至132行把PE4改为上拉输入。输入端悬空时由上拉保持高电平，按下按键接地后读到GPIO_PIN_RESET。GPIO速度控制的是输出边沿驱动特性，GPIO_SPEED_FREQ_LOW不是软件翻转频率。
+[TABLE START]
+目的 | 本工程使用的HAL函数 | 对应含义
+初始化 | HAL_GPIO_Init | 把结构体配置写入GPIO寄存器
+读引脚 | HAL_GPIO_ReadPin | 读取输入数据位
+写引脚 | HAL_GPIO_WritePin | 通过置位/复位机制输出指定电平
+翻转输出 | HAL_GPIO_TogglePin | 根据当前输出状态改变指定引脚
+[TABLE END]
+[P] 第8题 扩展练习四 HAL主循环与预期现象
+[P] 图10 实际HAL main.c第38至62行选录 省略注释与空行后保留原行号
+[P] 初始化次序为HAL_Init → SystemClock_Config → MX_GPIO_Init。进入循环后，PF9先翻转一次，调用HAL_Delay(500)等待，再读取PE4：低电平时将PF10写低点亮LED1，高电平时写高关闭。
+[P] 由代码能够得出的结论
+[TABLE START]
+观察对象 | 按代码与配置推导的预期 | 不能直接推出的结果
+PF9 LED0 | 名义上约每500 ms翻转一次；一个完整亮灭周期约1 s | 不能据编译日志证明实际波形频率或LED已闪烁
+PE4与PF10 | 每轮延时后采样按键，按下时PF10输出低 | 不是中断即时响应；短按可能漏读，且没有消抖
+SysTick时基 | HAL采用1 ms中断时基；168 MHz时LOAD应为167999 | 未取得运行中的寄存器读数或示波器测量
+[TABLE END]
+[P] HAL_Delay依赖SysTick_Handler调用HAL_IncTick来推进uwTick。HAL_RCC_ClockConfig切频后会重建时基；不能再把普中SPL中会重装并关闭SysTick的delay_ms混入同一HAL工程，否则可能破坏HAL超时和延时。
+[P] 这些现象是源码推导；实际按键响应、LED频率和定时误差需在具备硬件后另行测量。
+[P] 第8题 扩展练习四 SPL GPIO与时钟对照
+[P] 图11 实际SPL SysTick工程led.c第9至22行 GPIO初始化源码
+[P] 图12 实际SPL时钟工程main.c第57至68行 主循环源码
+[P] SPL的RCC_AHB1PeriphClockCmd、GPIO_Init、GPIO_ResetBits和GPIO_SetBits分别对应时钟使能、配置、输出低和输出高。读取输入电平使用GPIO_ReadInputDataBit；例如教师CH5EX02读取GPIOF的GPIO_Pin_6，对应HAL_GPIO_ReadPin。PF6是教师板按键，不能替换成普中板的PE4。两种库都须先开时钟；低有效输出宜先写初始高电平，再启用输出模式。
+[P] SPL时钟例程在main中调用RCC_HSE_Config(8,336,4,7)。HSE=8 MHz时，SYSCLK=8÷8×336÷4=84 MHz，HCLK=84 MHz，PCLK1=21 MHz，PCLK2=42 MHz。不能把此工程写成HAL工程的168/42/84 MHz。
+[P] delay(6000000)是空循环忙等，时长还受优化和指令执行影响，不是精确的500 ms。该例程重新配置时钟后未调用SystemCoreClockUpdate，软件时钟变量仍可能保留原168 MHz值；再次根据它配置时基前必须更新。
+[P] 第8题 扩展练习四 SPL SysTick的使用
+[P] 第二个SPL工程在SystemInit内配置168 MHz，在main中调用SysTick_Init(168)。它采用HCLK/8作为SysTick计数时钟，即21 MHz，每微秒21个计数。此处的168是传入的MHz数值，必须与实际HCLK一致。
+[P] /* Actual SPL SysTick User/main.c, lines 21-34 */
+[P] int main()
+[P] {
+[P] SysTick_Init(168);
+[P] LED_Init();
+[P] while(1)
+[P] {
+[P] LED1=0;
+[P] LED2=1;
+[P] delay_ms(500);
+[P] LED1=1;
+[P] LED2=0;
+[P] delay_ms(500);
+[P] }
+[P] }
+[P] 上段保留实际执行语句，仅调整缩进并省略源码中的延时精度注释。该例配套LED驱动初始化PF9与PF10；主程序交替改变两路LED状态，调用delay_ms(500)后再进入另一种状态。
+[P] 沿着调用链检查延时
+[P] delay_ms把较长等待分成540 ms的小段，再调用delay_nms。delay_nms写入LOAD，清零VAL，打开计数器，轮询CTRL的COUNTFLAG，结束后关闭计数器并清零VAL。因此它是占用CPU等待的轮询式延时，不是HAL的全局毫秒计数。
+[TABLE START]
+项目 | SPL课程例程 | HAL最小工程
+时钟来源 | SysTick=HCLK/8；168 MHz下为21 MHz | 默认SysTick=HCLK；168 MHz下为168 MHz
+等待方法 | 读取COUNTFLAG直到计满 | SysTick中断累加uwTick，HAL_Delay等待差值
+结束状态 | delay_nms会关闭SysTick计数器 | 1 ms周期中断时基继续运行
+频率改变 | 须重新核对SysTick_Init参数与延时系数 | 正确执行HAL切频流程后重建时基
+[TABLE END]
+[P] 源码把LOAD直接写为nms×fac_ms，周期分析应考虑LOAD+1、启动和软件开销。课程注释中的“精确延时”不等于已测得的误差保证；本次只据源码说明机制，不把500 ms写成实测值。
+[P] 第8题 CubeMX生成工程与时钟参数
+[P] clock168_gpio.ioc选择STM32F407ZGT6，HSE为8 MHz，PF9为GPIO输出。生成环境是CubeMX 6.18.1和STM32CubeF4 V1.28.3，目标工具链为MDK-ARM V5。实际生成的SystemClock_Config如下。
+[P] 图13 CubeMX生成的Src/main.c第121至146行选录 实际代码摘录
+[TABLE START]
+参数 | 代码设置 | 对应频率或条件
+PLL M N P Q | 8、336、2、7 | VCO输入1 MHz，VCO输出336 MHz
+SYSCLK / HCLK | PLLCLK、AHB不分频 | 168 MHz / 168 MHz
+PCLK1 / PCLK2 | APB1四分频、APB2二分频 | 42 MHz / 84 MHz
+Flash与电压等级 | FLASH_LATENCY_5、Scale 1 | 按相应供电条件支持168 MHz工作
+[TABLE END]
+[P] 实际main调用HAL_Init、SystemClock_Config和MX_GPIO_Init后进入空while(1)。gpio.c将PF9初始化为低电平，按参考板LED低有效接法预期为常亮；循环未实现动态翻转或按键处理。这与视频中的其他演示工程、HAL最小工程是不同版本。
+[P] 时钟获取也要区分：HAL_RCC_GetSysClockFreq依据RCC配置计算SYSCLK；HAL_RCC_GetHCLKFreq返回SystemCoreClock缓存。直接改寄存器后若未维护缓存，后者不能自动代表当前实际时钟。
+[P] 第8题 Keil历史编译记录
+[P] 下表摘录保存的AC5历史构建日志。六个目标的记录均为0 Error(s)、0 Warning(s)，其中前四项属于原作业参考工程，后两项属于教师CH5EX01原工程。它们是既有构建证据，不是本轮修订源码的重编结果。大小单位为字节。
+[TABLE START]
+目标 | Code | RO-data | RW-data | ZI-data | 结果
+SPL时钟 | 1524 | 408 | 0 | 1632 | 0错 0警告
+SPL SysTick | 1272 | 424 | 4 | 1636 | 0错 0警告
+HAL最小工程 | 3906 | 450 | 16 | 1632 | 0错 0警告
+CubeMX生成 | 3142 | 442 | 16 | 1632 | 0错 0警告
+教师CH5EX01 STD | 1528 | 424 | 40 | 1648 | 0错 0警告
+教师CH5EX01 HAL | 3390 | 442 | 36 | 1636 | 0错 0警告
+[TABLE END]
+[P] 图14 实际Keil编译完成窗口局部 上传的真实截图 HAL目标为0错误0警告
+[P] 图14裁自“Keil_HAL工程编译完成”截图的Build Output区域，原图随附，显示Code=3906、链接及HEX生成信息，与HAL原生日志一致。另一个名为“Rebuild结果”的截图只显示Rebuild开始阶段，不将它当作完成证据。
+[P] 编译成功说明什么
+[P] 记录说明对应版本的源码在所列工具链、宏和依赖条件下完成编译、链接并生成映像。编译器不会自动验证外部晶振频率、PLL电气边界、板级接线或LED闪烁频率，因此编译通过不消除下一节所列配置问题。
+[P] 记录采用Arm Compiler 5.06 update 7 build 960。Code、RO-data、RW-data和ZI-data含义不同，不能把Code列单独当作全部Flash或RAM占用。原始日志与修改后的源码必须分别保存，不能把旧日志作为新补丁通过编译的凭据。
+[P] 复核所需资料
+[P] 工程资料中保留四份参考工程文本及HTML日志，另有两份教师原始文本日志，源码选集用于逐行阅读；完整工程入口见参考资料[6]。重建时应使用匹配的AC5与F4 DFP环境，并保留工程中的启动、系统、驱动和头文件依赖。
+[P] 第8题 教师CH5EX01工程对照
+[P] CH5EX01是时钟讨论题指定的参考例。教师HAL与STD均以PE3、PE4为LED输出，PB0至PB7为流水灯输出；CH5EX02还使用PF6等按键。普中参考板则把PF9、PF10用于LED，PE4用于按键。两者的PE4方向相反，移植前必须按实际板卡核对。
+[TABLE START]
+项目 | CH5EX01 HAL原件 | CH5EX01 STD原件
+HSE与PLL | 8 MHz；M8 N336 P2 Q4 | 25 MHz；M25 N336 P2 Q7
+主频与总线 | 168 / 168 / 42 / 84 MHz | 25 MHz实际输入时同左
+SysTick | 默认HCLK；1 ms中断 | HCLK/100；10 ms中断
+等待函数 | HAL_Delay(1000) | Delay(10)，即约100 ms
+PE3翻转 | 每轮翻转，完整闪烁频率约0.5 Hz | 每5轮翻转，稳态约1 Hz
+启动路径 | SystemInit后，main中配置PLL | SystemInit内调用SetSysClock
+[TABLE END]
+[P] 两个需要修正的时钟条件
+[P] HAL原件的PLLQ=4使336 MHz VCO经Q支路输出84 MHz，超过DS8626 Rev12表36给出的75 MHz上限。保持CPU为168 MHz时，应在独立修订版把Q改为7，得到48 MHz，并同步IOC；不能把原配置整体表述为符合电气规格。
+[P] STD原件按25 MHz晶振设置HSE_VALUE=25000000、PLL_M=25。若直接换到8 MHz板，PLL输入只有0.32 MHz，低于规定范围。53.76 MHz只是代入公式的理想结果，实际不保证锁定或运行。8 MHz移植版须同时改HSE_VALUE与PLL_M，而不是只改一个软件常量。
+[P] 教师STD的HSE失败分支没有恢复168 MHz配置，启动流程可能留在HSI 16 MHz；SystemCoreClock全局初值也可能过期。HAL配置失败会进入Error_Handler，不能描述成无缝切换并继续原频率运行。
+[P] 第8题 课件 视频与工程版本辨析
+[P] 同一个教学主题出现了不同演示版本。表中频率按实际画面或源码计算，不能把视频、PPT和RAR中的参数统一成一个数值。这里的时间戳用于回到视频核对，不表示板上测得的时间。
+[TABLE START]
+材料与定位 | 所见配置 | 对应结论
+CubeMX新建工程视频 10分20秒 | HSE25 / M20 / N268 / P2 | SYSCLK 167.5 MHz；按最终界面参数计算
+HAL GPIO视频 4分15秒 | HSE8 / M8 / N336 / P2 | SYSCLK 168 MHz
+HAL GPIO视频 18分15秒 | Delay100；每5轮翻转PE3 | 约500 ms翻转，完整闪烁频率约1 Hz
+SPL GPIO视频 19分45秒及22分15秒 | 10 ms tick；Delay20；每轮翻转 | 约200 ms翻转，完整闪烁频率约2.5 Hz
+第5章课件 例5-1 | PE3心跳1 Hz，PB依次循环 | 功能要求，不能代替版本实际实现
+教师HAL RAR | HAL_Delay(1000)后循环翻转 | 约1000 ms翻转，完整闪烁频率约0.5 Hz
+[TABLE END]
+[P] 怎样使用这些材料
+[P] 先确定采用哪份源工程，再检查该版本的晶振、PLL参数、引脚和SysTick。若要完成1 Hz心跳加100 ms流水灯，可按100 ms推进流水，再以5步为一组翻转心跳，或使用独立的毫秒时间差调度。不能只把一个Delay改成500，就认为所有输出节拍同时满足。
+[P] GPIO视频中“低电平点亮”的接法与输出初始高电平相对应。输出模式和速度是硬件电气设置，Very High不代表LED软件翻转频率。视频里的工程建立、编译或下载配置画面也不能自动作为当前实体板已经运行的证据。
+[P] SPL新建工程视频8分10秒的结果为0错误、1警告；它与上传的教师工程0错0警历史日志属于不同记录，分别保留。
+[P] 第8题 仿真记录与实验结论
+[P] 2026年10月4日的历史截图显示HAL工程进入µVision的Simulation调试会话。下图显示程序在HAL_Init启用Flash缓存附近停止，命令窗口报告对0x40023C00的读取访问受限。两幅图均裁自同一张实际IDE截图，未重绘界面或报错内容。
+[P] 图15 实际仿真截图中的HAL_Init停止位置 源码窗口局部
+[P] 图16 同一仿真截图的命令窗口 error 65访问限制
+[P] 0x40023C00属于STM32F407的Flash接口寄存器区。该历史会话在初始化阶段就受阻，因而没有形成PLL、GPIO或HAL时基持续运行的证据。这个结果是仿真会话的访问限制，不能解释为实体芯片或硬件电路失败。
+[P] SysTick属于Cortex-M内核部件，仅凭这条Flash寄存器报错，不能进一步断言所有内核功能都不支持。最稳妥的记录是：工程可构建，调试会话可启动，但该次外设运行验证未完成。
+[TABLE START]
+已完成 | 本次未形成的证据
+四工程源码、配置与启动链阅读；实际Keil构建日志核对 | 实体板烧录、LED与按键实测、示波器或逻辑分析仪频率测量
+HAL实际IDE截图；仿真停止位置与报错记录 | 运行态时钟寄存器、SysTick持续计数及GPIO波形
+[TABLE END]
+[P] 原题第8题为自选扩展练习，未把烧录或上板设为提交前提。本次按现有资料完成书面分析与已有工程记录复核，保留验证边界，不补写不存在的实物现象。
+[P] 参考资料与工程来源
+[P] 下列资料用于核对本作业所涉及的章节，不代表通读全部手册。本版于2026年10月5日结合原题图片及逐秒视频复核修订。正文以方括号编号指向相应资料。
+[P] [1] ST DS8626 Rev12 STM32F405xx和STM32F407xx数据手册
+[P] 核对Features、LQFP144引脚图、表7引脚表、存储器映射、时钟电气条件及NRST推荐电路。随附PDF：sources/STM32F407ZG_DS8626.pdf。
+[P] [2] ST RM0090 STM32F4参考手册
+[P] 核对F405/407适用的系统结构、存储器映射、RCC和GPIO章节。RM0090同时覆盖多种F4器件，必须先看章节适用范围，再使用总线与PLL参数。
+[P] [3] ST PM0214 Rev10 Cortex-M4编程手册
+[P] 核对寄存器组、存储器映射、异常模型、向量表、NVIC、SCS和SysTick章节。相应PDF保存在sources目录。
+[P] [4] ST DS11585 Rev20 STM32L496xx数据手册
+[P] 核对Features、具体器件对照表及订货型号说明。随附PDF：sources/STM32L496VE_DS11585.pdf。
+[P] [5] ST STM32L496VE器件页面
+[P] 用于交叉核对STM32L496VET6的512 KB Flash、LQFP100和温度等级。
+[P] 参考资料与版本定位
+[P] [6] 四份实际工程及本机编译记录
+[P] 本次代码摘录、工程分组、构建表和实际界面图均据此目录中的对应文件。图8至13是实际源码排版摘录，不是IDE截图；图14至16是实际IDE截图的局部。
+[P] [7] 2026年10月4日本机工程与工具验证记录
+[P] 环境和过程以该记录的后续补充段及原始工程文件交叉核对。较早的“CubeF4未安装”状态已被后续生成与构建成功记录更新。芯片参数、引脚和函数行为以对应手册、原理图和源码为准。
+[P] 随附Word正文和表格可编辑；LaTeX源文件与配图可重新编译为PDF。工程资料中的源码为阅读选集，完整可构建工程请使用[6]中的原始目录。
+[P] 补充课程来源
+[P] 教师PPT：第3章Cortex-M4内核体系结构；第4章STM32芯片应用基础；第5章GPIO与SysTick。总线矩阵核对RM0090 Rev19第2.1节第59页；PLL限制核对DS8626 Rev12表36；SysTick重载核对Arm DUI0553B第4.4.2节。
+[P] 教师CH5EX01 HAL原工程
+[P] 教师CH5EX01 STD原工程
+[P] 视频定位采用课程提供的SPL新建工程、CubeMX新建工程、HAL GPIO及SPL GPIO演示文件。相关参数须与同版本源码对应；不能用课程画面冒充本轮软件运行截图。
+[P] 原题逐项对照
+[P] 原题依据为两张2026年10月4日作业截图。本版按第1至7题和第8题自选扩展逐项对照；“时钟之迹”是另一份PPT讨论任务，见同包时钟之迹目录。
+[TABLE START]
+原题 | 答案位置 | 核对重点
+1 缩写 | 第1题及续页 | ARM至CAN Bus逐项英文、作用与区别；JTAG/SWD分列
+2 存储器 | 第2题 图1和地址表 | GPIO/CAN在外设区；SysTick在系统控制空间
+3 中断 | 第3题 图2和向量表 | 请求、优先级、现场保护、ISR和异常返回
+4 主从总线 | 第4题两页 | 8个主端口/7个从端口；GPIO AHB1、TIM2 APB1、USART1 APB2
+5 时钟 | 第5题 图4 | HSI/HSE/LSI/LSE；SYSCLK选源；168/42/84MHz上限
+6 复位 | 第6题 图5 | NRST低有效；ZGT6第25脚；复位RC及按键
+7 芯片手册 | 第7题与sources目录 | F407ZGT6、L496VET6具体容量与封装；两个官方PDF
+8 自选扩展 | 第8题各小节 | 已做①匹配原理图②SPL/HAL分组模板③启动栈向量④GPIO读写
+[TABLE END]
+[P] 原图显示截止2026年10月8日08:00、仅可提交1次，未标明时区；本次只核对题目图，未查询实时提交状态。完成文件不等于已提交。
+[P] 第8题①原文建议到淘宝找最小系统原理图。本版使用课程内已匹配STM32F407ZGT6的普中F407-T100原图，明确保留来源；没有把它冒称为另行获取的淘宝商品图。
+[P] 讨论PPT要求从所选芯片和CH5EX01 HAL/STD沿源码追踪时钟初始化、设置和获取、SysTick节拍、Delay/HAL_Delay，并画流程/伪代码及说明应用；至少5页内容，不含封面/结尾。原题没有把PB步进100ms设为硬性要求。
+[P] 本轮视频核对覆盖5段全部1Hz画面检查点和末帧，保留具体时间戳及原片过渡空白。课程学习索引分别标明视频、课件、归档源码和修订源码；旧编译日志仅证明旧版本。
+[P] GPIO与节拍的补充核验
+[P] BSRR是写命令寄存器  BSRR低16位写1置高，高16位写1置低，写0不影响该位。不要对BSRRL/BSRR使用 &= 或 |= 企图保持输出，因为读到0并不代表当前ODR。PA4–PA7中仅PA6高的示例可用：
+[P] GPIOA->BSRR = (0x00B0u << 16) | 0x0040u;
+[P] 这条命令复位PA4/PA5/PA7并置位PA6，其余输出不变。若同时向同一位的set/reset均写1，须按器件规定处理；本例使两掩码互斥。依据RM0090 Rev19第284页及杨永杰教材PDF第92页的错误用法对照。
+[P] MODER字段宽度是2位  把PA2、PA3设为复用模式10b，必须清除位[5:4]和[7:6]，不能按引脚号直接移位：
+[P] GPIOA->MODER = (GPIOA->MODER & ~((3u<<4)|(3u<<6)))
+               | (2u<<4) | (2u<<6);
+[P] 对应第5章课件第26页。此寄存器读改写仍需避免与中断中的同寄存器更新并发；单次BSRR只解决输出置位/复位，不使全部GPIO操作自动原子。
+[P] 输入状态与输出锁存  GPIO_ReadInputDataBit/HAL_GPIO_ReadPin读取IDR；ODR是输出锁存值。二者不总相等，外部负载和复用/模拟模式都会影响意义。GPIO速度档位也不能当作软件输出频率。
+[P] 节拍与完整周期  视频HAL最终每100ms循环、每5轮翻转PE3，稳态约1Hz；SPL视频最终Delay(20)乘10ms tick、每轮翻转，是约2.5Hz。HAL归档Delay(1000)每轮翻转则约0.5Hz。以上是源码推导，未作实体板测量。
+[P] 计数回卷  HAL视频的uint16_t Index在65535后变0，这两个值都能被5整除，会产生一次相邻循环翻转。修订工程使用0–4显式循环计数，或无符号毫秒差值调度；即使旧代码0错误编译，这个边界仍存在。

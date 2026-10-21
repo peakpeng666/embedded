@@ -1,0 +1,54 @@
+{
+  "original_files_preserved": 17610,
+  "preservation_errors": [],
+  "preview_service_log_appends": [
+    {
+      "path": "90_历史归档/时钟之迹/20261006_课堂展示初版/制作源文件/validation/workflow.log",
+      "original_content_preserved": true,
+      "added_bytes": 1283
+    },
+    {
+      "path": "02_课程作业/时钟之迹/制作源文件/validation/workflow.log",
+      "original_content_preserved": true,
+      "added_bytes": 1170
+    }
+  ],
+  "changed_file_errors": [],
+  "links_checked": 120,
+  "broken_links": [],
+  "deliverables": [
+    {
+      "path": "02_课程作业/作业2/作业2_书面解答.docx",
+      "unchanged": true
+    },
+    {
+      "path": "02_课程作业/作业2/作业2_书面解答.pdf",
+      "unchanged": true
+    },
+    {
+      "path": "02_课程作业/作业2/作业2_工程与参考资料.zip",
+      "unchanged": true
+    },
+    {
+      "path": "02_课程作业/时钟之迹/时钟之迹_课堂展示_修订版.pptx",
+      "unchanged": true
+    },
+    {
+      "path": "02_课程作业/时钟之迹/时钟之迹_课堂展示_修订版.pdf",
+      "unchanged": true
+    }
+  ],
+  "projects_checked": 16,
+  "new_missing_dependencies": [],
+  "cubemx_generation_target_exists": true,
+  "root_directories": [
+    "00_常用入口",
+    "01_课程资料",
+    "02_课程作业",
+    "03_学习笔记",
+    "04_工程实践",
+    "07_软件工具",
+    "90_历史归档",
+    "99_整理记录"
+  ]
+}

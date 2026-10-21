@@ -1,0 +1,32 @@
+{
+  "index_events": [
+    {
+      "loop": 0,
+      "index": 65530
+    },
+    {
+      "loop": 5,
+      "index": 65535
+    },
+    {
+      "loop": 6,
+      "index": 0
+    },
+    {
+      "loop": 11,
+      "index": 5
+    }
+  ],
+  "loop_gaps": [
+    5,
+    1,
+    5
+  ],
+  "nominal_intervals_ms": [
+    500,
+    100,
+    500
+  ],
+  "pll_check": "84 MHz exceeds 75 MHz specification; Q=7 gives 48 MHz",
+  "systick_check": "passed"
+}

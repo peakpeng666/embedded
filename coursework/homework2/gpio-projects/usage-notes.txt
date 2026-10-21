@@ -1,0 +1,11 @@
+﻿打开工程
+
+SPL_GPIO/Blank.uvprojx：标准库空白模板
+HAL_GPIO/Blank.uvprojx：HAL 空白模板
+SPL_GPIO/Template.uvprojx：标准库 GPIO 示例
+HAL_GPIO/Template.uvprojx：HAL GPIO 示例
+
+GPIO 示例接线：PF9 为低电平点亮的 LED，PE4 为按下接地的按键。
+时钟：外部晶振 8 MHz，SYSCLK 168 MHz。
+工具：Keil MDK，Arm Compiler 5.06，STM32F4xx_DFP 2.16.0。
+源码位于 User 目录；Obj 中提供 HEX 和 AXF；本目录附四份实际编译日志。

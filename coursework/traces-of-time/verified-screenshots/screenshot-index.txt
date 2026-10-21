@@ -1,0 +1,37 @@
+﻿《时钟之迹》真实截图索引（2026-10-07至10-08）
+
+底稿：用户提供的《时钟之迹_六页字体优化版_定稿.pptx》。
+成稿顺序：封面、Set、Get、Config、Delay、各时钟原理与应用；6页中有5页正文。
+选择：Keil MDK、STM32F407ZGT6、标准外设库与HAL；例程为CH5Ex01STD、CH5EX01HAL。
+教师四项内容对应：第1项→Set/Get；第2项→Config/Delay；第3项→可编辑伪代码链及流程图；第4项→末页时钟表。
+
+截图均来自真实Keil µVision窗口，打开独立工程副本，保留文件标签、代码和行号。16张源码原图未改写；PPT仅对其中5张作区域裁剪，文字、公式、流程图和3张表格为可编辑对象。
+
+Set（01系列，共5张）
+01：HAL Core/Src/main.c，137–155行，原M/N/P/Q、总线及Flash设置。
+01a：main.c，70–76行，HAL_Init→SystemClock_Config。
+01b/01c/01d：STD UserMain/system_stm32f4xx.c，514行初始化调用；371、384、401–403行PLL参数；687–709行总线。
+
+Get（02系列，共2张）
+02/02a：HAL Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c，941–968行四个频率接口；885–928行SYSCLK寄存器计算。频率数字为配置推算，源码窗口不是硬件测量。
+
+Config（03系列，共3张）
+03：HAL Drivers/CMSIS/Include/core_cm4.h，2029–2035行LOAD=ticks−1、VAL及CTRL。
+03a：stm32f4xx_hal.c，253–274行默认1ms时基。
+03b：STD UserMain/Usermain.c，48–49行HCLK/100及Delay(10)调用。
+
+Delay（04系列，共6张）
+04/04a/04b：HAL stm32f4xx_hal.c，389–403行忙等、312–315行计数；Core/Src/stm32f4xx_it.c，184–189行中断入口。
+04c/04d/04e：STD UserMain/Usermain.c，83–101行等待与递减、20行static __IO变量；stm32f4xx_it.c，142–145行中断入口。
+
+实际验证
+Keil µVision 5.35，ARM Compiler V5.06 update7 build960；两套副本均实际Rebuild成功，0错误、0警告，附原始编译日志。预先检查了工程构建钩子和源文件，无启用的额外构建脚本。
+原PPT及184个原源码/工程文件的SHA-256均未改变；副本源码与原件一致。原HAL的Q=4未修改，Q=7仅作为PPT中的建议。
+PowerPoint真实打开成稿并逐页检查，PDF亦逐页检查。中文为Microsoft YaHei，代码为Consolas，PDF已嵌入字体。
+未进行调试、烧录、开发板连接或硬件测量；频率和LED周期均为源码推算，不称作运行结果。
+
+软件核实补充
+CubeIDE真实“关于”窗口为2.2.0；CubeMX已实际启动，旧工程提示窗口显示6.18.1。二者核实截图附后。
+CubeMX读取旧版ioc时自动下载并解压DB.6.0.60和DB.6.0.92兼容数据库至用户缓存（C:\Users\Peak\.stm32cubemx\databases）；后续F4 V1.27.1固件包下载已点击Cancel取消。没有迁移或保存原工程，PPT未使用CubeMX时钟树。
+
+附件中的截图元数据、裁剪记录和核实记录用于追溯；ST/Arm核对资料及补充讲解放在PPT备注中。

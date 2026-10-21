@@ -1,0 +1,1234 @@
+{
+  "06_例程_时钟之迹/02_工程例程/5-STM32时钟系统/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\APP\\led\\led.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "06_例程_时钟之迹/02_工程例程/7-SysTick系统定时器/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Public",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\APP\\led\\led.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\misc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Public\\SysTick.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Public\\system.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "06_例程_时钟之迹/02_工程例程/STD_LED/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\APP\\led\\led.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "06_例程_时钟之迹/02_工程例程/STD_模板/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "08_平台资源下载/练习例子工程/CH5EX01HAL/CH5EX01HAL/MDK-ARM/CH5EX01HAL.uvprojx": [
+    {
+      "kind": "include",
+      "value": "../../Core/Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../../Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../../Drivers/CMSIS/Include",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Core/Src/gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Core/Src/main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Core/Src/stm32f4xx_hal_msp.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Core/Src/stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Core/Src/system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "startup_stm32f407xx.s",
+      "exists": true
+    }
+  ],
+  "08_平台资源下载/练习例子工程/CH5Ex01STD/UserMain/CH5EX01STD.uvprojx": [
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_Startup\\Include",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "..\\UserMain",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_Startup\\startup_stm32f40xx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Usermain.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\system_stm32f4xx.c",
+      "exists": true
+    }
+  ],
+  "09_课堂展示_时钟之迹/clock_traces_20261006/sources/STD_project.uvprojx": [
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_Startup\\Include",
+      "exists": false
+    },
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": false
+    },
+    {
+      "kind": "include",
+      "value": "..\\UserMain",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_Startup\\startup_stm32f40xx.s",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\Usermain.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\stm32f4xx_it.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\system_stm32f4xx.c",
+      "exists": false
+    }
+  ],
+  "09_课堂展示_时钟之迹/clock_traces_revision_20261006/sources/STD_project.uvprojx": [
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_Startup\\Include",
+      "exists": false
+    },
+    {
+      "kind": "include",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": false
+    },
+    {
+      "kind": "include",
+      "value": "..\\UserMain",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_Startup\\startup_stm32f40xx.s",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": "..\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\Usermain.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\stm32f4xx_it.c",
+      "exists": false
+    },
+    {
+      "kind": "source",
+      "value": ".\\system_stm32f4xx.c",
+      "exists": false
+    }
+  ],
+  "10_书面作业_作业2/GPIO工程/HAL_GPIO/Blank.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\STM32F4xx_HAL_Driver\\Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\cmsis_core",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\device",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\system",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main_blank.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_hal_msp.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\startup\\startup_stm32f407xx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\system\\system_stm32f4xx.c",
+      "exists": true
+    }
+  ],
+  "10_书面作业_作业2/GPIO工程/HAL_GPIO/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\STM32F4xx_HAL_Driver\\Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\cmsis_core",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\device",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\system",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_hal_msp.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\startup\\startup_stm32f407xx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\system\\system_stm32f4xx.c",
+      "exists": true
+    }
+  ],
+  "10_书面作业_作业2/GPIO工程/SPL_GPIO/Blank.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main_blank.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "10_书面作业_作业2/GPIO工程/SPL_GPIO/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "嵌入式作业/02_工程验证/01_标准库工程_5-STM32时钟系统/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\APP\\led\\led.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "嵌入式作业/02_工程验证/02_标准库工程_7-SysTick系统定时器/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\APP\\led",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\CMSIS",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\Public",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\APP\\led\\led.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\startup_stm32f40_41xxx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\CMSIS\\system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\misc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Libraries\\STM32F4xx_StdPeriph_Driver\\src\\stm32f4xx_syscfg.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Public\\SysTick.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\Public\\system.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    }
+  ],
+  "嵌入式作业/02_工程验证/03_HAL最小工程/Template.uvprojx": [
+    {
+      "kind": "include",
+      "value": ".\\STM32F4xx_HAL_Driver\\Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\User",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\cmsis_core",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\device",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": ".\\system",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_cortex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_dma.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_flash_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_pwr_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_hal_msp.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\User\\stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\startup\\startup_stm32f407xx.s",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": ".\\system\\system_stm32f4xx.c",
+      "exists": true
+    }
+  ],
+  "嵌入式作业/04_CubeMX工程/clock168_gpio/MDK-ARM/clock168_gpio.uvprojx": [
+    {
+      "kind": "include",
+      "value": "../Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+      "exists": false
+    },
+    {
+      "kind": "include",
+      "value": "../Drivers/CMSIS/Include",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Inc",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+      "exists": true
+    },
+    {
+      "kind": "include",
+      "value": "../Inc",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Src/gpio.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Src/main.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Src/stm32f4xx_hal_msp.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Src/stm32f4xx_it.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "../Src/system_stm32f4xx.c",
+      "exists": true
+    },
+    {
+      "kind": "source",
+      "value": "startup_stm32f407xx.s",
+      "exists": true
+    }
+  ]
+}

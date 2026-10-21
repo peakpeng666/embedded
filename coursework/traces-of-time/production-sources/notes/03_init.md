@@ -1,0 +1,1 @@
+启动文件先调用SystemInit，再进入C运行时初始化，最后执行main。标准库在SystemInit内调用SetSysClock，因此进入main前已完成主时钟配置。HAL工程在main中依次调用HAL_Init、SystemClock_Config和MX_GPIO_Init。这个顺序有明确依赖：HAL_Init先在复位后的HSI 16 MHz下建立1 ms时基，后续HSE就绪检测、PLL锁定等待中的超时判断都使用HAL_GetTick。切换到168 MHz后，HAL_RCC_ClockConfig更新SystemCoreClock，并再次调用HAL_InitTick，使时基继续保持1 ms。

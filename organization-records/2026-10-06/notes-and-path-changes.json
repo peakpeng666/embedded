@@ -1,0 +1,146 @@
+[
+  {
+    "path": "03_学习笔记/F407开发板详解_对照官方手册.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/F407开发板详解_对照官方手册.md",
+    "before_sha256": "46debb9479591971cfa97c1f7452d880b2fcad03f47384adcbe810514708bba5",
+    "after_sha256": "66b327e44eab470411c2f8a383e8350f66969caa66e565abd6e3406d268294ce"
+  },
+  {
+    "path": "03_学习笔记/STM32F407ZGT6硬件平台架构与原理图电气分析指南.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/STM32F407ZGT6硬件平台架构与原理图电气分析指南.md",
+    "before_sha256": "b363f74e1404baad57125bf699bedc52ea5f0ad2360d887339c08f6d30f59d4d",
+    "after_sha256": "5d4ce2ee98aa364d8cfa34643fa88c3296b4a80b90a7d6a037e9c8edde103f0c"
+  },
+  {
+    "path": "03_学习笔记/课堂入门_开发板与读图.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/课堂入门_开发板与读图.md",
+    "before_sha256": "46706bc51c74193389b80c167dfe647801ef003c177991517f534ddc7ea77f6c",
+    "after_sha256": "c2140219886632e375a9c7bf0f81afdbbffa7a0ddb6569dc80e0dd0bccb5ab0c"
+  },
+  {
+    "path": "03_学习笔记/课程知识与复习重点_第1-4章.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/课程知识与复习重点_第1-4章.md",
+    "before_sha256": "ea762f675c00675180ebb42a3ae2aeae023fc50a0721fe5bcf72ad384772af0c",
+    "after_sha256": "e6ac17ee94b0b1de64467f29489ad17b85ace0e13e2ecea6a09887c2ee4cbb59"
+  },
+  {
+    "path": "02_课程作业/作业2/_build/prepare_projects.py",
+    "backup": "99_整理记录/2026-10-06/修改前/02_课程作业/作业2/_build/prepare_projects.py",
+    "before_sha256": "4971ca3ddb19950a88139d287d4cbdf7ad8501b054496706bb08a179d4f9616c",
+    "after_sha256": "92e3ad5f9b88d9a6f60c4624568256841c0f2f5891410758b9ef3571bc1e701a"
+  },
+  {
+    "path": "04_工程实践/03_环境与工程验证/01_环境检查/软件核查_20261006/verify_builds.py",
+    "backup": "99_整理记录/2026-10-06/修改前/04_工程实践/03_环境与工程验证/01_环境检查/软件核查_20261006/verify_builds.py",
+    "before_sha256": "455233fcc54da69cfcc4a869924b81b6d601808a46867ef46668b1a7ae3b55d1",
+    "after_sha256": "0cb372d1e9790bdcfa5e4d0f71a19d321333654625839dc4f318eb9eb423d255"
+  },
+  {
+    "path": "04_工程实践/03_环境与工程验证/04_CubeMX工程/gen_script.txt",
+    "backup": "99_整理记录/2026-10-06/修改前/04_工程实践/03_环境与工程验证/04_CubeMX工程/gen_script.txt",
+    "before_sha256": "0cd28e0ba07b9eecf987d2a78c4ebf6c31736ac1f0860349b3de374c48153176",
+    "after_sha256": "855fed311884534fae6c0ddc1a451e49e49fc1a8f7bf841b7e59e7bb89cca7b9"
+  },
+  {
+    "path": "02_课程作业/时钟之迹/制作源文件/sources/source_index.md",
+    "backup": "99_整理记录/2026-10-06/修改前/02_课程作业/时钟之迹/制作源文件/sources/source_index.md",
+    "before_sha256": "a28559cba5142b300c5f2327428e62058170a6de0f4fdfb79977b98afad7fe93",
+    "after_sha256": "3f15e09d0462eb60ed699db09517ab985042d79866d566e867a0180b50736da0"
+  },
+  {
+    "path": "07_软件工具/03_辅助记录/装包与验证.py",
+    "backup": "99_整理记录/2026-10-06/修改前/07_软件工具/03_辅助记录/装包与验证.py",
+    "before_sha256": "c874ae35346603bc6a5845a595cc2986fe5ead44dbb4ed8ac5b85f9342d9b4e7",
+    "after_sha256": "5dd22837aea618101fc19683115eb5ae3af45be6c5ca06dfe6bb55869b5f4019"
+  },
+  {
+    "path": "07_软件工具/README_老师作业_时钟之迹.txt",
+    "backup": "99_整理记录/2026-10-06/修改前/07_软件工具/README_老师作业_时钟之迹.txt",
+    "before_sha256": "9cba41d62f09a1f4d58b506789bd6fa1a5629aa7bca8bad2126329881c83eefa",
+    "after_sha256": "6ba562322f7a1310ac158d62e806724e2bacd609d980a54dc405c9af8164cb1f"
+  },
+  {
+    "path": "README.md",
+    "backup": "99_整理记录/2026-10-06/修改前/README.md",
+    "before_sha256": "bd7de254a15c49808503d7c81a205e0c726e628aba480aaff4a27d0f7b7daf35",
+    "after_sha256": "6038f13015cdae4e6494509adc8a4c8ca274128b1d2672e73516c189ffede7dd"
+  },
+  {
+    "path": "01_课程资料/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "8778ff144b3f1e73549f7fe42441ce653dfb8f19f20aae1bc1ff06fb692cc509"
+  },
+  {
+    "path": "02_课程作业/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "a732134ea6e75d807d8e2af56607b3ccc260cef8f2e4345a92283dd6a0d01aaf"
+  },
+  {
+    "path": "02_课程作业/作业2/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "aaa18c9d484bc2168629e82e6075ffa0adf4277a5a1b7283bc9853e5a081f717"
+  },
+  {
+    "path": "02_课程作业/时钟之迹/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "7f62b3ddd7e5082a25a02090b15d8953ceb916c24f6b73e18da76a5eebd83ca9"
+  },
+  {
+    "path": "03_学习笔记/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "4b240c4f49dc14f68098a8cb56b6ef93276a10e57a7c772c5f9fa735eb9e5a11"
+  },
+  {
+    "path": "04_工程实践/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "ec79e55978b48f5aae510a2f5f3443e1246c996e462bea372ee9ef4a743cc3de"
+  },
+  {
+    "path": "04_工程实践/01_时钟与SysTick/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "6d840019003ffb36d52cf6acca98dca51a3188ff8aa8033cfc94cef49c33e2a2"
+  },
+  {
+    "path": "04_工程实践/02_教师例程/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "1441ea93ff992875e9bb12ea16447fa25dcf835d429469546af5c7ff97403e75"
+  },
+  {
+    "path": "07_软件工具/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "0b2caad7f9b66b09d796ba0467889bb637ee3a818d288a2c950a214edde0f44b"
+  },
+  {
+    "path": "90_历史归档/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "3fcf06e1d154c57c030e201c8d6a59cf8a785e76a611e5a8aac3676ee051b299"
+  },
+  {
+    "path": "99_整理记录/README.md",
+    "backup": null,
+    "before_sha256": null,
+    "after_sha256": "d116cc12503f03b9585a624a92f845e7f650c64d95960fb9549f63a4fd6b108f"
+  },
+  {
+    "path": "03_学习笔记/综合分析_设置时钟及前置章节.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/综合分析_设置时钟及前置章节.md",
+    "before_sha256": "113b25017b0b47a38a5c100ef8cda56bff2035d9119b0576d82094ba4f0e6d38",
+    "after_sha256": "b3b0e9e12a0a37b07bc0e7f569bac46b7e27788d96102e97e0effff3f79d60e0"
+  },
+  {
+    "path": "03_学习笔记/课程平台资源清单.md",
+    "backup": "99_整理记录/2026-10-06/修改前/03_学习笔记/课程平台资源清单.md",
+    "before_sha256": "c68a8995d6e9b702d16d90a1dcfd9d930a432577142aed37de4c5333d62dae48",
+    "after_sha256": "2f010f48162aa536d0c43b209027ca06cb641d353acf7cc8c6f76ec0e718cdeb"
+  }
+]

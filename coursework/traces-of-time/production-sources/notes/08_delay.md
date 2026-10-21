@@ -1,0 +1,1 @@
+标准库Delay采用递减计数。主程序先将参数写入uwTimingDelay，再循环检查它是否为零。SysTick每10 ms进入中断，通过TimingDelay_Decrement将非零计数减1；归零后Delay返回。原文件中的共享变量使用__IO，也就是volatile限定，要求编译器保留对这个对象的实际访问，使主程序能够观察到中断对计数的修改。Delay阻塞主程序的后续执行，但中断仍可执行。这里一个参数单位对应10 ms，所以Delay(10)约为100 ms，Delay(1)约为10 ms。以上时间都按SystemCoreClock等于168 MHz计算；标准库模板假设25 MHz晶振，板上焊接8 MHz晶振时实际主频53.76 MHz，列出时间均变为约3.1倍。

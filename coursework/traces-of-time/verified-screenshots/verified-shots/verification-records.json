@@ -1,0 +1,81 @@
+{
+  "slides": [
+    {
+      "page": 1,
+      "text_shapes": 23,
+      "pictures": 0,
+      "native_tables": 0
+    },
+    {
+      "page": 2,
+      "text_shapes": 24,
+      "pictures": 1,
+      "native_tables": 0
+    },
+    {
+      "page": 3,
+      "text_shapes": 10,
+      "pictures": 1,
+      "native_tables": 1
+    },
+    {
+      "page": 4,
+      "text_shapes": 13,
+      "pictures": 1,
+      "native_tables": 1
+    },
+    {
+      "page": 5,
+      "text_shapes": 45,
+      "pictures": 2,
+      "native_tables": 0
+    },
+    {
+      "page": 6,
+      "text_shapes": 20,
+      "pictures": 0,
+      "native_tables": 1
+    }
+  ],
+  "pdf_pages": 6,
+  "pdf_fonts": [
+    "BCDEEE+MicrosoftYaHei",
+    "BCDFEE+MicrosoftYaHei",
+    "BCDGEE+MicrosoftYaHei-Bold",
+    "BCDHEE+MicrosoftYaHei-Bold",
+    "BCDIEE+Consolas",
+    "BCDJEE+Consolas"
+  ],
+  "chinese_font_slot_errors": [],
+  "original_ppt_unchanged": true,
+  "visual_review": "PowerPoint六页及PDF六页已逐页核对，未见重叠、缺字或正文裁切",
+  "teacher_requirement_mapping": {
+    "1": "Set、Get",
+    "2": "Config、Delay",
+    "3": "Set、Config伪代码链和Delay可编辑流程图",
+    "4": "各时钟原理与应用"
+  },
+  "source_integrity": {
+    "checked_original_source_project_files": 184,
+    "original_changes": [],
+    "copy_source_project_changes": []
+  },
+  "actual_builds": [
+    {
+      "name": "STD",
+      "returncode": 0,
+      "log": "编译日志_STD_20261007.txt"
+    },
+    {
+      "name": "HAL",
+      "returncode": 0,
+      "log": "编译日志_HAL_20261007.txt"
+    }
+  ],
+  "hardware_run_or_measurement": false,
+  "cubemx_compatibility_cache_downloaded": [
+    "DB.6.0.60",
+    "DB.6.0.92"
+  ],
+  "cubemx_f4_v1_27_1_firmware_download": "Canceled before installation"
+}

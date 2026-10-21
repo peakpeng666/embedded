@@ -8,11 +8,9 @@
 
 | 目录 | 内容 |
 | --- | --- |
-| [course-materials](course-materials/) | 第 1–5 章课件、讲课视频、参考书、芯片手册和实验说明 |
 | [coursework](coursework/) | 作业 1–3、时钟之迹展示稿及配套源文件 |
 | [study-notes](study-notes/) | 复习提纲、开发板分析、视频索引和课程补充 |
-| [engineering-practice](engineering-practice/) | Lab1 工程、时钟与 SysTick 例程、教师例程、图纸与验证记录 |
-| [history-archive](history-archive/) | 旧作业、旧 PPT、修改前备份和审校记录 |
+| [engineering-practice](engineering-practice/) | Lab1 工程、时钟与 SysTick 例程、图纸与补充代码 |
 | [organization-records](organization-records/) | 路径对照、文件清单与文本提取记录 |
 
 ## 常用入口
@@ -26,8 +24,6 @@
 | Lab1 | [工程说明](engineering-practice/embedded/README.md) · [硬件图纸](engineering-practice/embedded/hardware/README.md) · [实板验收](engineering-practice/embedded/docs/validation.md) |
 | 复习 | [第 1–4 章知识与复习重点](study-notes/course-knowledge-and-review-key-points_ch1-4.md) |
 
-软件安装包、CubeMX 安装目录和 Windows 快捷方式保留在本机，不在此仓库。讲课视频、教师课件和 PDZ 阅读包通过 Git LFS 管理，克隆前先执行 `git lfs install`。
+课程资料、历史归档、教师例程、验证截图和连板录屏暂留本地，后续补充。软件安装包与 IDE 安装目录不在此仓库。
 
-## 说明
-
-各目录有自己的 README。课程资料与工程记录按原始来源保留；新文件放入对应目录，旧成品放入 `history-archive`。
+各目录有自己的 README。新文件放入对应目录，旧成品放入 `history-archive`（本地）。

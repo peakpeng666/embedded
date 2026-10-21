@@ -1,0 +1,258 @@
+[
+  {
+    "name": "01_Set_HAL_PLL与总线",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Core\\Src\\main.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Core\\Src\\main.c",
+    "goto_line": 166,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01_Set_HAL_PLL与总线.png",
+    "source_sha256": "49911e494e81f1a9cfbf617077f0fc4b4f009be0e3f8773c0ddcfdb861a589c6",
+    "screenshot_file": "01_Set_HAL_PLL与总线.png",
+    "screenshot_sha256": "a9265f9b6c0b70f0e15a0280c071e13895042892fbd54b4e59c764f489cb0411"
+  },
+  {
+    "name": "01a_Set_HAL初始化调用",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Core\\Src\\main.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Core\\Src\\main.c",
+    "goto_line": 82,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01a_Set_HAL初始化调用.png",
+    "source_sha256": "49911e494e81f1a9cfbf617077f0fc4b4f009be0e3f8773c0ddcfdb861a589c6",
+    "screenshot_file": "01a_Set_HAL初始化调用.png",
+    "screenshot_sha256": "a58aba85234edc41a34d67caf1aa66f0c8006d7f8e87ed377cfc729382c2b570"
+  },
+  {
+    "name": "02_Get_HAL频率接口",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+    "goto_line": 968,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\02_Get_HAL频率接口.png",
+    "source_sha256": "afd19b590332cba54d72fe33ff37b6bf316d43ea03f95cf949d01b65cd559ce4",
+    "screenshot_file": "02_Get_HAL频率接口.png",
+    "screenshot_sha256": "7ffe7ab2f2037a3139078f2f9a954928052cb375021909390c978fd9c89526c7"
+  },
+  {
+    "name": "02a_Get_HAL_SYSCLK计算",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal_rcc.c",
+    "goto_line": 928,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\02a_Get_HAL_SYSCLK计算.png",
+    "source_sha256": "afd19b590332cba54d72fe33ff37b6bf316d43ea03f95cf949d01b65cd559ce4",
+    "screenshot_file": "02a_Get_HAL_SYSCLK计算.png",
+    "screenshot_sha256": "45c5d8d6e658e4380117c2e726b051188f14fb140f390bcd553c8de38bd3b7de"
+  },
+  {
+    "name": "03_Config_CMSIS重装与时钟源",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\CMSIS\\Include\\core_cm4.h",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\CMSIS\\Include\\core_cm4.h",
+    "goto_line": 2056,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\03_Config_CMSIS重装与时钟源.png",
+    "source_sha256": "738dff259c25e68ed2529baf425315d8dae1af5dac6c11b66bfdef82e78e86c9",
+    "screenshot_file": "03_Config_CMSIS重装与时钟源.png",
+    "screenshot_sha256": "c1276cc5bf95b918d03cc60c80798161f62801a6fa7dec7d20b3d71ad23b9afa"
+  },
+  {
+    "name": "03a_Config_HAL默认时基",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "goto_line": 274,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\03a_Config_HAL默认时基.png",
+    "source_sha256": "2e4e55ecd6b1bc29f8eb4f42f6395a82684babc6cc5e1240bc2e8e5fb9412144",
+    "screenshot_file": "03a_Config_HAL默认时基.png",
+    "screenshot_sha256": "effce14be074d8b011889264adde475eaa977d7ceecb4dbad571425bac8d8b23"
+  },
+  {
+    "name": "04_Delay_HAL阻塞等待",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "goto_line": 402,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04_Delay_HAL阻塞等待.png",
+    "source_sha256": "2e4e55ecd6b1bc29f8eb4f42f6395a82684babc6cc5e1240bc2e8e5fb9412144",
+    "screenshot_file": "04_Delay_HAL阻塞等待.png",
+    "screenshot_sha256": "1b8207ad2046fe281a973db3e84e94b1342817b036d5a5465bc0395436445fc0"
+  },
+  {
+    "name": "04a_Delay_HAL中断计数",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Drivers\\STM32F4xx_HAL_Driver\\Src\\stm32f4xx_hal.c",
+    "goto_line": 341,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04a_Delay_HAL中断计数.png",
+    "source_sha256": "2e4e55ecd6b1bc29f8eb4f42f6395a82684babc6cc5e1240bc2e8e5fb9412144",
+    "screenshot_file": "04a_Delay_HAL中断计数.png",
+    "screenshot_sha256": "2f9d592d47691b36ebad8b7da9399cc591f7b7b956615c5687623c95251c493d"
+  },
+  {
+    "name": "04b_Delay_HAL中断入口",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5EX01HAL\\Core\\Src\\stm32f4xx_it.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5EX01HAL\\Core\\Src\\stm32f4xx_it.c",
+    "goto_line": 189,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04b_Delay_HAL中断入口.png",
+    "source_sha256": "55e94ad0a3db579511987b734b24818ef9325507b8c1818385889ebdead8db99",
+    "screenshot_file": "04b_Delay_HAL中断入口.png",
+    "screenshot_sha256": "eeb7462971b0e69b24709ddd6507bbe1ba280fc37fa40660708ab3796c6a3cce"
+  },
+  {
+    "name": "01b_Set_STD初始化调用",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "goto_line": 515,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01b_Set_STD初始化调用.png",
+    "source_sha256": "a41b9d173eef11003341977c2439d5c0248ebfa46754a523d352575a8c0287c9",
+    "screenshot_file": "01b_Set_STD初始化调用.png",
+    "screenshot_sha256": "996044d2bdd0ba7a05cad0ccb16819695f0960982d9879ea89d8a66cc2227c4c"
+  },
+  {
+    "name": "01c_Set_STD_PLL参数",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "goto_line": 404,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01c_Set_STD_PLL参数.png",
+    "source_sha256": "a41b9d173eef11003341977c2439d5c0248ebfa46754a523d352575a8c0287c9",
+    "screenshot_file": "01c_Set_STD_PLL参数.png",
+    "screenshot_sha256": "7ea3517e89aa3e23a91a7851dc8284d610e0a6ec0d62c52f67d0596efafdf94b"
+  },
+  {
+    "name": "01d_Set_STD总线配置",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\system_stm32f4xx.c",
+    "goto_line": 711,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01d_Set_STD总线配置.png",
+    "source_sha256": "a41b9d173eef11003341977c2439d5c0248ebfa46754a523d352575a8c0287c9",
+    "screenshot_file": "01d_Set_STD总线配置.png",
+    "screenshot_sha256": "72058c41bb6ce285555cdea21f3055e6a2a2fb6697d994b5c57016330a2e661a"
+  },
+  {
+    "name": "03b_Config_STD与LED调用",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "goto_line": 72,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\03b_Config_STD与LED调用.png",
+    "source_sha256": "e8b5b3f6b8d34a949fb688bf7d76bcc06c60de7596cc25b53eca55ee53ac0c11",
+    "screenshot_file": "03b_Config_STD与LED调用.png",
+    "screenshot_sha256": "2d8f3e16be9893357e84463b40a1dce937adefcc353d34144c767a5defec088d"
+  },
+  {
+    "name": "04c_Delay_STD等待与递减",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "goto_line": 107,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04c_Delay_STD等待与递减.png",
+    "source_sha256": "e8b5b3f6b8d34a949fb688bf7d76bcc06c60de7596cc25b53eca55ee53ac0c11",
+    "screenshot_file": "04c_Delay_STD等待与递减.png",
+    "screenshot_sha256": "9f851de329a1d8cc0fee7c2dceed7389bf3d7e60842487e0a6aabe6dcfc191bc"
+  },
+  {
+    "name": "04d_Delay_STD共享变量",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\Usermain.c",
+    "goto_line": 26,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04d_Delay_STD共享变量.png",
+    "source_sha256": "e8b5b3f6b8d34a949fb688bf7d76bcc06c60de7596cc25b53eca55ee53ac0c11",
+    "screenshot_file": "04d_Delay_STD共享变量.png",
+    "screenshot_sha256": "39a194a00e9a26bfded46f940c64e79a1e5fb52bc23a6975955d35a969a79707"
+  },
+  {
+    "name": "04e_Delay_STD中断入口",
+    "file": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\工程副本\\CH5Ex01STD\\UserMain\\stm32f4xx_it.c",
+    "original_file": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\02_教师例程\\CH5Ex01STD\\UserMain\\stm32f4xx_it.c",
+    "goto_line": 145,
+    "capture_bbox": [
+      0,
+      0,
+      2560,
+      1530
+    ],
+    "screenshot": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04e_Delay_STD中断入口.png",
+    "source_sha256": "8d4cd329a34d04aa1cb9307b4418e8b354ea160cf4d89817a19b6ccb352c3cf0",
+    "screenshot_file": "04e_Delay_STD中断入口.png",
+    "screenshot_sha256": "286066d7ae54b2532a455e83c795517636450ca42b7558ef01ed1d1db8974291"
+  }
+]

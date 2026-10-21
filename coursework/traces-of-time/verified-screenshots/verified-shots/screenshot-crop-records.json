@@ -1,0 +1,57 @@
+[
+  {
+    "asset": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\roundtrip_normalized\\images\\proof_set.png",
+    "raw": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\01_Set_HAL_PLL与总线.png",
+    "bbox": [
+      396,
+      0,
+      1465,
+      372
+    ],
+    "raw_sha256": "a9265f9b6c0b70f0e15a0280c071e13895042892fbd54b4e59c764f489cb0411"
+  },
+  {
+    "asset": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\roundtrip_normalized\\images\\proof_get.png",
+    "raw": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\02_Get_HAL频率接口.png",
+    "bbox": [
+      396,
+      0,
+      1465,
+      432
+    ],
+    "raw_sha256": "7ffe7ab2f2037a3139078f2f9a954928052cb375021909390c978fd9c89526c7"
+  },
+  {
+    "asset": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\roundtrip_normalized\\images\\proof_config.png",
+    "raw": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\03_Config_CMSIS重装与时钟源.png",
+    "bbox": [
+      376,
+      153,
+      1530,
+      565
+    ],
+    "raw_sha256": "c1276cc5bf95b918d03cc60c80798161f62801a6fa7dec7d20b3d71ad23b9afa"
+  },
+  {
+    "asset": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\roundtrip_normalized\\images\\proof_delay_std.png",
+    "raw": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04c_Delay_STD等待与递减.png",
+    "bbox": [
+      396,
+      153,
+      1270,
+      441
+    ],
+    "raw_sha256": "9f851de329a1d8cc0fee7c2dceed7389bf3d7e60842487e0a6aabe6dcfc191bc"
+  },
+  {
+    "asset": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\.build\\roundtrip_normalized\\images\\proof_delay_hal.png",
+    "raw": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\20261007_真实截图优化\\真实截图\\04a_Delay_HAL中断计数.png",
+    "bbox": [
+      396,
+      153,
+      1330,
+      364
+    ],
+    "raw_sha256": "2f9d592d47691b36ebad8b7da9399cc591f7b7b956615c5687623c95251c493d"
+  }
+]

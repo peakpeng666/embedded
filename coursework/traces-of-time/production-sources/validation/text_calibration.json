@@ -1,0 +1,106 @@
+{
+  "roles": {
+    "body": {
+      "family": "Microsoft YaHei",
+      "size": 24.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 3.9,
+      "latin_chars_per_100px": 8.1,
+      "caps_chars_per_100px": 7.5,
+      "digits_chars_per_100px": 7.1,
+      "citation_chars_per_100px": 7.5,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 964.6,
+        "slide": "P03",
+        "text": "HAL_Init先在复位HSI16MHz下建立1ms时基，为HSE就绪与PLL…"
+      }
+    },
+    "title": {
+      "family": "Microsoft YaHei",
+      "size": 40.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 2.4,
+      "latin_chars_per_100px": 4.9,
+      "caps_chars_per_100px": 4.5,
+      "digits_chars_per_100px": 4.3,
+      "citation_chars_per_100px": 4.5,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 678.4,
+        "slide": "P02",
+        "text": "四阶段：初始化、设置、获取、应用"
+      }
+    },
+    "subtitle": {
+      "family": "Microsoft YaHei",
+      "size": 28.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 3.4,
+      "latin_chars_per_100px": 6.9,
+      "caps_chars_per_100px": 6.4,
+      "digits_chars_per_100px": 6.1,
+      "citation_chars_per_100px": 6.4,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": {
+        "px": 806.3,
+        "slide": "P02",
+        "text": "Init、Config、Get、Use分别解决入口、参数、读取和动作。"
+      }
+    },
+    "annotation": {
+      "family": "Microsoft YaHei",
+      "size": 16.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 5.9,
+      "latin_chars_per_100px": 12.1,
+      "caps_chars_per_100px": 11.2,
+      "digits_chars_per_100px": 10.7,
+      "citation_chars_per_100px": 11.3,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "code": {
+      "family": "Consolas",
+      "size": 20.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 4.7,
+      "latin_chars_per_100px": 8.5,
+      "caps_chars_per_100px": 8.1,
+      "digits_chars_per_100px": 8.6,
+      "citation_chars_per_100px": 8.4,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "display": {
+      "family": "Consolas",
+      "size": 68.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 1.4,
+      "latin_chars_per_100px": 2.5,
+      "caps_chars_per_100px": 2.4,
+      "digits_chars_per_100px": 2.5,
+      "citation_chars_per_100px": 2.5,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    },
+    "label": {
+      "family": "Microsoft YaHei",
+      "size": 20.0,
+      "weight": "normal",
+      "cjk_chars_per_100px": 4.7,
+      "latin_chars_per_100px": 9.7,
+      "caps_chars_per_100px": 9.0,
+      "digits_chars_per_100px": 8.6,
+      "citation_chars_per_100px": 9.0,
+      "script_clusters_per_100px": {},
+      "longest_planned_line": null
+    }
+  },
+  "script_samples": {},
+  "source": "spec_lock.md",
+  "generated_at": "2026-10-06T08:27:35Z",
+  "notes": [
+    "every role is measured at normal weight; recalibrate a role realized as bold deck-wide with --role NAME:FAMILY:SIZE:bold: bold widens Latin and digits about 7%, while the bundled advance table gives CJK one width for both weights"
+  ]
+}

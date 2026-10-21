@@ -1,0 +1,56 @@
+[
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\课程知识与复习重点.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\03_学习笔记\\课程知识与复习重点_第1-4章.md",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\时钟之迹_课堂PPT.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\时钟之迹_课堂展示_修订版.pptx",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\时钟之迹_PDF预览.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\时钟之迹\\时钟之迹_课堂展示_修订版.pdf",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\作业2_GPIO工程.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\作业2\\GPIO工程",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\作业2_PDF阅读版.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\作业2\\作业2_书面解答.pdf",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\作业2_Word编辑版.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\作业2\\作业2_书面解答.docx",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\Keil uVision5.lnk",
+    "Target": "C:\\Keil_v5\\UV4\\UV4.exe",
+    "Arguments": "",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\00_常用入口\\STM32CubeMX 6.18.1.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\07_软件工具\\STM32CubeMX-6.18.1\\MX\\jre\\bin\\java.exe",
+    "Arguments": "--add-opens java.desktop/java.awt=ALL-UNNAMED --add-exports java.desktop/sun.awt=ALL-UNNAMED -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT -jar \"D:\\Peak\\Desktop\\嵌入式\\07_软件工具\\STM32CubeMX-6.18.1\\MX\\STM32CubeMX.exe\"",
+    "TargetExists": true
+  },
+  {
+    "Link": "D:\\Peak\\Desktop\\嵌入式\\04_工程实践\\作业2_GPIO工程.lnk",
+    "Target": "D:\\Peak\\Desktop\\嵌入式\\02_课程作业\\作业2\\GPIO工程",
+    "Arguments": "",
+    "TargetExists": true
+  }
+]

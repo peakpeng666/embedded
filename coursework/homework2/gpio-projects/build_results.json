@@ -1,0 +1,30 @@
+[
+  {
+    "name": "SPL_GPIO",
+    "passed": true,
+    "exit_code": 0,
+    "size": "Program Size: Code=1068 RO-data=408 RW-data=0 ZI-data=1632  \r",
+    "compiler": "Arm Compiler 5.06 update 7 build 960"
+  },
+  {
+    "name": "HAL_GPIO",
+    "passed": true,
+    "exit_code": 0,
+    "size": "Program Size: Code=3814 RO-data=450 RW-data=16 ZI-data=1632  \r",
+    "compiler": "Arm Compiler 5.06 update 7 build 960"
+  },
+  {
+    "name": "SPL_Blank",
+    "passed": true,
+    "exit_code": 0,
+    "size": "Program Size: Code=704 RO-data=408 RW-data=0 ZI-data=1632",
+    "compiler": "Arm Compiler 5.06 update 7 build 960"
+  },
+  {
+    "name": "HAL_Blank",
+    "passed": true,
+    "exit_code": 0,
+    "size": "Program Size: Code=3106 RO-data=450 RW-data=16 ZI-data=1632",
+    "compiler": "Arm Compiler 5.06 update 7 build 960"
+  }
+]

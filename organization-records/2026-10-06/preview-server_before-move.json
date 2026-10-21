@@ -1,0 +1,10 @@
+[
+  {
+    "ProcessId": 19708,
+    "CommandLine": "C:\\Python312\\python.exe C:\\Users\\Peak\\.codex\\skills\\ppt-master\\scripts\\svg_editor\\server.py D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006 --port 6060 --timeout 7200 --no-browser --live"
+  },
+  {
+    "ProcessId": 42040,
+    "CommandLine": "C:\\Python312\\python.exe C:\\Users\\Peak\\.codex\\skills\\ppt-master\\scripts\\svg_editor\\server.py D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_revision_20261006 --port 6061 --timeout 7200 --no-browser --live"
+  }
+]

@@ -43,11 +43,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\start_cubeide_de
 
 再打开 **运行 → 调试配置 → GDB Hardware Debugging → CMSIS_DAP_Attach**。连接 `127.0.0.1:3333`，使用 `keil/Objects/lab1_keil.axf`，关闭复位和 Load image，附加到当前已烧录的 Keil 镜像。**F6** 单步、**F8** 继续、**Ctrl+F2** 结束调试；结束后关闭 OpenOCD 窗口再使用 Keil。
 
-这份附加配置的符号必须与板上程序一致。CubeIDE 的 GNU 输出与 Keil 输出不同；本次未把 GNU 输出烧入板子。若更换板上镜像，应同步更换调试符号。中文路径的源码映射已保存在 `.launch` 中，若移动工程后出现“找不到源”，用“定位文件”选择对应的 `main.c`。
+这份附加配置的符号必须与板上程序一致。CubeIDE 的 GNU 输出与 Keil 输出不同；更换板上镜像时同步更换调试符号。源码映射保存在 `.launch` 中，移动工程后若提示找不到源，用“定位文件”选择对应的 `main.c`。
 
 ## 录像与其它软件
 
-录像：`D:\Peak\Desktop\嵌入式\工程实践\Keil连板演示\Windows多软件连板开发演示.mp4`，约 3 分 29 秒，带中文步骤字幕与章节。
+录像：`../../keil-board-demos/Windows-multi-tool-board-demo.mp4`，约 3 分 29 秒，带中文步骤字幕与章节。
 
 | 时间 | 内容 |
 | --- | --- |

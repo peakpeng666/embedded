@@ -24,7 +24,7 @@ ARM GCC 10.3.1 编译通过，启用 `-Wall -Wextra -Werror`。主机 GCC 的 Ad
 
 ## 实板
 
-通过 90 秒 UART + SWD GPIO 观测和用户目视确认，得到以下结果。原始现场文件保留本地；可共享摘要见 [hardware_validation.json](hardware_validation.json)。
+通过 90 秒 UART + SWD GPIO 观测和用户目视确认，得到以下结果。原始现场文件保留本地；可共享摘要见 [hardware_validation.json](./hardware_validation.json)。
 
 | 项目 | 结果 |
 | --- | --- |

@@ -21,6 +21,6 @@
   "limits": "V3.4 原图 U3 文字仍为 STM32L475VET6；保留原始标注。没有通过软件确认 PCB 丝印版本，V3.4 为接口特征最匹配的官方图。",
   "st_datasheet": "https://www.st.com/resource/en/datasheet/stm32l496ve.pdf",
   "st_datasheet_pinout_pdf_page": 68,
-  "output": "output\\pdf\\STM32L496_最小系统与实验电路_官方图版.pdf",
+  "output": "output/pdf/STM32L496_minimal-system-and-experiment-circuit_official-drawing.pdf",
   "output_sha256": "5d2e717605e0caa3110f47afce3c1b687dd500739139958ec4d6b78fbd483a92"
 }

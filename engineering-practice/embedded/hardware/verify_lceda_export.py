@@ -13,8 +13,8 @@ import xml.etree.ElementTree as ET
 
 ROOT=Path(__file__).resolve().parents[1]
 EDA=ROOT/'hardware/lceda'
-native=EDA/'Pandora_L496_原理图与流程图.json'
-netfile=EDA/'Pandora_L496_嘉立创导出.net'
+native=EDA/'Pandora_L496_schematic-and-flowcharts.json'
+netfile=EDA/'Pandora_L496_lceda-export.net'
 project=json.loads(native.read_text(encoding='utf-8'))
 nettext=netfile.read_text(encoding='utf-8-sig')
 nets={}
@@ -71,7 +71,7 @@ stxml=ROOT/'hardware/sources/STM32L496VETx_ST_CubeMX_pins.xml'
 ns={'m':'http://mcd.rou.st.com/modules.php?name=mcu'}
 stpins={int(p.attrib['Position']):p.attrib['Name'] for p in ET.parse(stxml).findall('m:Pin',ns)}
 assert pinmap==stpins and len(pinmap)==100
-saved=EDA/'Pandora_L496_嘉立创保存.json'
+saved=EDA/'Pandora_L496_lceda-saved.json'
 app_project=json.loads(saved.read_text(encoding='utf-8'))
 app_mcu=None
 for sheet in app_project['schematics']:
@@ -83,7 +83,7 @@ for sheet in app_project['schematics']:
 assert app_mcu is not None
 app_pins={int(c.split('^^')[0].split('~')[3]):c.split('^^')[3].split('~')[4] for c in app_mcu if c.startswith('P~')}
 assert app_pins==stpins and len(app_pins)==100
-exported=EDA/'Pandora_L496_嘉立创导出.json'
+exported=EDA/'Pandora_L496_lceda-export.json'
 export_project=json.loads(exported.read_text(encoding='utf-8-sig'))
 assert export_project['title']=='Pandora_L496_Verified' and len(export_project['schematics'])==4
 export_mcu=None
@@ -105,5 +105,5 @@ report={'result':'PASS','eda_application':'嘉立创EDA 标准版 6.5.51',
                       '厂商 V3.4 图 U3 标 L475，按配套官方指南使用 L496','VREF 旁注写 R18，器件标注为 R13 / 10R',
                       'RGB、按键和 Y2 无可核验物理封装序号，采用功能端子'],
         'files_sha256':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [native,saved,exported,netfile,stxml]}}
-(EDA/'核对结果.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+(EDA/'verification-results.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps(report['checks'],ensure_ascii=False))

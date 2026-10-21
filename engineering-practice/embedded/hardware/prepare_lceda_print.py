@@ -8,15 +8,15 @@ from pathlib import Path
 import pymupdf as fitz
 
 ROOT=Path(__file__).resolve().parents[1]
-src=ROOT/'hardware/lceda/嘉立创原始导出.pdf'
-dest=ROOT/'output/pdf/潘多拉_嘉立创EDA_原理图与流程图.pdf'
+src=ROOT/'hardware/lceda/lceda-original-export.pdf'
+dest=ROOT/'output/pdf/Pandora_lceda-EDA_schematic-and-flowcharts.pdf'
 out=fitz.open()
 with fitz.open(src) as doc:
     assert len(doc)==4
     for i,page in enumerate(doc,1):
         svg=page.get_svg_image(text_as_path=True)
         # Store app-rendered outlines, so Chinese fonts travel with the print file.
-        (ROOT/f'hardware/lceda/{i:02d}_嘉立创导出.svg').write_text(svg,encoding='utf-8')
+        (ROOT/f'hardware/lceda/{i:02d}_lceda-export.svg').write_text(svg,encoding='utf-8')
         converted=fitz.open('svg',svg.encode('utf-8'))
         vector=fitz.open('pdf',converted.convert_to_pdf())
         p=out.new_page(width=1190.5511811,height=841.8897638)
@@ -28,5 +28,5 @@ out.save(dest,garbage=4,deflate=True)
 out.close()
 with fitz.open(dest) as doc:
     for i,page in enumerate(doc,1):
-        page.get_pixmap(matrix=fitz.Matrix(1.7,1.7)).save(ROOT/f'output/pdf/嘉立创_{i:02d}_预览.png')
+        page.get_pixmap(matrix=fitz.Matrix(1.7,1.7)).save(ROOT/f'output/pdf/lceda_{i:02d}_preview.png')
 print(str(dest))

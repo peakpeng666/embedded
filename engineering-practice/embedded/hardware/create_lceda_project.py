@@ -349,7 +349,7 @@ def main():
     project={'editorVersion':'6.5.51','docType':'5','title':'Pandora_L496_Official_Code_Review',
              'description':'正点原子潘多拉：官方电路与实际代码核对；原生可编辑四页图纸。',
              'colors':{},'schematics':[s.data() for s in sheets]}
-    path=OUT/'Pandora_L496_原理图与流程图.json'
+    path=OUT/'Pandora_L496_schematic-and-flowcharts.json'
     path.write_text(json.dumps(project,ensure_ascii=False,indent=2),encoding='utf-8')
     for i,s in enumerate(sheets,1):
         data=s.data()['dataStr']

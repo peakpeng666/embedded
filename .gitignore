@@ -1,18 +1,46 @@
-.venv/
-backups/
-logs/
+# Local-only installers and shortcuts
+软件工具/
+常用入口/
+.zcodeignore
+
+# Local IDE workspace and duplicate packages
+engineering-practice/CubeIDE-workspace/
+engineering-practice/Pandora_demos-and-drawings.zip
+engineering-practice/pandora-delivery/source-snapshot/
+engineering-practice/pandora-delivery/verified-images/
+engineering-practice/teacher-examples/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0-with-teacher-template.zip
+engineering-practice/teacher-examples/CH5EX01HAL.rar
+engineering-practice/teacher-examples/CH5Ex01STD.rar
+
+# Duplicate materials and build intermediates
+history-archive/duplicate-materials/
+history-archive/traces-of-time/verified-screenshots/build-intermediates/
+
+# Lab1 local environment and generated files
+engineering-practice/embedded/.venv/
+engineering-practice/embedded/.toolchains/
+engineering-practice/embedded/.local_archive/
+engineering-practice/embedded/backups/
+engineering-practice/embedded/logs/
+engineering-practice/embedded/output/
+engineering-practice/embedded/tmp/
+engineering-practice/embedded/hardware/sources/
+engineering-practice/embedded/keil/Obj/
+engineering-practice/embedded/HANDOFF_MANIFEST.json
+
+# Build and cache outputs
+build/
+_build/
+Obj/
+Objects/
+Listings/
+MDK-ARM/*/
+.metadata/
+node_modules/
 __pycache__/
-.toolchains/
-.local_archive/
-lab1/build/
-lab1/references/
-tmp/
-output/
 *.py[cod]
+*.uvguix.*
+*.lnk
 .DS_Store
-keil/Objects/
-keil/Obj/
-keil/Listings/
-keil/*.uvguix.*
-HANDOFF_MANIFEST.json
-hardware/sources/
+Thumbs.db
+desktop.ini

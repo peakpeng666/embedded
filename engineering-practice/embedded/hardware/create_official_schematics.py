@@ -165,10 +165,10 @@ layout.set_metadata({
     'subject': 'V3.4 官方矢量原理图；MCU 型号依官方 L496 开发指南核对',
     'keywords': 'Pandora STM32L496VET6 CMSIS-DAP UART RGB EXTI V3.4',
 })
-destination = OUT / 'STM32L496_最小系统与实验电路_官方图版.pdf'
+destination = OUT / 'STM32L496_minimal-system-and-experiment-circuit_official-drawing.pdf'
 layout.save(destination, garbage=4, deflate=True)
 for i, page in enumerate(layout):
-    name = ('01_最小系统图', '02_实验电路图')[i]
+    name = ('01_minimal-system-diagram', '02_experiment-circuit')[i]
     (OUT / f'{name}.svg').write_text(page.get_svg_image(), encoding='utf-8')
     page.get_pixmap(dpi=220).save(OUT / f'{name}.png')
 

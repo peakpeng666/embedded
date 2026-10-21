@@ -18,10 +18,10 @@
     "RGB、按键和 Y2 无可核验物理封装序号，采用功能端子"
   ],
   "files_sha256": {
-    "hardware\\lceda\\Pandora_L496_原理图与流程图.json": "4e9322048445efc150b5859a016cd13ab29e97d9441a04fd36d2ac63d14b1724",
-    "hardware\\lceda\\Pandora_L496_嘉立创保存.json": "6970b8fb6af299f97908e5eaf33928158b421721e56b0fa2a3b7d0e23a75db49",
-    "hardware\\lceda\\Pandora_L496_嘉立创导出.json": "3494625de972214a6631fdbee7ef00272ee6cd26e973e70e22aac23679677914",
-    "hardware\\lceda\\Pandora_L496_嘉立创导出.net": "7da8a4038f5009f1c6ce3c68cde05f52c88167b5828893d1f17483010062bfd1",
-    "hardware\\sources\\STM32L496VETx_ST_CubeMX_pins.xml": "c00e9168bdcccb0301d954222bac47510314240f83b818b36f29ae0811f889f0"
+    "hardware/lceda/Pandora_L496_schematic-and-flowcharts.json": "4e9322048445efc150b5859a016cd13ab29e97d9441a04fd36d2ac63d14b1724",
+    "hardware/lceda/Pandora_L496_lceda-saved.json": "6970b8fb6af299f97908e5eaf33928158b421721e56b0fa2a3b7d0e23a75db49",
+    "hardware/lceda/Pandora_L496_lceda-export.json": "3494625de972214a6631fdbee7ef00272ee6cd26e973e70e22aac23679677914",
+    "hardware/lceda/Pandora_L496_lceda-export.net": "7da8a4038f5009f1c6ce3c68cde05f52c88167b5828893d1f17483010062bfd1",
+    "hardware/sources/STM32L496VETx_ST_CubeMX_pins.xml": "c00e9168bdcccb0301d954222bac47510314240f83b818b36f29ae0811f889f0"
   }
 }

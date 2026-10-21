@@ -24,6 +24,8 @@
 | Lab1 | [工程说明](engineering-practice/embedded/README.md) · [硬件图纸](engineering-practice/embedded/hardware/README.md) · [实板验收](engineering-practice/embedded/docs/validation.md) |
 | 复习 | [第 1–4 章知识与复习重点](study-notes/course-knowledge-and-review-key-points_ch1-4.md) |
 
-课程资料与历史归档暂留本地，后续补充。软件安装包与 IDE 安装目录不在此仓库。
+完整归档在 [full-archive 分支](https://github.com/peakpeng666/embedded/tree/full-archive)，包含课程资料、历史归档、教师例程和验证记录。PDZ 阅读包（129MB）在 [Releases](https://github.com/peakpeng666/embedded/releases/tag/course-materials-2026-10-21)。
+
+full-archive 中的视频和课件使用 Git LFS，克隆该分支前执行 `git lfs install`。软件安装包与 IDE 安装目录不在此仓库。
 
 各目录有自己的 README。新文件放入对应目录，旧成品放入 `history-archive`（本地）。

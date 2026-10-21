@@ -8,7 +8,7 @@ static void restart_pattern(lab_t *lab, uint32_t now)
 
 void lab_init(lab_t *lab, uint32_t now, bool key0_down, bool key1_down)
 {
-    *lab = (lab_t){0};
+    *lab = (lab_t){.mode = LAB_OFF};
     lab->mode = LAB_OFF;
     lab->frame_start = now;
     lab->key0.stable = lab->key0.candidate = key0_down;

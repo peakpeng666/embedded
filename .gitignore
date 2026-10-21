@@ -10,3 +10,9 @@ tmp/
 output/
 *.py[cod]
 .DS_Store
+keil/Objects/
+keil/Obj/
+keil/Listings/
+keil/*.uvguix.*
+HANDOFF_MANIFEST.json
+hardware/sources/

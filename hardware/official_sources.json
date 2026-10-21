@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-21",
+  "vendor_download_page": "http://www.openedv.com/docs/boards/iot/zdyz_panduola.html",
+  "vendor_discussion_page": "http://www.openedv.com/thread-284556-1-1.html",
+  "vendor_quark_share": "https://pan.quark.cn/s/65fa193e56a3",
+  "vendor_quark_passcode": "dhFn",
+  "vendor_baidu_share": "https://pan.baidu.com/s/17T9ZlkHhXO7ZF1ixRkGCEQ",
+  "vendor_baidu_passcode": "mznq",
+  "path_on_share": "【正点原子】潘多拉IoT开发板/【正点原子】潘多拉IoT开发板资料（新资料）",
+  "guide_l496_identity_pdf_pages": [
+    18,
+    23,
+    27,
+    52,
+    65
+  ],
+  "schematic_filename": "Pandora_STM32L4_Board_V3.4_sch.pdf",
+  "schematic_sha256": "af5b27b3889ff6d5bba7d5ab9a0f679aa202b02b9e691e8315631b57ede26337",
+  "guide_sha256": "8b525502d2818cb5e3439de6fbdc8afb43e6c642ee433a2f995233ae8d873c6d",
+  "match": "官方同产品新版资料；指南明确 STM32L496VET6；V3.4 电路含 DAP、Type-C 与本次使用的相同引脚网络。",
+  "limits": "V3.4 原图 U3 文字仍为 STM32L475VET6；保留原始标注。没有通过软件确认 PCB 丝印版本，V3.4 为接口特征最匹配的官方图。",
+  "st_datasheet": "https://www.st.com/resource/en/datasheet/stm32l496ve.pdf",
+  "st_datasheet_pinout_pdf_page": 68,
+  "output": "output\\pdf\\STM32L496_最小系统与实验电路_官方图版.pdf",
+  "output_sha256": "5d2e717605e0caa3110f47afce3c1b687dd500739139958ec4d6b78fbd483a92"
+}

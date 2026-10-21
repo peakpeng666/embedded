@@ -1,0 +1,11 @@
+; Leave the board's first 64 KiB bootloader area intact.
+LR_IROM1 0x08010000 0x00070000 {
+  ER_IROM1 0x08010000 0x00070000 {
+    startup_keil.o (RESET, +First)
+    *(InRoot$$Sections)
+    .ANY (+RO)
+  }
+  RW_IRAM1 0x20000000 0x0000F000 {
+    .ANY (+RW +ZI)
+  }
+}

@@ -1,5 +1,13 @@
 # Windows 接续指南
 
+## 2026-10-21 本机实测更新
+
+已在 Windows 完成 GitHub 工程接续，并实际使用 Keil、STM32CubeIDE、MobaXterm 连板。Keil 原生工程、快捷键、CubeIDE 附加配置、验证记录与录像时间轴见 [Keil 本机开发说明](../keil/README.md)。CubeMX 的引脚配置和 Proteus 的独立 LCD 仿真也已打开验证。
+
+配套 [嘉立创 EDA 原生图纸与核对说明](../hardware/README.md) 包含四页最小系统、电路和实际代码流程图，以及原厂资料冲突、实测边界、网表与引脚核对结果。
+
+本机 Python 为 `C:\Python312\python.exe`；可直接使用工程的 `.venv\Scripts\python.exe`。以下早期交接命令中的 `py -3.12` 如不可用，可换成 `python`。
+
 ## 取得全部资料
 
 仓库：[peakpeng666/embedded](https://github.com/peakpeng666/embedded)。
@@ -88,7 +96,7 @@ Windows 交接包包含 `backups/` 原备份和 `.toolchains/Keil.STM32L4xx_DFP.
 
 ## 验证边界与来源
 
-跨平台构建脚本已在当前 Linux 主机编译验证，BIN 与实板验收版本一致。Windows 依赖进行了 Windows x64/Python 3.12 的二进制包解析检查；本次没有在 Windows 实机连接开发板，首次 Windows USB/COM 连接仍需当地确认。
+原交接版本在 Linux 编译并完成实板验收。2026-10-21 又在本机 Windows/Python 3.12 实测：Keil AC5 构建与下载校验通过；CubeIDE 自带 GCC 构建为 0 错误、0 警告；两款 IDE 均完成 CMSIS-DAP 硬件调试；MobaXterm 在 COM3 收到 `STATUS mode=COLOR`。Keil 下载前后完成 512 KiB Flash 读回比较，两个应用页面之外均未改变。Windows 主机逻辑测试六组通过，未在 Windows 执行 ASan/UBSan。历史 Linux 验收记录和本次 Windows 记录分别保留。
 
 PDF 已预生成。Windows 重新生成报告时使用系统宋体和 Arial；没有这些字体时直接阅读 `docs/lab1_design.pdf` 即可。
 

@@ -1,0 +1,18 @@
+{
+  "eda_application": "嘉立创EDA 标准版 6.5.51",
+  "official_installer_url": "https://image.lceda.cn/files/lceda-windows-x64-6.5.51.exe",
+  "installer_sha256": "4e21ccaa4f0665a19d5d676dd07f23361ce5fc882e915a4ce3f88b0dfee82fff",
+  "installer_authenticode_status": "Valid",
+  "installer_signer": "深圳嘉立创科技集团股份有限公司",
+  "native_format_specification": "https://github.com/easyeda/easyeda-std-file-format",
+  "native_format_version": "6.5.51",
+  "generation": "Native editable JSON objects; imported and saved using the actual LCEDA desktop app; app-exported netlist validated independently.",
+  "code_files_sha256": {
+    "lab1\\src\\main.c": "a7537d8971c54bbfe7da048c2183febcf0f9b0279e4f7c716de2362ae9073fc3",
+    "lab1\\src\\lab_logic.c": "2efd4d6a127c1941df1dc4168914261093a24f37b2bfa789f0ed0105e85e2ac9",
+    "lab1\\src\\lab_logic.h": "b56757a2f0db81992dd43a572fcd4f0dee75e7af8f57c5011a91f7d4a81ce729"
+  },
+  "app_pdf_sha256": "2851f843b2c6bcdd302e61e4308b1837a111987b26aeb224d0f417a3cdb8b8fa",
+  "a3_pdf_sha256": "931afdbbc283e85a7e2cb47f7df88a6f6404fcee6f58ae38d0a4ef34e752f9e7",
+  "pcb_manufacturing_ready": false
+}

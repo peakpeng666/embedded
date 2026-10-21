@@ -23,3 +23,4 @@
 course-materials/lecture-videos/*.wmv filter=lfs diff=lfs merge=lfs -text
 course-materials/lecture-slides/*.pptx filter=lfs diff=lfs merge=lfs -text
 course-materials/reference-books/*.pdz filter=lfs diff=lfs merge=lfs -text
+course-materials/lecture-videos/demo_creating-project-with-STM32CubeMX.wmv -filter -text

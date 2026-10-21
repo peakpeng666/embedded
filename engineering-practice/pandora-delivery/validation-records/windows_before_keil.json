@@ -1,0 +1,10 @@
+{
+  "time": "20261021T112603+0900",
+  "label": "before_keil",
+  "file": "D:\\Peak\\Desktop\\\u5d4c\u5165\u5f0f\\\u5de5\u7a0b\u5b9e\u8df5\\embedded\\backups\\windows_before_keil_20261021T112603+0900.bin",
+  "bytes": 524288,
+  "sha256": "9e4cdffb2945932c430f51dcea77d63cf8ea12936f98c9af4b7335b7d50db874",
+  "core_halted_at_end": false,
+  "bootloader_sha256": "d3e26953817cdf9553618e9138b2de945f77ce795f89cb4f7ce1dd45acc8e38e",
+  "application_tail_sha256": "29f05ac95931e88b1e1ab2deab564a96eaa826a815898d570d4c4c80512b0941"
+}

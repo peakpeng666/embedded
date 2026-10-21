@@ -1,0 +1,68 @@
+嵌入式课程软件安装核查
+检查日期：2026-10-06（Asia/Tokyo）
+
+结论
+核心 Keil + STM32CubeMX 开发流程已实测可用，但老师网页列出的软件尚未全部配齐。
+没有找到 STM32CubeIDE 和 Proteus 的安装；标准库内层压缩包尚未展开；CubeMX F4 固件库缺少器件头文件目录。
+
+核对依据
+已访问用户正在打开的 Chrome 窗口，并读取“嵌入式系统原理及应用”课程资源中的“练习软件”列表（courseId=32250）。
+已检查 Windows 卸载注册表、桌面和开始菜单快捷方式、C/D 盘相关程序目录及软件可执行文件。
+G: 为 Google Drive 虚拟盘，未把云端文件当作本机安装。
+截图：老师课程软件清单_当前浏览器.png
+网页文字：老师网页_软件列表.txt
+
+逐项结果
+1. Keil MDK 5.35：已安装，版本 5.35.0.0。
+   当前桌面快捷方式指向 C:\Keil_v5\UV4\UV4.exe。
+   ARM Compiler 实际编译日志：V5.06 update 7 (build 960)。
+   D:\UV4 另有 5.35 副本；本次测试使用 C 盘安装。
+
+2. ARM.CMSIS 5.9.0：已装入 Keil。
+   C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0
+   已核实包描述文件与 Cortex-M4 核心头文件存在。
+
+3. Keil.STM32F4xx_DFP 2.16.0：已装入 Keil。
+   C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0
+   已核实包描述文件、器件头文件、启动文件与 Flash 算法存在。
+
+4. STM32F4 标准外设库 V1.8.0：已下载，内层源码包尚未解压。
+   外层文件：D:\Peak\Desktop\嵌入式\07_软件工具\02_开发库\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0.zip
+   内层文件：D:\Peak\Desktop\嵌入式\07_软件工具\02_开发库\STM32F4xx_DSP_StdPeriph_Lib_V1.8.0-master\en.stm32f4_dsp_stdperiph_lib.zip
+   已查看内层压缩包：包含 3680 条文件/目录记录，含 RCC/GPIO 源码及标注 V1.8.0 的 stm32f4xx.h。
+   这是源码库，无需像应用程序一样安装；需要直接使用完整库时，应展开内层压缩包。
+   现有标准库例程自带所需源码，本次编译通过。
+
+5. STM32CubeMX：已部署 6.18.1，已实际启动，并成功生成和编译测试工程。
+   老师网页版本为 6.6.1，本机版本较新。
+   程序目录：D:\Peak\Desktop\嵌入式\07_软件工具\STM32CubeMX-6.18.1\MX
+   桌面入口：D:\Peak\Desktop\STM32CubeMX 6.18.1.lnk
+   启动截图：CubeMX_启动验证.png
+   F4 固件库位置：C:\Users\Peak\STM32Cube\Repository\STM32Cube_FW_F4_V1.28.3
+   完整性问题：缺少 Drivers\CMSIS\Device\ST\STM32F4xx\Include 目录。
+   此目录缺失没有阻断本次 Keil 流程；新工程的 main.d 依赖记录证明编译实际读取了 Keil STM32F4xx_DFP 2.16.0 中的 stm32f4xx.h 和 stm32f407xx.h。
+   尚不能据此认定该固件库完整，其他工具链未验证。
+
+6. STM32CubeIDE 2.2.0：在检查范围内未发现安装记录、快捷方式或程序。
+
+7. Proteus 8.10 SP3 Pro：在检查范围内未发现安装记录、快捷方式或程序。
+
+8. 网页中的 MDK 注册机：未执行。安装和编译验证不等于商业许可验证。
+   当前 C:\Keil_v5\TOOLS.INI 中 TOOL_VARIANT=mdk_lite。
+
+本次实际验证
+测试全部在 C:\Temp 的独立副本中进行，未修改课程原工程源码。
+1. 现有标准库时钟工程：全量重新编译通过，0 Error(s), 0 Warning(s)。
+   日志：spl_clock_rebuild.log
+2. 现有 CubeMX HAL 工程：全量重新编译通过，0 Error(s), 0 Warning(s)。
+   日志：cubemx_hal_rebuild.log
+3. 使用当前 CubeMX 和 F4 固件库，在空目录从 .ioc 重新生成 Keil 工程：生成成功，重新编译通过，0 Error(s), 0 Warning(s)。
+   最终日志：cubemx_windows_generation.log、cubemx_windows_rebuild.log
+   最终结果：cubemx_windows_results.json
+   初次临时测试使用正斜杠路径，生成的工程路径不正确；改用 Windows 原生反斜杠后通过。
+   cubemx_fresh_* 是该初次测试记录，最终结论以 cubemx_windows_* 为准。
+本次未进行实体开发板烧录或调试验证。
+
+后续待补项目
+若要与网页列出的软件全部对应，还需安装 CubeIDE、Proteus；展开标准库内层压缩包，并补全 CubeMX F4 固件库。
+网页提供资源不等于每次作业都必须使用所有软件；当前 Keil + CubeMX 路线已有实际可用的编译结果。

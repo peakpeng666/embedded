@@ -1,0 +1,11 @@
+{
+  "work": "C:\\Temp\\cubemx_generate_check_4vqgl0gz",
+  "generator_exit": 0,
+  "generated_projects": [
+    "C:\\Temp\\cubemx_generate_check_4vqgl0gz\\clock168_gpio\\MDK-ARM\\clock168_gpio.uvprojx"
+  ],
+  "stm32f4xx_headers": [],
+  "stm32f407xx_headers": [],
+  "build_exit": 2,
+  "build_passed": false
+}

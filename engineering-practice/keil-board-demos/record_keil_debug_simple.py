@@ -1,0 +1,40 @@
+import time
+from pywinauto import Desktop
+import pyautogui as p
+from recorder import Recorder, BASE
+
+D = Desktop(backend='win32')
+w = D.window(handle=459888)
+w.set_focus()
+p.press('f5')
+time.sleep(.4)
+p.hotkey('ctrl', 'f5')
+time.sleep(.5)
+r = Recorder('02_keil_debug_simple')
+try:
+    r.caption('Keil 硬件调试：按 Ctrl+F5，自动加载程序并停在 main\n已保存 Load Application at Startup 与 Run to main 设置')
+    p.hotkey('ctrl', 'f5')
+    time.sleep(4)
+    r.caption('黄色箭头表示当前执行位置；左侧查看 CPU 寄存器\n按 F10 单步执行，先完成硬件初始化')
+    p.press('f10')
+    time.sleep(3)
+    p.press('f10')
+    time.sleep(3)
+    r.caption('在下方 Command 输入表达式，可以读取板上变量\n这里读取毫秒计数 milliseconds 和状态 lab.mode')
+    edit = w.child_window(control_id=107, class_name='Edit')
+    edit.set_edit_text('printf ("milliseconds=%d mode=%d\\n", milliseconds, lab.mode)')
+    edit.set_focus()
+    p.press('enter')
+    time.sleep(4)
+    p.screenshot().save(BASE / 'keil_simple_variables.png')
+    r.caption('演示通过调试器修改 RAM：lab.mode = 1，使 RGB 进入轮闪状态\n按 F5 运行，再按 Ctrl+F5 退出调试；串口可继续查询状态')
+    edit.set_edit_text('lab.mode = 1')
+    edit.set_focus()
+    p.press('enter')
+    time.sleep(1)
+    p.press('f5')
+    time.sleep(4)
+    p.hotkey('ctrl', 'f5')
+    time.sleep(3)
+finally:
+    r.stop()

@@ -1,0 +1,18 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:07.11,Default,,0,0,0,,嘉立创 EDA 标准版：已导入并保存四页原生工程，元件、连线与流程框均可编辑。
+Dialogue: 0,0:00:07.11,0:00:14.31,Default,,0,0,0,,第1页：最小系统。U3 的全部100脚按 ST 数据核对；R13=10Ω，原厂旁注冲突已注明。
+Dialogue: 0,0:00:14.31,0:00:22.42,Default,,0,0,0,,第2页：RGB、KEY0/KEY1、外部晶体与板载 DAP。USART1 的 J1 配对为1–4、2–3。
+Dialogue: 0,0:00:22.42,0:00:30.53,Default,,0,0,0,,第3页按 main.c 绘制：中断只记录边沿，主循环完成消抖、状态切换和低有效 LED 输出。
+Dialogue: 0,0:00:30.53,0:00:38.53,Default,,0,0,0,,第4页：20ms消抖、停止键稳定按住时优先；14帧每帧300ms，COLOR灭帧与OFF状态不同。
+Dialogue: 0,0:00:38.53,0:00:44.70,Default,,0,0,0,,嘉立创实际导出网表已核对25个网络、39个器件值；实物PCB版本和BOOT帽位未冒充已验证。

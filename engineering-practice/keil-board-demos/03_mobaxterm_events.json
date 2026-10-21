@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-21T11:55:10.525168+09:00",
+  "duration": 29.297000000000025,
+  "events": [
+    {
+      "start": 1.0,
+      "text": "MobaXterm：连接板载 USB_COM 串口\n点击 Session → Serial，端口选择 COM3，速率 115200"
+    },
+    {
+      "start": 7.25,
+      "text": "Advanced Serial settings：8 数据位、1 停止位、无校验\nFlow control 选择 None；这些参数与固件的 115200 / 8N1 对应"
+    },
+    {
+      "start": 13.827999999999975,
+      "text": "连接后输入 status，再按 Enter\nmode=COLOR 表示程序正在轮闪；按键次数和丢包计数也会返回"
+    },
+    {
+      "start": 18.938000000000102,
+      "text": "输入 help，再按 Enter，查看固件提供的命令\nKEY0 启动轮闪，KEY1 停止；这些按键在开发板上操作"
+    },
+    {
+      "start": 24.985000000000127,
+      "text": "串口用于查看日志、状态和命令交互\n修改代码并下载后，可以在这里检查新程序的运行结果"
+    }
+  ]
+}

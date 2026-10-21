@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-21T11:42:06.236463+09:00",
+  "duration": 54.577999999999975,
+  "events": [
+    {
+      "start": 1.0,
+      "text": "Keil µVision：打开 GitHub 工程，编译并下载到 STM32L496\n板载 CMSIS-DAP + USB_COM，Windows 已识别 COM3"
+    },
+    {
+      "start": 6.108999999999924,
+      "text": "应用源码位于 lab1/src；KEY0 查询启动 RGB，KEY1 外部中断停止\n打开目标选项：Alt+F7"
+    },
+    {
+      "start": 12.030999999999949,
+      "text": "Target：STM32L496VETx；IROM1 起始地址 0x08010000\n应用从 64 KiB 之后开始，保留板上引导程序"
+    },
+    {
+      "start": 18.547000000000025,
+      "text": "Debug → CMSIS-DAP Debugger → Settings\n已识别 ATK-03262021，使用 SWD，时钟 100 kHz"
+    },
+    {
+      "start": 25.764999999999873,
+      "text": "Flash Download：Erase Sectors、Program、Verify\n选择 STM32L4xx 512 KB Flash；当前镜像占用两个 2 KiB 页面"
+    },
+    {
+      "start": 34.125,
+      "text": "编译：按 F7，检查 Build Output\n此工程使用电脑已有的 Arm Compiler 5.06"
+    },
+    {
+      "start": 39.5,
+      "text": "下载：按 F8，将刚编译的 3344 字节程序写入应用区\n下载完成后检查 Verify OK，再进入调试运行"
+    },
+    {
+      "start": 48.952999999999975,
+      "text": "查看下载结果：Erasing / Programming / Verify\n下一步进入硬件调试，再通过串口查询运行状态"
+    }
+  ]
+}

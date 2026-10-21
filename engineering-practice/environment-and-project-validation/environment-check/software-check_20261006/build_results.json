@@ -1,0 +1,20 @@
+[
+  {
+    "name": "spl_clock",
+    "source": "D:\\Peak\\Desktop\\嵌入式\\嵌入式作业\\02_工程验证\\01_标准库工程_5-STM32时钟系统",
+    "isolated_project": "C:\\Temp\\embedded_check_4yaztt_b\\spl_clock\\Template.uvprojx",
+    "exit_code": 0,
+    "duration_seconds": 2.7,
+    "log": "D:\\Peak\\Desktop\\嵌入式\\嵌入式作业\\01_环境检查\\软件核查_20261006\\spl_clock_rebuild.log",
+    "passed": true
+  },
+  {
+    "name": "cubemx_hal",
+    "source": "D:\\Peak\\Desktop\\嵌入式\\嵌入式作业\\04_CubeMX工程\\clock168_gpio",
+    "isolated_project": "C:\\Temp\\embedded_check_4yaztt_b\\cubemx_hal\\MDK-ARM\\clock168_gpio.uvprojx",
+    "exit_code": 0,
+    "duration_seconds": 3.4,
+    "log": "D:\\Peak\\Desktop\\嵌入式\\嵌入式作业\\01_环境检查\\软件核查_20261006\\cubemx_hal_rebuild.log",
+    "passed": true
+  }
+]

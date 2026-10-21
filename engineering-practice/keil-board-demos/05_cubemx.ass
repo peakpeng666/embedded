@@ -1,0 +1,16 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:07.00,Default,,0,0,0,,STM32CubeMX：打开 cubemx/Pandora_L496.ioc\N型号 STM32L496VETx、LQFP100，与当前开发板一致
+Dialogue: 0,0:00:07.00,0:00:13.76,Default,,0,0,0,,引脚：PE7 / PE8 / PE9 为 RGB；PD10 为 KEY0，PD9 为 KEY1 EXTI\NPA9 / PA10 为 USART1；PA13 / PA14 保留 SWD 调试
+Dialogue: 0,0:00:13.76,0:00:20.87,Default,,0,0,0,,Clock Configuration：查看系统时钟树\NHSI 内部时钟 16 MHz，SYSCLK、HCLK、APB1、APB2 均为 16 MHz
+Dialogue: 0,0:00:20.87,0:00:30.29,Default,,0,0,0,,这份 .ioc 用于核对引脚与时钟配置\N现有裸机源码在 main.c 中完成对应的寄存器初始化

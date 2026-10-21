@@ -1,0 +1,17 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:07.25,Default,,0,0,0,,MobaXterm：连接板载 USB_COM 串口\N点击 Session → Serial，端口选择 COM3，速率 115200
+Dialogue: 0,0:00:07.25,0:00:13.82,Default,,0,0,0,,Advanced Serial settings：8 数据位、1 停止位、无校验\NFlow control 选择 None；这些参数与固件的 115200 / 8N1 对应
+Dialogue: 0,0:00:13.82,0:00:18.93,Default,,0,0,0,,连接后输入 status，再按 Enter\Nmode=COLOR 表示程序正在轮闪；按键次数和丢包计数也会返回
+Dialogue: 0,0:00:18.93,0:00:24.98,Default,,0,0,0,,输入 help，再按 Enter，查看固件提供的命令\NKEY0 启动轮闪，KEY1 停止；这些按键在开发板上操作
+Dialogue: 0,0:00:24.98,0:00:29.29,Default,,0,0,0,,串口用于查看日志、状态和命令交互\N修改代码并下载后，可以在这里检查新程序的运行结果

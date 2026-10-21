@@ -1,0 +1,15 @@
+三个目录：
+Startup
+StdLib
+User
+
+注意各目录下的文件
+1、时钟方面（在stm32f4xx.h中定义HSE_VALUE，在system_stm32f4xx.c定义主PLL几个参数）
+原始文件缺省HSE_VALUE=25MHz，#define PLL_M  25，PLL_N=336，PLL_P=2， PLL_Q=7，正好168M
+谢斌改为HSE_VALUE=8MHz，#define PLL_M  4，PLL_N=336，PLL_P=2， PLL_Q=7，可得168M
+2、
+
+工程中C/C++设置时：
+STM32F40_41xxx,USE_STDPERIPH_DRIVER
+
+在设置Debug时注意选中Reset and Run.

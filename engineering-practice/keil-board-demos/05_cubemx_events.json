@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-10-21T12:26:59.947150+09:00",
+  "duration": 30.29699999999957,
+  "events": [
+    {
+      "start": 1.0,
+      "text": "STM32CubeMX：打开 cubemx/Pandora_L496.ioc\n型号 STM32L496VETx、LQFP100，与当前开发板一致"
+    },
+    {
+      "start": 7.0,
+      "text": "引脚：PE7 / PE8 / PE9 为 RGB；PD10 为 KEY0，PD9 为 KEY1 EXTI\nPA9 / PA10 为 USART1；PA13 / PA14 保留 SWD 调试"
+    },
+    {
+      "start": 13.765999999999622,
+      "text": "Clock Configuration：查看系统时钟树\nHSI 内部时钟 16 MHz，SYSCLK、HCLK、APB1、APB2 均为 16 MHz"
+    },
+    {
+      "start": 20.875,
+      "text": "这份 .ioc 用于核对引脚与时钟配置\n现有裸机源码在 main.c 中完成对应的寄存器初始化"
+    }
+  ]
+}

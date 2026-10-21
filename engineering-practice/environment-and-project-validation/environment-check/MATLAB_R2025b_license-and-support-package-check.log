@@ -1,0 +1,122 @@
+VERSION=25.2.0.2998904 (R2025b)
+LIC MATLAB = 1
+LIC Simulink = 1
+LIC MATLAB_Coder = 1
+LIC Simulink_Coder = 0
+LIC ECoder = 0
+LIC Fixed_Point_Designer = 0
+LIC Target_Support_Package = 0
+--- VER ---
+5G Toolbox | 25.2
+AUTOSAR Blockset | 25.2
+Aerospace Blockset | 25.2
+Aerospace Toolbox | 25.2
+Antenna Toolbox | 25.2
+Audio Toolbox | 25.2
+Automated Driving Toolbox | 25.2
+Bioinformatics Toolbox | 25.2
+Bluetooth Toolbox | 25.2
+C2000 Microcontroller Blockset | 25.2
+Communications Toolbox | 25.2
+Computer Vision Toolbox | 25.2
+Control System Toolbox | 25.2
+Curve Fitting Toolbox | 25.2
+DDS Blockset | 25.2
+DSP HDL Toolbox | 25.2
+DSP System Toolbox | 25.2
+Data Acquisition Toolbox | 25.2
+Database Toolbox | 25.2
+Datafeed Toolbox | 25.2
+Deep Learning HDL Toolbox | 25.2
+Deep Learning Toolbox | 25.2
+Econometrics Toolbox | 25.2
+Embedded Coder | 25.2
+Financial Instruments Toolbox | 25.2
+Financial Toolbox | 25.2
+Fixed-Point Designer | 25.2
+Fuzzy Logic Toolbox | 25.2
+GPU Coder | 25.2
+Global Optimization Toolbox | 25.2
+HDL Coder | 25.2
+HDL Verifier | 25.2
+Image Acquisition Toolbox | 25.2
+Image Processing Toolbox | 25.2
+Industrial Communication Toolbox | 25.2
+Instrument Control Toolbox | 25.2
+LTE Toolbox | 25.2
+Lidar Toolbox | 25.2
+MATLAB | 25.2
+MATLAB Coder | 25.2
+MATLAB Compiler | 25.2
+MATLAB Compiler SDK | 25.2
+MATLAB Report Generator | 25.2
+MATLAB Test | 25.2
+Mapping Toolbox | 25.2
+Medical Imaging Toolbox | 25.2
+Mixed-Signal Blockset | 25.2
+Model Predictive Control Toolbox | 25.2
+Model-Based Calibration Toolbox | 25.2
+Motor Control Blockset | 25.2
+Navigation Toolbox | 25.2
+Optimization Toolbox | 25.2
+Parallel Computing Toolbox | 25.2
+Partial Differential Equation Toolbox | 25.2
+Phased Array System Toolbox | 25.2
+Powertrain Blockset | 25.2
+Predictive Maintenance Toolbox | 25.2
+RF Blockset | 25.2
+RF PCB Toolbox | 25.2
+RF Toolbox | 25.2
+ROS Toolbox | 25.2
+Radar Toolbox | 25.2
+Reinforcement Learning Toolbox | 25.2
+Requirements Toolbox | 25.2
+Risk Management Toolbox | 25.2
+Robotics System Toolbox | 25.2
+Robust Control Toolbox | 25.2
+Satellite Communications Toolbox | 25.2
+Sensor Fusion and Tracking Toolbox | 25.2
+SerDes Toolbox | 25.2
+Signal Integrity Toolbox | 25.2
+Signal Processing Toolbox | 25.2
+SimBiology | 25.2
+SimEvents | 25.2
+Simscape | 25.2
+Simscape Battery | 25.2
+Simscape Driveline | 25.2
+Simscape Electrical | 25.2
+Simscape Fluids | 25.2
+Simscape Multibody | 25.2
+Simulink | 25.2
+Simulink 3D Animation | 25.2
+Simulink Check | 25.2
+Simulink Code Inspector | 25.2
+Simulink Coder | 25.2
+Simulink Compiler | 25.2
+Simulink Control Design | 25.2
+Simulink Coverage | 25.2
+Simulink Design Optimization | 25.2
+Simulink Design Verifier | 25.2
+Simulink Desktop Real-Time | 25.2
+Simulink Fault Analyzer | 25.2
+Simulink PLC Coder | 25.2
+Simulink Real-Time | 25.2
+Simulink Report Generator | 25.2
+Simulink Test | 25.2
+SoC Blockset | 25.2
+Spreadsheet Link | 25.2
+Stateflow | 25.2
+Statistics and Machine Learning Toolbox | 25.2
+Symbolic Math Toolbox | 25.2
+System Composer | 25.2
+System Identification Toolbox | 25.2
+Text Analytics Toolbox | 25.2
+UAV Toolbox | 25.2
+Vehicle Dynamics Blockset | 25.2
+Vehicle Network Toolbox | 25.2
+Vision HDL Toolbox | 25.2
+WLAN Toolbox | 25.2
+Wavelet Toolbox | 25.2
+Wireless HDL Toolbox | 25.2
+Wireless Testbench | 25.2
+--- SUPPORTPKG ---

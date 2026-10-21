@@ -1,0 +1,41 @@
+{
+  "duration": 208.6,
+  "chapters": [
+    {
+      "start": 0.0,
+      "duration": 54.2,
+      "title": "Keil：工程、编译与实板下载",
+      "file": "01_keil_download.mp4"
+    },
+    {
+      "start": 54.2,
+      "duration": 24.8,
+      "title": "Keil：断点位置、单步与变量",
+      "file": "02_keil_debug_simple.mp4"
+    },
+    {
+      "start": 79.0,
+      "duration": 29.0,
+      "title": "MobaXterm：COM3 串口通信",
+      "file": "03_mobaxterm.mp4"
+    },
+    {
+      "start": 108.0,
+      "duration": 40.733333,
+      "title": "CubeIDE：GCC 编译与 CMSIS-DAP 调试",
+      "file": "04_cubeide.mp4"
+    },
+    {
+      "start": 148.733,
+      "duration": 29.933333,
+      "title": "CubeMX：L496 引脚与时钟配置",
+      "file": "05_cubemx.mp4"
+    },
+    {
+      "start": 178.667,
+      "duration": 29.933333,
+      "title": "Proteus：F401 LCD 电路仿真",
+      "file": "06_proteus.mp4"
+    }
+  ]
+}

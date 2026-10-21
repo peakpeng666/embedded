@@ -1,0 +1,16 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:05.10,Default,,0,0,0,,Keil 硬件调试：按 Ctrl+F5，自动加载程序并停在 main\N已保存 Load Application at Startup 与 Run to main 设置
+Dialogue: 0,0:00:05.10,0:00:11.31,Default,,0,0,0,,黄色箭头表示当前执行位置；左侧查看 CPU 寄存器\N按 F10 单步执行，先完成硬件初始化
+Dialogue: 0,0:00:11.31,0:00:15.92,Default,,0,0,0,,在下方 Command 输入表达式，可以读取板上变量\N这里读取毫秒计数 milliseconds 和状态 lab.mode
+Dialogue: 0,0:00:15.92,0:00:25.15,Default,,0,0,0,,演示通过调试器修改 RAM：lab.mode = 1，使 RGB 进入轮闪状态\N按 F5 运行，再按 Ctrl+F5 退出调试；串口可继续查询状态

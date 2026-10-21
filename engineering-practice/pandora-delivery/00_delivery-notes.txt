@@ -1,0 +1,22 @@
+潘多拉 Windows 开发与专业图纸交付
+日期：2026-10-21
+
+录屏：
+  Windows-multi-tool-board-demo.mp4：3分29秒，Keil、MobaXterm、CubeIDE、CubeMX、Proteus。
+  lceda-EDA-schematic-review-demo.mp4：约44秒，检查四页原生图纸。
+
+图纸：
+  Pandora_schematic-and-flowcharts_A3.pdf：四页 A3，最小系统、实验电路、程序与中断、消抖与RGB状态机。
+  Pandora_lceda-EDA-native-project.json：嘉立创EDA标准版“文件→打开→嘉立创EDA→导入”，可编辑。
+  sources-and-implementation-review.md：原厂资料对照、引脚核对与实现说明。
+
+源码：
+  source-snapshot/keil/lab1.uvprojx：Keil AC5 工程，与 CubeIDE 共用 lab1/src 中的 C 源码。
+  source-snapshot/keil/README.md：编译、下载、调试与串口操作。
+  source-snapshot/hardware/README.md：图纸来源、打开方式与复核方法。
+  source-snapshot/hardware/sources：官方资料、开发指南与引脚 XML。
+  source-snapshot/hardware/lceda：应用保存副本、网表、原始 PDF、矢量 SVG 与核对结果。
+
+实板：Keil 下载与校验通过，仅应用的两个 2 KiB 页改变，前 64 KiB 引导区不变。
+工程地址 0x08010000；COM3，115200/8N1/无流控。
+验证范围：编译、下载、调试、串口与图纸导出；PCB 丝印、BOOT 帽位和阻容值未在实物上测量。

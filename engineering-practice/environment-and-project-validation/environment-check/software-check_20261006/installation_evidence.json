@@ -1,0 +1,40 @@
+{
+  "CheckedAt": "2026-10-06 15:31:14 +09:00",
+  "Keil": {
+    "Executable": "C:\\Keil_v5\\UV4\\UV4.exe",
+    "Version": "5.35.0.0",
+    "ToolVariant": "TOOL_VARIANT=mdk_lite"
+  },
+  "CMSIS": {
+    "Pack": "ARM.CMSIS.5.9.0",
+    "MetadataPresent": true,
+    "CoreHeaderPresent": true
+  },
+  "STM32F4DFP": {
+    "Pack": "Keil.STM32F4xx_DFP.2.16.0",
+    "MetadataPresent": true,
+    "DeviceHeaderPresent": true
+  },
+  "CubeMX": {
+    "Version": "6.18.1",
+    "RunningTitle": "STM32CubeMX Untitled",
+    "Path": "D:\\Peak\\Desktop\\嵌入式\\07_软件工具\\STM32CubeMX-6.18.1\\MX",
+    "Firmware": "C:\\Users\\Peak\\STM32Cube\\Repository\\STM32Cube_FW_F4_V1.28.3",
+    "FirmwareCMSISIncludePresent": false
+  },
+  "Drives": [
+    {
+      "DeviceID": "C:"
+    },
+    {
+      "DeviceID": "D:"
+    },
+    {
+      "DeviceID": "G:"
+    }
+  ],
+  "MissingInstallations": [
+    "STM32CubeIDE: no matching uninstall registry, shortcut, or application executable found in checked locations",
+    "Proteus: no matching uninstall registry, shortcut, or application executable found in checked locations"
+  ]
+}

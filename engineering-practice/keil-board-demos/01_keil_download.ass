@@ -1,0 +1,20 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:06.10,Default,,0,0,0,,Keil µVision：打开 GitHub 工程，编译并下载到 STM32L496\N板载 CMSIS-DAP + USB_COM，Windows 已识别 COM3
+Dialogue: 0,0:00:06.10,0:00:12.03,Default,,0,0,0,,应用源码位于 lab1/src；KEY0 查询启动 RGB，KEY1 外部中断停止\N打开目标选项：Alt+F7
+Dialogue: 0,0:00:12.03,0:00:18.54,Default,,0,0,0,,Target：STM32L496VETx；IROM1 起始地址 0x08010000\N应用从 64 KiB 之后开始，保留板上引导程序
+Dialogue: 0,0:00:18.54,0:00:25.76,Default,,0,0,0,,Debug → CMSIS-DAP Debugger → Settings\N已识别 ATK-03262021，使用 SWD，时钟 100 kHz
+Dialogue: 0,0:00:25.76,0:00:34.12,Default,,0,0,0,,Flash Download：Erase Sectors、Program、Verify\N选择 STM32L4xx 512 KB Flash；当前镜像占用两个 2 KiB 页面
+Dialogue: 0,0:00:34.12,0:00:39.50,Default,,0,0,0,,编译：按 F7，检查 Build Output\N此工程使用电脑已有的 Arm Compiler 5.06
+Dialogue: 0,0:00:39.50,0:00:48.95,Default,,0,0,0,,下载：按 F8，将刚编译的 3344 字节程序写入应用区\N下载完成后检查 Verify OK，再进入调试运行
+Dialogue: 0,0:00:48.95,0:00:54.57,Default,,0,0,0,,查看下载结果：Erasing / Programming / Verify\N下一步进入硬件调试，再通过串口查询运行状态

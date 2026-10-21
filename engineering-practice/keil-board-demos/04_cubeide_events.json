@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-21T12:24:21.787399+09:00",
+  "duration": 41.07800000000043,
+  "events": [
+    {
+      "start": 1.0,
+      "text": "STM32CubeIDE：同一份 GitHub 源码，也可使用电脑自带 GCC 编译\n按 Ctrl+B 构建 Pandora_Lab1 工程"
+    },
+    {
+      "start": 6.391000000000531,
+      "text": "控制台显示：构建完成，0 错误、0 警告\n接着打开 运行 → 调试配置，连接板载 CMSIS-DAP"
+    },
+    {
+      "start": 9.110000000000582,
+      "text": "调试器使用 CubeIDE 自带 OpenOCD；GDB 连接 127.0.0.1:3333\n先运行工程 tools/start_cubeide_debug.ps1，再启动此调试配置"
+    },
+    {
+      "start": 14.813000000000102,
+      "text": "此次附加到已烧录的 Keil 程序，符号文件使用匹配的 lab1_keil.axf\n关闭复位与 Load image，仅加载符号，不改写 Flash"
+    },
+    {
+      "start": 27.04700000000048,
+      "text": "已停在板上实际运行的 main.c，左侧显示线程和调用栈\n右侧表达式读取 milliseconds 与 lab.mode = LAB_COLOR"
+    },
+    {
+      "start": 32.5,
+      "text": "按 F6 单步；按 F8 继续运行\n结束调试后 OpenOCD 释放连接，开发板继续执行"
+    }
+  ]
+}

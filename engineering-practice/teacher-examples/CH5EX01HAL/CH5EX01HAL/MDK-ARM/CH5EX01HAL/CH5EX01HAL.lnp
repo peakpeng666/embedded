@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"ch5ex01hal\startup_stm32f407xx.o"
+"ch5ex01hal\main.o"
+"ch5ex01hal\gpio.o"
+"ch5ex01hal\stm32f4xx_it.o"
+"ch5ex01hal\stm32f4xx_hal_msp.o"
+"ch5ex01hal\stm32f4xx_hal_tim.o"
+"ch5ex01hal\stm32f4xx_hal_tim_ex.o"
+"ch5ex01hal\stm32f4xx_hal_rcc.o"
+"ch5ex01hal\stm32f4xx_hal_rcc_ex.o"
+"ch5ex01hal\stm32f4xx_hal_flash.o"
+"ch5ex01hal\stm32f4xx_hal_flash_ex.o"
+"ch5ex01hal\stm32f4xx_hal_flash_ramfunc.o"
+"ch5ex01hal\stm32f4xx_hal_gpio.o"
+"ch5ex01hal\stm32f4xx_hal_dma_ex.o"
+"ch5ex01hal\stm32f4xx_hal_dma.o"
+"ch5ex01hal\stm32f4xx_hal_pwr.o"
+"ch5ex01hal\stm32f4xx_hal_pwr_ex.o"
+"ch5ex01hal\stm32f4xx_hal_cortex.o"
+"ch5ex01hal\stm32f4xx_hal.o"
+"ch5ex01hal\stm32f4xx_hal_exti.o"
+"ch5ex01hal\system_stm32f4xx.o"
+--strict --scatter "CH5EX01HAL\CH5EX01HAL.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "CH5EX01HAL.map" -o CH5EX01HAL\CH5EX01HAL.axf

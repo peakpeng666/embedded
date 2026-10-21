@@ -1,0 +1,45 @@
+{
+  "created_at": "2026-10-21T16:14:32.401091+09:00",
+  "files": {
+    "00_delivery-notes.txt": {
+      "bytes": 1390,
+      "sha256": "8120be052dfdcfb2ec46515d0cd1da63090716ca9c88cfce2020c42421eeaaf2"
+    },
+    "lceda-EDA-schematic-review-demo.mp4": {
+      "bytes": 1713759,
+      "sha256": "3b9de558d2a5cc6162f099a623895a95da01fc237cd77d05897c53657fced43c"
+    },
+    "Pandora_lceda-EDA-native-project.json": {
+      "bytes": 106502,
+      "sha256": "d2fd27284b4369aec0cdf4ef7db9e6283a8cc302c072928d451d909bbbb0a60f"
+    },
+    "Pandora_schematic-and-flowcharts_A3.pdf": {
+      "bytes": 645077,
+      "sha256": "931afdbbc283e85a7e2cb47f7df88a6f6404fcee6f58ae38d0a4ef34e752f9e7"
+    },
+    "sources-and-implementation-review.md": {
+      "bytes": 5602,
+      "sha256": "72762bb857ed085873b4cda07c3417a73e34761ee40e773630cb9086cd598b72"
+    },
+    "validation-records/EDA-netlist-and-pin-verification.json": {
+      "bytes": 1439,
+      "sha256": "477d09689053975f89ccd1483c7733d959c69c9d6b5ef0561702e1eff1afb5d1"
+    },
+    "validation-records/windows_after_keil.json": {
+      "bytes": 750,
+      "sha256": "e87decec78414f718bd7db883563b1a99476ed54d870e4ff6a150a540f89760d"
+    },
+    "validation-records/windows_before_keil.json": {
+      "bytes": 533,
+      "sha256": "4159c7bf407713be21ce86cb80fb323c975ea6f0110ee23d4fd09a81aeb7673c"
+    },
+    "Windows-multi-tool-board-demo.mp4": {
+      "bytes": 6893205,
+      "sha256": "62b52f507d7134badf51562f874e8b94a5a31e6dba2384f84856f4c2ce6c9e52"
+    },
+    "Windows-multi-tool-board-demo.srt": {
+      "bytes": 4902,
+      "sha256": "a5b88d8a8a299825fc1b443ee22d9eec4bf7155c444abb11aef8e0468dce9f1c"
+    }
+  }
+}

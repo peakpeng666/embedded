@@ -1,0 +1,18 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1320
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Microsoft YaHei,34,&H00FFFFFF,&H00FFFFFF,&H00111827,&H00111827,0,0,0,0,100,100,0,0,1,1,0,2,55,55,35,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.00,0:00:07.98,Default,,0,0,0,,Keil 硬件调试：Ctrl+F5 进入调试，F5 运行，F10 单步\N当前 Flash 已通过整片读回比对，应用镜像与 AXF 对应
+Dialogue: 0,0:00:07.98,0:00:13.39,Default,,0,0,0,,在 Command 输入 BS main，为 main 设置断点\NF5 运行，程序会停在黄色箭头标出的源代码位置
+Dialogue: 0,0:00:13.39,0:00:18.59,Default,,0,0,0,,F10：执行当前语句并停到下一条；左侧寄存器同步变化\N可以观察硬件初始化、串口输出和主循环
+Dialogue: 0,0:00:18.59,0:00:23.61,Default,,0,0,0,,查看程序变量：milliseconds 是毫秒计数，lab.mode 是灯的模式\N在 Command 中使用 printf，或用 WS 添加到 Watch 窗口
+Dialogue: 0,0:00:23.61,0:00:29.98,Default,,0,0,0,,调试演示：将 lab.mode 改成 1（COLOR），再按 F5 运行\N这是通过调试器修改 RAM 变量；板上的 KEY0/KEY1 仍可正常使用
+Dialogue: 0,0:00:29.98,0:00:34.96,Default,,0,0,0,,结束调试前先让程序运行，再按 Ctrl+F5 退出\N接下来在 MobaXterm 的 COM3 中查询程序状态

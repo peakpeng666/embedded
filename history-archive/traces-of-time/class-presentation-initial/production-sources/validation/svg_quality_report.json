@@ -1,0 +1,891 @@
+{
+  "schema": "ppt-master.svg-quality-report.v1",
+  "stage": "final",
+  "target": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006",
+  "source_fingerprint": {
+    "algorithm": "sha256",
+    "digest": "c70dc6876c4d9d187422da661faa78b87a946e2db2341ea3b43e9e8a9447a510",
+    "file_count": 12,
+    "files": [
+      {
+        "file": "01_cover.svg",
+        "sha256": "f5b76a6b904292ca89303e5dba3d8763adefcf860172079aa12399db4f6a7cf9"
+      },
+      {
+        "file": "02_four_stages.svg",
+        "sha256": "18b44f5ad763c84388eb1de884b8fa3c562fd24e4ad55b9f2b8590f2d030a46c"
+      },
+      {
+        "file": "03_init.svg",
+        "sha256": "cc84084afcf602e7c4472657ebab4f2c1b76fa4e06eced27418310ba5a741bac"
+      },
+      {
+        "file": "04_pll.svg",
+        "sha256": "f9812e3f5621b1d85c167b8543f0e0ccf7376f71fe679d95b851e03852e28052"
+      },
+      {
+        "file": "05_clock_tree.svg",
+        "sha256": "6e8ceaa345789583ea8c18a1b11ed7e319f3a8da6c669df84554e718a36f2bda"
+      },
+      {
+        "file": "06_get.svg",
+        "sha256": "83b24612a7590ca8f4c8c11626df8298e435afdbc5a2372de69622f90493b61e"
+      },
+      {
+        "file": "07_systick.svg",
+        "sha256": "79b9e5bc83e129b7d22b711b395b15882e152d50e414559871b1f948364f36e8"
+      },
+      {
+        "file": "08_delay.svg",
+        "sha256": "1d1d2985ab3f0a40243419a8dc060e7e766fd98db9608da23b8ff6b33238ba9c"
+      },
+      {
+        "file": "09_hal_delay.svg",
+        "sha256": "abf38239e16bfb6bba449c58bdd3252af699e95b61b6f75bcb246fe37c0ac97a"
+      },
+      {
+        "file": "10_application.svg",
+        "sha256": "08a4ae2d634e28c72ffef626bbe87b85800617d9a6bb8aefd10badd06b38ca93"
+      },
+      {
+        "file": "11_clock_roles.svg",
+        "sha256": "a5b8398cf864b58d540ecba61896a56876785ce83fff3147e5477285d538613d"
+      },
+      {
+        "file": "12_close.svg",
+        "sha256": "2af03158483e1c7684e1845cca31ee6089262f5efdf4efe31a50fff7b193599f"
+      }
+    ]
+  },
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "warnings": 0,
+    "errors": 0
+  },
+  "issue_types": {},
+  "categories": {
+    "blocking": {
+      "count": 0,
+      "issues": []
+    },
+    "introduced": {
+      "count": 0,
+      "issues": []
+    },
+    "inherited": {
+      "count": 0,
+      "issues": []
+    },
+    "source-import": {
+      "count": 0,
+      "summary": {
+        "warning_count": 0,
+        "by_code": {}
+      }
+    }
+  },
+  "drift": {
+    "colors": {
+      "#E8F4F1": [
+        "08_delay.svg"
+      ],
+      "#F3AD80": [
+        "04_pll.svg",
+        "12_close.svg"
+      ]
+    },
+    "fonts": {},
+    "sizes": {
+      "80": [
+        "01_cover.svg"
+      ]
+    }
+  },
+  "carrier_receipt": {
+    "scope": "informational-not-a-quota",
+    "pages": 12,
+    "totals": {
+      "text_elements": 201,
+      "image_placements": 0,
+      "icons": 0,
+      "svg_geometry_elements": 73,
+      "preset_shapes": 1,
+      "page_frame_elements": 12,
+      "marker_uses": 8,
+      "inline_emphasis_runs": 31,
+      "gradient_uses": 0,
+      "filter_uses": 0,
+      "text_effects": 0
+    },
+    "pages_with": {
+      "images": 0,
+      "icons": 0,
+      "presets": 1,
+      "charts": 0,
+      "tables": 0,
+      "formulas": 0,
+      "inline_emphasis_runs": 9,
+      "gradient_uses": 0,
+      "filter_uses": 0,
+      "text_effects": 0
+    },
+    "relationship_pages": 0,
+    "geometry_elements": {
+      "circle": 8,
+      "ellipse": 0,
+      "line": 35,
+      "path": 0,
+      "polygon": 0,
+      "polyline": 0,
+      "rect": 30
+    },
+    "preset_names": {
+      "flowChartDecision": 1
+    },
+    "native_objects": {
+      "chart": 0,
+      "formula_block": 0,
+      "formula_inline": 0,
+      "other": 0,
+      "table": 0
+    },
+    "image_page_max_frame_share_range": []
+  },
+  "project_issues": {
+    "template": [],
+    "animation": [],
+    "illustration": [],
+    "communication_trace": [],
+    "pptx_structure": []
+  },
+  "files": [
+    {
+      "file": "01_cover.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\01_cover.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 15,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 4,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 1,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 8,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 15,
+        "tspan_elements": 6,
+        "sparse_typography_sizes": {
+          "80": 2
+        }
+      },
+      "passed": true,
+      "source_sha256": "f5b76a6b904292ca89303e5dba3d8763adefcf860172079aa12399db4f6a7cf9"
+    },
+    {
+      "file": "02_four_stages.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\02_four_stages.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 23,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 2,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 2,
+              "circle": 4,
+              "ellipse": 0,
+              "line": 1,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 23,
+        "tspan_elements": 10
+      },
+      "passed": true,
+      "source_sha256": "18b44f5ad763c84388eb1de884b8fa3c562fd24e4ad55b9f2b8590f2d030a46c"
+    },
+    {
+      "file": "03_init.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\03_init.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 17,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 3,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 3,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 4,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 3
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 17,
+        "tspan_elements": 9
+      },
+      "passed": true,
+      "source_sha256": "cc84084afcf602e7c4472657ebab4f2c1b76fa4e06eced27418310ba5a741bac"
+    },
+    {
+      "file": "04_pll.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\04_pll.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 25,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 6,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 2,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 25,
+        "tspan_elements": 13,
+        "contextual_values": {
+          "colors": [
+            "#F3AD80"
+          ]
+        }
+      },
+      "passed": true,
+      "source_sha256": "f9812e3f5621b1d85c167b8543f0e0ccf7376f71fe679d95b851e03852e28052"
+    },
+    {
+      "file": "05_clock_tree.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\05_clock_tree.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 19,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 0,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 4,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 5,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 3
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 19,
+        "tspan_elements": 5
+      },
+      "passed": true,
+      "source_sha256": "6e8ceaa345789583ea8c18a1b11ed7e319f3a8da6c669df84554e718a36f2bda"
+    },
+    {
+      "file": "06_get.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\06_get.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 17,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 0,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 3,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 17,
+        "tspan_elements": 14
+      },
+      "passed": true,
+      "source_sha256": "83b24612a7590ca8f4c8c11626df8298e435afdbc5a2372de69622f90493b61e"
+    },
+    {
+      "file": "07_systick.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\07_systick.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 15,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 2,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 2,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 15,
+        "tspan_elements": 4
+      },
+      "passed": true,
+      "source_sha256": "79b9e5bc83e129b7d22b711b395b15882e152d50e414559871b1f948364f36e8"
+    },
+    {
+      "file": "08_delay.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\08_delay.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 14,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 4,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 4,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 5,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 1,
+            "preset_names": {
+              "flowChartDecision": 1
+            },
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 2
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 14,
+        "tspan_elements": 16,
+        "contextual_values": {
+          "colors": [
+            "#E8F4F1"
+          ]
+        }
+      },
+      "passed": true,
+      "source_sha256": "1d1d2985ab3f0a40243419a8dc060e7e766fd98db9608da23b8ff6b33238ba9c"
+    },
+    {
+      "file": "09_hal_delay.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\09_hal_delay.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 12,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 6,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 2,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 12,
+        "tspan_elements": 24
+      },
+      "passed": true,
+      "source_sha256": "abf38239e16bfb6bba449c58bdd3252af699e95b61b6f75bcb246fe37c0ac97a"
+    },
+    {
+      "file": "10_application.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\10_application.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 15,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 2,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 4,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 0,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 15,
+        "tspan_elements": 11
+      },
+      "passed": true,
+      "source_sha256": "08a4ae2d634e28c72ffef626bbe87b85800617d9a6bb8aefd10badd06b38ca93"
+    },
+    {
+      "file": "11_clock_roles.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\11_clock_roles.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 15,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 0,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 2,
+              "circle": 0,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Consolas",
+          "Microsoft YaHei"
+        ],
+        "text_elements": 15,
+        "tspan_elements": 10
+      },
+      "passed": true,
+      "source_sha256": "a5b8398cf864b58d540ecba61896a56876785ce83fff3147e5477285d538613d"
+    },
+    {
+      "file": "12_close.svg",
+      "path": "D:\\Peak\\Desktop\\嵌入式\\09_课堂展示_时钟之迹\\clock_traces_20261006\\svg_output\\12_close.svg",
+      "exists": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "viewbox": "0 0 1280 720",
+        "carrier_receipt": {
+          "text_elements": 14,
+          "images": {
+            "placements": 0,
+            "files": [],
+            "max_frame_share": 0.0
+          },
+          "icons": 0,
+          "effects": {
+            "inline_emphasis_runs": 2,
+            "gradient_uses": 0,
+            "filter_uses": 0,
+            "text_effects": 0
+          },
+          "geometry": {
+            "svg_elements": {
+              "rect": 1,
+              "circle": 4,
+              "ellipse": 0,
+              "line": 2,
+              "polyline": 0,
+              "polygon": 0,
+              "path": 0
+            },
+            "preset_shapes": 0,
+            "preset_names": {},
+            "page_frame_elements": 1,
+            "marker_uses": {
+              "start": 0,
+              "mid": 0,
+              "end": 0
+            }
+          },
+          "native_objects": {
+            "chart": 0,
+            "table": 0,
+            "formula_block": 0,
+            "formula_inline": 0,
+            "other": 0
+          }
+        },
+        "fonts": [
+          "Microsoft YaHei"
+        ],
+        "text_elements": 14,
+        "tspan_elements": 12,
+        "contextual_values": {
+          "colors": [
+            "#F3AD80"
+          ]
+        }
+      },
+      "passed": true,
+      "source_sha256": "2af03158483e1c7684e1845cca31ee6089262f5efdf4efe31a50fff7b193599f"
+    }
+  ]
+}

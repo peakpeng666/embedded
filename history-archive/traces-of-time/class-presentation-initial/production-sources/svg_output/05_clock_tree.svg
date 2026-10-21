@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei" font-size="24" data-pptx-page-role="content">
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><polygon points="0,0 8,4 0,8" fill="#167D8D" /></marker></defs>
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#F5F6F2" />
+<g id="title" data-pptx-bounds="64 42 1152 112" fill="#132E3B"><text x="64" y="64" font-size="16" fill="#167D8D">02 / 设置时钟</text><text x="64" y="123" font-size="40" font-weight="bold">设置：主频沿总线继续分配</text></g>
+<g id="clock-tree" data-pptx-bounds="64 178 1152 274">
+<rect x="64" y="265" width="223" height="132" fill="#132E3B" rx="8" /><text x="87" y="301" font-size="20" fill="#AABDBF">SYSCLK / PLL</text><text x="87" y="350" font-size="40" font-weight="bold" fill="#F5F6F2">168 MHz</text>
+<line x1="287" y1="330" x2="386" y2="330" stroke="#167D8D" stroke-width="3" marker-end="url(#arrow)" /><text x="305" y="303" font-size="20" fill="#61747B">AHB /1</text>
+<rect x="395" y="265" width="233" height="132" fill="#E8EEEB" rx="8" /><text x="418" y="301" font-size="20" fill="#167D8D">HCLK / CPU · AHB</text><text x="418" y="350" font-size="40" font-weight="bold" fill="#132E3B">168 MHz</text>
+<line x1="628" y1="330" x2="681" y2="330" stroke="#167D8D" stroke-width="3" /><line x1="681" y1="239" x2="681" y2="407" stroke="#167D8D" stroke-width="3" /><line x1="681" y1="239" x2="780" y2="239" stroke="#167D8D" stroke-width="3" marker-end="url(#arrow)" /><line x1="681" y1="407" x2="780" y2="407" stroke="#167D8D" stroke-width="3" marker-end="url(#arrow)" />
+<text x="700" y="215" font-size="20" fill="#61747B">APB1 /4</text><text x="700" y="385" font-size="20" fill="#61747B">APB2 /2</text>
+<text x="806" y="232" font-size="28" font-weight="bold" fill="#132E3B">PCLK1  42 MHz</text><text x="806" y="270" font-size="20" fill="#167D8D">APB1 定时器 → 84 MHz</text>
+<text x="806" y="400" font-size="28" font-weight="bold" fill="#132E3B">PCLK2  84 MHz</text><text x="806" y="438" font-size="20" fill="#167D8D">APB2 定时器 → 168 MHz</text>
+</g>
+<g id="divider-code" data-pptx-bounds="64 480 747 144"><rect x="64" y="480" width="747" height="144" rx="8" fill="#132E3B" /><text x="85" y="515" font-family="Consolas" font-size="20" fill="#F5F6F2"><tspan x="85" dy="0">RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;</tspan><tspan x="85" dy="31">RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;</tspan><tspan x="85" dy="31">RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;</tspan></text><text x="85" y="609" font-size="16" fill="#AABDBF">原例程随后以 FLASH_LATENCY_5 调用 HAL_RCC_ClockConfig()。</text></g>
+<g id="timer-rule" data-pptx-bounds="851 480 365 144" fill="#132E3B"><text x="851" y="512" font-weight="bold">F407 的 TIM 时钟规则</text><text x="851" y="559" font-size="20"><tspan x="851" dy="0">APB 分频 = 1：TIM = PCLK</tspan><tspan x="851" dy="34">APB 分频 ≠ 1：TIM = 2 × PCLK</tspan></text></g>
+<g id="footer" data-pptx-bounds="64 652 1152 29" data-pptx-role="footer" font-size="16" fill="#61747B"><text x="64" y="675">源码：HAL main.c:150–155；原理：RM0090，STM32F405/407 RCC 时钟树</text><text x="1216" y="675" text-anchor="end">05 / 12</text></g>
+</svg>

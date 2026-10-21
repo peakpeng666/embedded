@@ -1,0 +1,424 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans CJK SC}
+\setsansfont{Noto Sans CJK SC}
+\setmonofont{DejaVu Sans Mono}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+\usepackage[margin=0.64in,top=0.62in,bottom=0.62in,headheight=15pt]{geometry}
+\usepackage{graphicx,array,tabularx,colortbl,xcolor,fancyhdr,hyperref,fvextra}
+\hypersetup{colorlinks=true,urlcolor=blue!40!black,linkcolor=black,pdftitle={讲课视频学习索引},pdfauthor={}}
+\definecolor{tablehead}{HTML}{DFE9F0}
+\definecolor{tabline}{HTML}{D9D9D9}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small 嵌入式系统\quad |\quad 视频学习索引}\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\hyphenpenalty=10000\exhyphenpenalty=10000
+\renewcommand{\baselinestretch}{1.10}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.20}
+\arrayrulecolor{tabline}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\qtitle}[1]{{\Large\bfseries #1}\par\vspace{4pt}}
+\newcommand{\qsub}[1]{{\bfseries #1}\par}
+\begin{document}
+\pdfbookmark[0]{讲课视频学习索引}{page1}
+\qtitle{讲课视频学习索引}
+{\small 工程建立 GPIO 时钟与汇编调试}\par
+本册按五段课程视频的教学顺序整理操作、知识点和关键画面，便于建工程时定位步骤、遇到错误时回看修正过程。时钟与引脚参数按各视频版本分别记录，不把演示中途状态写成最终配置。
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.744\hsize}Y|>{\hsize=0.698\hsize}Y|>{\hsize=1.558\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{视频} & \textbf{时长} & \textbf{学习重点} \\ \hline
+标准库新建工程 & 8分30.500秒 & 模板、分组、宏、路径和Compiler5 \\ \hline
+CubeMX新建工程 & 15分58秒 & 图形配置、代码生成与USER CODE \\ \hline
+HAL GPIO流水灯 & 20分16.601秒 & HAL GPIO初始化与心跳分频 \\ \hline
+标准库GPIO流水灯 & 22分31.400秒 & 手写GPIO配置与标准库延时 \\ \hline
+汇编与单步调试 & 10分15.900秒 & 启动、寄存器与函数返回 \\ \hline
+\end{tabularx}
+\endgroup\par
+\qsub{怎样使用}
+时间均相对视频起点。先按操作索引找到需要的阶段，再核对紧随该节的原尺寸证据图；每张图都注明视频、时间和状态。正文保留了会影响结果的中途错误，省略重复鼠标移动与等待。小字可放大PDF查看，也可打开evidence目录中的1920×1028原图。
+
+\qsub{覆盖说明}
+五段共77分32.401秒。已阅读全长音轨转录的1787个片段，查看165张全时间轴采样画面及64张原尺寸定位帧；函数名、参数和数字按清晰画面交叉核对。这是按教学事件整理核验，不是逐帧观看或无误逐字听写。
+
+视频中的编译结果、模拟器寄存器和真实板卡运行是不同证据。本册未获得板卡下载、LED波形或频率的完整实测记录。文中约1 Hz、2.5 Hz等数值按代码节拍推算。
+
+\qsub{原视频入口}
+\href{https://drive.google.com/file/d/1eZ3OqHzSFt5WKUvtYL4vOfbnIAFsdkVN/view}{标准库新建工程}\par
+\href{https://drive.google.com/file/d/1QHl9C0TbRynSvDk-UhzPKI6H46yD-yIr/view}{CubeMX新建工程}\par
+\href{https://drive.google.com/file/d/1WUPIvZK2o6cRg6w-QLnkPIFsBuKh2Ib1/view}{HAL GPIO流水灯}\par
+\href{https://drive.google.com/file/d/1TXgXmDKF0x7eF5P2X5FxYOSMEr9YlFD1/view}{标准库GPIO流水灯}\par
+\href{https://drive.google.com/file/d/1RLW3tQnyWnAlEFWp_eVrIhQIqcXAJFET/view}{汇编与单步调试}\par
+
+\clearpage
+\pdfbookmark[0]{1 标准库新建工程 操作索引}{page2}
+\qtitle{1 标准库新建工程 操作索引}
+本段用既有标准库模板建立空白工程。模板已经包含的核心文件不应重复引入，磁盘目录、Keil分组与实际构建文件也要分别检查。
+
+0:00–0:41  目标是先搭空白工程，后续第五章再加入外设功能；对应课件4.3。不是本段已实现流水灯。
+
+0:42–1:35  打开Keil，找到并复制三个模板目录；工程存于UserMain。分组与磁盘目录是两个层面。
+
+1:36–2:05  New Project，保存Test2，选择STM32F407系列/\allowbreak{}ZG目标。2:00选型框还在展开途中，最终目标由7:20确认。
+
+2:05–2:20  关闭RTE选择，模板已含所需核心和外设。2:12 CORE未勾，不照搬到所有项目。
+
+2:20–3:05  右键/\allowbreak{}Project菜单/\allowbreak{}工具按钮进入Manage Project Items；创建Startup组，加入启动.s文件。3:00已添加startup\_\allowbreak{}stm32f40xx.s。
+
+3:05–3:55  创建STDLIB，按功能选misc.c、gpio.c、rcc.c、syscfg.c。教师提醒全库盲加不利定位问题。
+
+3:55–4:30  User组加入中断、系统、用户main源文件，展开工程树确认。添加到磁盘不等于添加到构建。
+
+4:30–5:10  查看Usermain.c、main/\allowbreak{}Delay/\allowbreak{}while框架、模板包版本。源码头部V1.8.0；口述年份不当版本权威。
+
+5:10–5:45  从说明复制STM32F40\_\allowbreak{}41xxx,USE\_\allowbreak{}STDPERIPH\_\allowbreak{}DRIVER到Define。5:30与6:15可读，精确大小写/\allowbreak{}下划线已核。
+
+5:45–6:18  Include Paths加入UserMain、STM32F4xx\_\allowbreak{}Startup/\allowbreak{}Include、STM32F4xx\_\allowbreak{}StdPeriph\_\allowbreak{}Driver/\allowbreak{}inc。6:15完整路径列表可辨。
+
+
+\clearpage
+\pdfbookmark[0]{1 标准库新建工程 操作索引续}{page3}
+\qtitle{1 标准库新建工程 操作索引续}
+6:18–6:55  Debug按板上下载器选CMSIS-DAP等。教师明确未接硬件，不能写“连接成功”。
+
+7:00–7:25  首次构建报错/\allowbreak{}旧CMSIS头警告，Target把ARM Compiler6改5。7:09警告、7:20编译器选项；所有滚动错误未逐条确定。
+
+7:25–7:58  剩main.h找不到：跳到stm32f4xx\_\allowbreak{}it.c第32行，改usermain.h。7:31错误原文、7:45修复编辑。
+
+7:58–8:30  编译后0错误1警告；说明用户代码填main中的while。8:10仍显示1 Warning，不写成零警告。
+
+8:10附近  HCLK/\allowbreak{}100产生10ms tick；Delay(5)约50ms。单位不能与HAL\_\allowbreak{}Delay混淆。
+
+
+\clearpage
+\pdfbookmark[0]{1 标准库新建工程 关键画面}{page4}
+\qtitle{1 标准库新建工程 关键画面}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/spl_new_project_330.jpg}\par
+{\footnotesize 标准库新建 5分30秒 预处理宏 课程视频原画面}
+\end{center}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/spl_new_project_440.jpg}\par
+{\footnotesize 标准库新建 7分20秒 Compiler5选项 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{1 标准库新建工程 关键画面续}{page5}
+\qtitle{1 标准库新建工程 关键画面续}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/spl_new_project_465.jpg}\par
+{\footnotesize 标准库新建 7分45秒 main.h引用修正 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{2 CubeMX新建工程 操作索引}{page6}
+\qtitle{2 CubeMX新建工程 操作索引}
+本段为通用CubeMX向导演示。最终采用25 MHz外部输入和167.5 MHz主频，PE3命名LED0；它不同于下一段HAL流水灯工程。
+
+0:00–0:45  用CubeMX向导建立HAL框架，再填应用层。不要把向导等同完成应用。
+
+0:45–1:30  MCU Selector搜索407，选择STM32F407ZGT6/\allowbreak{}STM32F407ZGTx，LQFP144。1:13明确商业型号与封装。
+
+1:30–2:45  浏览Pinout/\allowbreak{}Clock/\allowbreak{}Project Manager并保存Test1.ioc，建英文目录。英文路径是示范环境建议。
+
+2:45–3:40  SYS Debug=Serial Wire，PA13=SWDIO、PA14=SWCLK，Timebase=SysTick。3:15可读；按画面确认PA13、PA14标识。
+
+3:40–4:15  RCC启用HSE、LSE Crystal/\allowbreak{}Ceramic Resonator，对应外部晶振引脚。4:10两者皆启用，非HAL流水灯的仅HSE情形。
+
+4:15–5:35  PE3选GPIO\_\allowbreak{}Output并命名LED0；初始Low、Push Pull、Pull-up、Low速度。5:30最终表，此处不是LED2/\allowbreak{}初始High/\allowbreak{}VeryHigh。
+
+5:35–6:28  简介ADC/\allowbreak{}DAC、定时器；RTC勾Activate Clock Source。6:23只勾时钟源，Activate Calendar未勾，不能称实现日历。
+
+6:28–7:15  浏览CAN/\allowbreak{}以太网、音频/\allowbreak{}摄像头、安全/\allowbreak{}CRC、中间件菜单。这是能力介绍，没有配置这些外设。
+
+7:15–8:25  HSE25MHz经主PLL作为SYSCLK，尝试倍/\allowbreak{}分频。不能把中途16/\allowbreak{}168.75等值当最终。
+
+8:25–10:08  多轮静音/\allowbreak{}少量讲解调整M/\allowbreak{}N/\allowbreak{}P、APB分频，红色超限提示逐步消除。9:55口述接受“接近”值，试算过程不逐次复制到教程。
+
+
+\clearpage
+\pdfbookmark[0]{2 CubeMX新建工程 操作索引续}{page7}
+\qtitle{2 CubeMX新建工程 操作索引续}
+10:08–10:35  最终M20/\allowbreak{}N268/\allowbreak{}P2→167.5MHz；AHB/\allowbreak{}1，APB1/\allowbreak{}4=41.875，APB2/\allowbreak{}2=83.75；RTC切LSE32.768kHz。10:20主时钟已定但RTC仍LSI，10:35才是RTC最终。
+
+10:35–11:08  Project Manager选MDK-ARM，Min Version V5.32，Heap0x200、Stack0x400。Min Version不是本机µVision实际版本。
+
+11:08–11:45  Copy all used libraries；每外设.c/\allowbreak{}.h；Keep User Code；不勾Backup；勾Delete obsolete generated files。与HAL流水灯选择只复制必要库不同。
+
+11:45–12:15  Generate Code成功，打开目录/\allowbreak{}工程，固件包FW\_\allowbreak{}F4 V1.27.1。11:55成功对话框。
+
+12:15–13:50  看Core用户源、Drivers HAL/\allowbreak{}CMSIS、MDK启动文件与gpio/\allowbreak{}rtc/\allowbreak{}main；说明入口与无限循环。确实生成GPIO和RTC初始化。
+
+13:50–14:35  编译框架成功；指出全库编译较慢；检查宏USE\_\allowbreak{}HAL\_\allowbreak{}DRIVER,STM32F407xx及自动Include Paths。14:35为有效0错误0警告构建结果。
+
+14:35–15:15  Debug改选CMSIS-DAP，调试器应匹配真实板子；查看工程分组。并无下载完成/\allowbreak{}运行证据。
+
+15:15–15:58  USER CODE BEGIN 3/\allowbreak{}END 3范围演示；临时在内外输入占位字符展示区别。15:45 main.c*未保存并有hhhh/\allowbreak{}ssss，底部0错误来自旧构建，不能当当前文字可编译。
+
+
+\clearpage
+\pdfbookmark[0]{2 CubeMX新建工程 关键画面}{page8}
+\qtitle{2 CubeMX新建工程 关键画面}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/cube_new_project_330.jpg}\par
+{\footnotesize CubeMX新建 5分30秒 PE3初始Low与Low速度 课程视频原画面}
+\end{center}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/cube_new_project_635.jpg}\par
+{\footnotesize CubeMX新建 10分35秒 最终167.5 MHz及RTC选择LSE 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{3 HAL GPIO流水灯 操作索引}{page9}
+\qtitle{3 HAL GPIO流水灯 操作索引}
+本段完成PE3心跳及PB0至PB7流水灯的软件逻辑。课件要求心跳1 Hz和顺序流水；100 ms是此HAL实现选定的流水间隔。
+
+0:00–0:37  课件目标：PE3心跳与PB0–7八灯流水；LED电路低有效。PB100ms不是课件题干硬要求。
+
+0:37–1:15  CubeMX New Project选STM32F407ZGTx。
+
+1:15–1:53  SYS Serial Wire/\allowbreak{}SysTick，讲PA13/\allowbreak{}PA14调试。
+
+1:53–2:37  HSE外部晶振启用，LSE本例不用；PH0/\allowbreak{}PH1为HSE引脚。不要与通用CubeMX双晶振示范合并。
+
+2:37–4:15  HSE8MHz，PLL M8/\allowbreak{}N336/\allowbreak{}P2；SYSCLK168，APB1=42、APB2=84，定时器84/\allowbreak{}168。红色中途状态不作最终依据。
+
+4:15–6:20  PE3输出名LED2；PB0–PB7输出逐个命名YLED0–YLED7。总9路参与本功能。
+
+6:20–8:05  逐脚改初始High、推挽、上拉、Very High；最后核总表。7:45仍有PB6/\allowbreak{}PB7未完成；8:05全部完成；速度不代表灯刷新频率。
+
+8:05–9:10  保存TES3及英文路径，MDK-ARM Min V5.32，FW\_\allowbreak{}F4 V1.27.1。嵌套目录只是演示命名，不需原样照搬。
+
+9:10–9:40  Copy only necessary library files，分.c/\allowbreak{}.h、Keep User Code；生成工程。9:20选择明确，不是全库复制。
+
+9:40–10:30  生成并打开PDF配置报告，浏览引脚与配置说明。这是配置报告，不是实验测量报告。
+
+
+\clearpage
+\pdfbookmark[0]{3 HAL GPIO流水灯 操作索引续}{page10}
+\qtitle{3 HAL GPIO流水灯 操作索引续}
+10:30–11:30  Keil展开启动、应用、HAL驱动、CMSIS；定位main/\allowbreak{}gpio。
+
+11:30–13:00  MX\_\allowbreak{}GPIO\_\allowbreak{}Init中看RCC时钟使能、初始SET、结构体Pin/\allowbreak{}Mode/\allowbreak{}Pull/\allowbreak{}Speed及HAL\_\allowbreak{}GPIO\_\allowbreak{}Init。15:05补帧清楚显示PE3/\allowbreak{}PB0–7配置与先写电平。
+
+13:00–13:55  main初始化顺序HAL\_\allowbreak{}Init→SystemClock\_\allowbreak{}Config→MX\_\allowbreak{}GPIO\_\allowbreak{}Init；先编框架。不是手填一份替代生成代码。
+
+13:55–14:25  配置下载器/\allowbreak{}Flash Download；依真实板选，查看复位运行设置。14:10还为ST-Link，之后选CMSIS-DAP，中途不可当唯一指定。
+
+14:25–15:20  从旧代码复制引脚宏/\allowbreak{}数组与Number等变量；可用CubeMX生成宏或显式GPIO\_\allowbreak{}PIN\_\allowbreak{}n。标识符应保持同一套命名。
+
+15:20–16:25  误粘SPL GPIO\_\allowbreak{}ToggleBits/\allowbreak{}SetBits/\allowbreak{}ResetBits，编辑器提示implicit declaration；换成HAL函数。15:55明确SPL API错用于HAL；不是“加个头文件就行”。
+
+16:25–17:00  调整HAL\_\allowbreak{}Delay位置和1000→100：中途if后紧接Delay，后来移到if前。16:25是暂态错位，最后if仅控制TogglePin。
+
+17:00–18:20  每100ms一步，Index\%5时PE3翻转；全SET再RESET当前PB，Number到8回零，Index++；最终编译0/\allowbreak{}0。18:15最终代码；约1Hz是理论完整周期，非实测；uint16 Index回卷边界另作改进说明。
+
+18:20–19:15  总结CubeMX搭框架/\allowbreak{}应用填空，回配置页再回main解释功能代码。18:40/\allowbreak{}18:50只是看表，19:00回代码，未取得“实际再生成验证保留”的证据。
+
+19:15–20:16  右键跳HAL\_\allowbreak{}GPIO\_\allowbreak{}TogglePin定义，读库函数意义，说明WritePin/\allowbreak{}ReadPin等可按应用选择。库源码浏览不是实物测试。
+
+
+\clearpage
+\pdfbookmark[0]{3 HAL GPIO流水灯 关键画面}{page11}
+\qtitle{3 HAL GPIO流水灯 关键画面}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/hal_gpio_255.jpg}\par
+{\footnotesize HAL GPIO 4分15秒 168 MHz时钟配置 课程视频原画面}
+\end{center}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/hal_gpio_485.jpg}\par
+{\footnotesize HAL GPIO 8分05秒 最终High与Very High输出设置 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{3 HAL GPIO流水灯 关键画面续}{page12}
+\qtitle{3 HAL GPIO流水灯 关键画面续}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/hal_gpio_560.jpg}\par
+{\footnotesize HAL GPIO 9分20秒 只复制必要库 课程视频原画面}
+\end{center}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/hal_gpio_955.jpg}\par
+{\footnotesize HAL GPIO 15分55秒 中途误用SPL API的诊断 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{3 HAL GPIO流水灯 关键画面续}{page13}
+\qtitle{3 HAL GPIO流水灯 关键画面续}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/hal_gpio_1095.jpg}\par
+{\footnotesize HAL GPIO 18分15秒 最终100 ms步进与每5步翻转 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{4 标准库GPIO流水灯 操作索引}{page14}
+\qtitle{4 标准库GPIO流水灯 操作索引}
+本段手工配置标准库GPIO。最终Delay20配合10 ms滴答，使心跳每200 ms翻转，完整周期约0.4 s；与课件1 Hz目标不同。
+
+0:00–1:02  说明PE3与PB0–7、电路与两种库实现路线。课件指定心跳1Hz，但后面实现未保持该频率。
+
+1:02–2:30  从老师资源复制模板3目录，新建TES3/\allowbreak{}UserMain工程。
+
+2:30–3:15  选器件及CMSIS核心；厂商外设库手加。3:00帧仍未勾，不能拿该帧说已完成选择。
+
+3:15–4:15  打开Pack Installer说明缺器件包时找到ST→STM32F407ZG，已有包显示Up to date。只展示已有安装状态，没有实际新安装全过程。
+
+4:15–6:15  Startup、Stdlib、User分组与文件；解释misc支持中断，按功能选库。
+
+6:15–7:35  Define宏与三个Include目录。21:15回顾最终设置。
+
+7:35–8:00  CMSIS-DAP/\allowbreak{}SW设置，No Debug Unit Device found。7:45清晰，无板卡连接成功证据。
+
+8:00–8:30  编译器6产生错误/\allowbreak{}警告，改5后构建。8:10显示7 errors/\allowbreak{}21 warnings的中途结果，不混到最终。
+
+8:30–9:15  解释SysTick10ms，Delay(5)=50ms，随后修改初始延时。留下旧注释时以真实代码为准。
+
+9:15–10:45  main前声明LED\_\allowbreak{}init并在文件下方定义，不拆独立驱动文件便于初学。
+
+
+\clearpage
+\pdfbookmark[0]{4 标准库GPIO流水灯 操作索引续}{page15}
+\qtitle{4 标准库GPIO流水灯 操作索引续}
+10:45–12:10  GPIO\_\allowbreak{}InitTypeDef，RCC\_\allowbreak{}AHB1PeriphClockCmd使能B/\allowbreak{}E；解释GPIO所在AHB1。11:15代码原文可读。
+
+12:10–13:10  PE3/\allowbreak{}PE4推挽/\allowbreak{}上拉/\allowbreak{}GPIO\_\allowbreak{}High\_\allowbreak{}Speed；GPIO\_\allowbreak{}Init后SET使灯默认灭。虽然题目用PE3，这里顺便初始化PE4。
+
+13:10–14:00  PB0–7同样初始化并SET，main调用LED\_\allowbreak{}init。
+
+14:00–15:35  加Delay(20)，查GPIO库定义并选择ToggleBits(GPIOE,Pin3)。15:32明确“200毫秒取反”，非500ms。
+
+15:35–17:00  每次全SET八脚，ResetBits选一个，解释低有效流水。15:45明确200ms移位是本例实现取值。
+
+17:00–18:20  引入GPIO\_\allowbreak{}PIN数组与Number，Number++、等8归零；替换旧自定义符号成标准GPIO\_\allowbreak{}Pin\_\allowbreak{}n。
+
+18:20–19:00  数组初始值误以竖线连接，教师指出应逗号，逐项修复。18:40仍混有竖线，18:55已全逗号；位掩码与数组用途不同。
+
+19:00–20:50  编译0/\allowbreak{}0，总结模板/\allowbreak{}分组/\allowbreak{}初始化/\allowbreak{}应用顺序并回看代码。19:45仍Delay20+每轮toggle，完整周期约400ms=2.5Hz。
+
+20:50–22:31  回顾Compiler5、宏、Include、下载器、Reset and Run；强调初始化有固定格式，应用逻辑可变化。22:15最终代码没有改为1Hz，不能把“实现功能”口述替代频率验算。
+
+
+\clearpage
+\pdfbookmark[0]{4 标准库GPIO流水灯 关键画面}{page16}
+\qtitle{4 标准库GPIO流水灯 关键画面}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/spl_gpio_1135.jpg}\par
+{\footnotesize 标准库GPIO 18分55秒 引脚数组已改为逗号分隔 课程视频原画面}
+\end{center}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/spl_gpio_1185.jpg}\par
+{\footnotesize 标准库GPIO 19分45秒 10 ms滴答与Delay20 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{5 汇编与单步调试 操作索引}{page17}
+\qtitle{5 汇编与单步调试 操作索引}
+本段通过模拟器观察启动、加法、子程序调用和循环。它是调试练习，原演示的返回结构经历现场修改，不能当作完整验证的应用模板。
+
+0:00–0:45  汇编入门/\allowbreak{}无目标板；About查看µVision5.35.0.0、MDK5.35.0.2、当时工具链6.16。这里记录版本文字；当时工具链不能套给后续Compiler5示例。
+
+0:45–1:30  新建工程Tetris，选择ST F4/\allowbreak{}ZG器件。
+
+1:30–2:20  RTE勾CMSIS Core、Device Startup，其他不选。1:48/\allowbreak{}2:12勾选完成；CORE5.5.0、Startup2.6.3为组件信息而非IDE版本。
+
+2:20–3:30  展开startup.s与system\_\allowbreak{}stm32f4xx.c，解释向量/\allowbreak{}系统初始化/\allowbreak{}系统时钟。不能用SystemCoreClock初始变量16MHz断言所有工程主时钟16MHz。
+
+3:30–4:10  Add New Item建Test.s，复制示例。
+
+4:10–5:05  AREA/\allowbreak{}ENTRY/\allowbreak{}EXPORT \_\allowbreak{}\_\allowbreak{}main；MOV R0=50、R1=101；BL func01/\allowbreak{}func02；ADD与BX LR。程序短小，不等同完整可交付主程序。
+
+5:05–5:20  编译，0错误1警告L6314W。“没错”是无error，不是无warning。
+
+5:20–5:50  勾Use MicroLIB、选Use Simulator；与开发板无关。5:25/\allowbreak{}5:40设置可读，此工程仍选Compiler6。
+
+5:50–6:15  进入Debug，介绍单步进入/\allowbreak{}跨过子程序、寄存器/\allowbreak{}反汇编窗口。口述对两个按钮有重复/\allowbreak{}含糊，按钮功能按工具实际定义说明，不逐字照引。
+
+6:15–7:20  看向量表前两项\_\allowbreak{}\_\allowbreak{}initial\_\allowbreak{}sp与Reset\_\allowbreak{}Handler，再看LDR/\allowbreak{}BLX SystemInit、LDR/\allowbreak{}BX \_\allowbreak{}\_\allowbreak{}main。6:35/\allowbreak{}7:10原画可辨；地址0/\allowbreak{}4为向量偏移说明，非一律物理Flash绝对地址。
+
+
+\clearpage
+\pdfbookmark[0]{5 汇编与单步调试 操作索引续}{page18}
+\qtitle{5 汇编与单步调试 操作索引续}
+7:20–8:00  单步加法，观察R5=0x238。5+0x233按十六进制解释。
+
+8:00–8:55  发现返回/\allowbreak{}推进不如预期，尝试调试后注释BL func01，重新构建再试func02。8:37编辑、8:55新调试可读，不称彻底修复返回结构。
+
+8:55–9:30  单步或运行到光标；观察寄存器、时间、SP及xPSR N/\allowbreak{}Z/\allowbreak{}C等。模拟时间不自动代表真实硬件计时。
+
+9:30–10:15  func02两个顺序倒计数循环R7=8、R6=7，CBZ/\allowbreak{}NOP/\allowbreak{}SUBS/\allowbreak{}B，最后BX LR；强调后续更多用C实现。10:05无回到LOOP7的外循环，不是7×8嵌套循环。
+
+
+\clearpage
+\pdfbookmark[0]{5 汇编与单步调试 关键画面}{page19}
+\qtitle{5 汇编与单步调试 关键画面}
+\begin{center}
+\includegraphics[width=6.3in]{evidence/assembly_605.jpg}\par
+{\footnotesize 汇编 10分05秒 两段顺序倒计数循环 课程视频原画面}
+\end{center}
+
+\clearpage
+\pdfbookmark[0]{不同版本的关键对照}{page20}
+\qtitle{不同版本的关键对照}
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.581\hsize}Y|>{\hsize=1.209\hsize}Y|>{\hsize=1.209\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{比较项} & \textbf{通用CubeMX视频} & \textbf{HAL GPIO视频} \\ \hline
+外部输入与主频 & 25 MHz →167.5 MHz & 8 MHz →168 MHz \\ \hline
+PE3标签与初始电平 & LED0，Low & LED2，High \\ \hline
+输出速度 & Low & Very High \\ \hline
+复制库 & 全部已用库 & 仅必要库 \\ \hline
+RTC & 启用时钟源，最终LSE & 本例没有RTC需求 \\ \hline
+\end{tabularx}
+\endgroup\par
+GPIO速度设置影响输出边沿驱动特性，不能把Very High理解为灯的刷新频率。通用CubeMX的RTC只勾选时钟源，没有展示完成日历应用。
+
+\qsub{翻转间隔与完整周期}
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=1.163\hsize}Y|>{\hsize=1.023\hsize}Y|>{\hsize=0.814\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{实现} & \textbf{翻转间隔} & \textbf{完整亮灭周期} \\ \hline
+HAL GPIO最终 & 每5个100 ms步骤，即约500 ms & 约1 s，1 Hz \\ \hline
+标准库GPIO最终 & Delay20×10 ms，即约200 ms & 约0.4 s，2.5 Hz \\ \hline
+教师HAL压缩包原件 & 约1000 ms，与视频最终版本不同 & 约2 s，0.5 Hz \\ \hline
+\end{tabularx}
+\endgroup\par
+\qsub{修正过程值得保留}
+HAL中误用GPIO\_\allowbreak{}ToggleBits等SPL接口，应换成对应HAL接口；不是简单加一个头文件就能混用两套库。SPL的引脚数组用逗号保存多个元素，按位或则用于合成同时操作多个引脚的位掩码。
+
+CubeMX结尾的hhhh、ssss是USER CODE内外位置演示，main.c带未保存标记；底部旧的0错误不证明这些临时文字可以编译。HAL尾段只确认回看配置与代码，没有确认重新生成后保留代码的完整对照过程。
+
+IDE版本、编译器版本、固件包版本与MDK最低版本要求是不同信息。旧模板切换Compiler5是该模板的兼容处理，不是所有STM32工程都必须使用AC5。
+
+
+\clearpage
+\pdfbookmark[0]{复习问题与尚待验证的部分}{page21}
+\qtitle{复习问题与尚待验证的部分}
+\qsub{按问题回看}
+1  从晶振与PLL参数算出SYSCLK、APB和定时器时钟，解释167.5 MHz与168 MHz为何同时出现在课程中。
+
+2  画出低电平有效LED的电流路径，解释先SET八脚、再RESET一路怎样形成流水灯。
+
+3  比较SPL Delay20与HAL\_\allowbreak{}Delay20的等待单位，并将标准库心跳改为500 ms翻转。
+
+4  分别检查预处理宏、Include路径和头文件改名，记录每种错误的诊断与修复结果。
+
+5  说明GPIO\_\allowbreak{}PIN数组与按位或掩码的区别，并检查循环索引的归零边界。
+
+6  在自己的工程中保留一次重新生成前后的对照，验证USER CODE区域；不要只凭讲解推断已经验证。
+
+7  手工追踪BL、BX LR与PC，解释R5为何得到0x238，以及R7、R6两段顺序循环为何不是7×8嵌套。
+
+\qsub{哪些片段仍不能过度解释}
+标准库新建7:00至7:15、标准库GPIO8:00至8:15的诊断输出滚动，未逐条恢复全部错误因果。CubeMX 8:25至10:08的多次暂态试算不逐项抄录，最终参数已经确认；应用自身完整About版本未确认。
+
+CubeMX 15:15至15:58只确认USER CODE位置演示；HAL 18:20至19:15未确认一次实际重新生成成功。汇编8:00至8:55隔离了返回推进问题，但没有证明原来两个调用的整体布局已经修复。
+
+汇编5:50至6:15的单步按钮口述存在重复与含糊，应按Step Into、Step Over的实际功能验证。模拟时间、寄存器窗口和编译通过都不能替代板上计时与波形测量。
+
+\qsub{配套文件}
+同目录保留清洁Markdown索引与核验摘要，以及13张关键原图。其余操作可按本册时间戳回到云盘原视频，不重复打包媒体文件或转录初稿。
+
+\end{document}

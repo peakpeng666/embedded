@@ -1,0 +1,563 @@
+\documentclass[11pt,a4paper]{ctexart}
+% ---------- 字体 ----------
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}
+% ---------- 颜色 ----------
+\usepackage[table]{xcolor}
+\definecolor{accent}{HTML}{1F4E79}
+\definecolor{accentbg}{HTML}{EDF2F8}
+\definecolor{rulegray}{HTML}{8A94A0}
+\definecolor{codebg}{HTML}{F5F6F8}
+% ---------- 版面 ----------
+\usepackage{geometry}
+\geometry{margin=2.35cm,top=2.5cm,bottom=2.4cm,headheight=15pt,headsep=12pt}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,array,tabularx,multirow,makecell}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{circuitikz}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,linkcolor=accent!80!black,urlcolor=accent!80!black,
+            pdftitle={STM32F407微控制器架构剖析与嵌入式固件系统工程验证报告},pdfauthor={彭俊杰}]{hyperref}
+% ---------- 标题格式 ----------
+\ctexset{
+  section={number={\arabic{section}},format={\Large\bfseries\heiti\color{accent}},
+           aftername={\enspace},beforeskip={1.5em plus .3em},afterskip={.9em}},
+  subsection={format={\large\bfseries\heiti},aftername={\enspace},
+              beforeskip={1.1em plus .2em},afterskip={.6em}},
+  subsubsection={format={\bfseries\heiti},aftername={\enspace},
+                 beforeskip={.9em plus .1em},afterskip={.5em}}
+}
+\setlist{itemsep=2pt,topsep=4pt,parsep=0pt}
+\setlength{\parskip}{2pt}
+% ---------- 页眉页脚 ----------
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize\color{gray!55!black}STM32F407 微控制器架构剖析与固件工程验证报告}
+\fancyhead[R]{\footnotesize\color{gray!55!black}— \thepage\ —}
+\renewcommand{\headrulewidth}{0.4pt}
+% ---------- 表格与图 ----------
+\captionsetup{font={small},labelfont={bf,color=accent},labelsep=quad,skip=5pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\arrayrulecolor{black}
+% ---------- 代码样式 ----------
+\lstdefinestyle{cstyle}{language=C,
+  basicstyle=\footnotesize\ttfamily,keywordstyle=\color{accent}\bfseries,
+  commentstyle=\color{gray!30!black}\itshape,
+  columns=fullflexible,keepspaces=true,breaklines=true,
+  frame=single,rulecolor=\color{rulegray!50},framerule=0.4pt,
+  backgroundcolor=\color{codebg},xleftmargin=1.2em,xrightmargin=1.2em,
+  framexleftmargin=0.6em,framexrightmargin=0.6em,
+  showstringspaces=false,aboveskip=0.9em,belowskip=0.9em}
+\lstdefinestyle{plain}{language={},
+  basicstyle=\footnotesize\ttfamily,columns=fullflexible,keepspaces=true,
+  frame=single,rulecolor=\color{rulegray!50},framerule=0.4pt,
+  backgroundcolor=\color{codebg},xleftmargin=1.2em,xrightmargin=1.2em,
+  framexleftmargin=0.6em,framexrightmargin=0.6em,aboveskip=0.9em,belowskip=0.9em}
+% ---------- 摘要盒 ----------
+\newtcolorbox{absbox}{enhanced,colback=accentbg,colframe=accent!70,boxrule=0.5pt,arc=2.5pt,
+  left=10pt,right=10pt,top=8pt,bottom=8pt,
+  title={\heiti\zihao{-4} 摘\quad 要},coltitle=white,colbacktitle=accent,fonttitle=\bfseries,
+  attach boxed title to top left={yshift=-2mm,xshift=8mm},
+  boxed title style={arc=1.5pt,boxrule=0pt,left=8pt,right=8pt,top=2.5pt,bottom=2.5pt}}
+
+\begin{document}
+% ================= 标题区 =================
+\thispagestyle{plain}
+\begin{center}
+  {\zihao{2}\heiti\color{accent}STM32F407微控制器架构剖析\\[4pt]与嵌入式固件系统工程验证报告\par}
+  \vspace{8pt}
+  {\color{accent!55}\rule{0.32\textwidth}{1pt}}\par
+  \vspace{6pt}
+  {\small 彭俊杰\quad 智装备241\quad 2024306100324\quad 2026年10月6日\par}
+\end{center}
+\vspace{4pt}
+
+\pdfbookmark[1]{摘要}{abstract}
+\begin{absbox}
+本报告针对 ARM Cortex-M4 内核微控制器及意法半导体 STM32F407ZGT6 系列 SoC，系统解析其存储器映射、多层总线拓扑、中断异常向量机制、树状时钟分配网络及硬件复位时序；结合标准外设库（SPL）与硬件抽象层（HAL）两类典型固件架构，深入剖析系统从复位上电至 \texttt{main()} 函数的执行流、SysTick 系统节拍时基机制、GPIO 寄存器原子操作规范以及 STM32CubeMX 自动化配置的电气合规性；最后对 Keil MDK 仿真环境下的存储器访问受限机理进行硬件级溯源诊断。
+\end{absbox}
+
+\section*{验证边界与方法论说明}
+\addcontentsline{toc}{section}{验证边界与方法论说明}
+本报告所涉及的寄存器映射、总线连接关系、电气参数及引脚定义，均以 ARM 官方架构手册（PM0214 / DUI0553B）及意法半导体芯片数据手册（DS8626 Rev 12、RM0090 Rev 22）为基准依据。
+
+固件行为分析基于工程源码（普中 F407 示例、教师教学例程 CH5EX01 及 CubeMX 6.18.1 生成工程）进行白盒推导与静态时序建模；软件构建验证采用 Arm Compiler 5.06 (build 960) 历史日志作为确定性证据；仿真分析依托 $\mu$Vision 软件仿真会话的异常断点与寄存器状态展开溯源。涉及物理引脚波形、实测翻转抖动与硬件响应延迟的论断，均界定为基于电路模型的理论标称值。
+
+\vspace{2pt}
+\ctexset{tocdepth=2}
+\tableofcontents
+
+\clearpage
+% ================= 第一部分 =================
+\section{Cortex-M4 体系结构与异常处理模型}
+
+\subsection{核心体系结构术语与接口规范}
+Cortex-M4 处理器基于 ARMv7E-M 架构，其主要内部子系统、总线接口及调试协议定义如表~\ref{tab:terms}~所示。
+
+\begin{table}[H]
+\centering
+\caption{核心术语与体系结构定义}
+\label{tab:terms}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{2.5cm} p{4.6cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+术语缩写 & 英文全称 & 体系结构定义与功能定位 \\
+\midrule
+ARM & Advanced RISC Machines & 精简指令集微处理器体系结构；本报告指 ARMv7E-M 指令集架构及其 Cortex-M4 处理器内核。 \\
+AHB / APB & Advanced High-performance Bus / Advanced Peripheral Bus & AMBA 总线规范的高性能系统总线与外设总线，分别用于挂接高速存储器与低速外设。 \\
+PPB & Private Peripheral Bus & 处理器内核私有外设总线，映射内部 NVIC、SysTick、MPU 及调试跟踪组件（\texttt{0xE0000000}--\texttt{0xE00FFFFF}）。 \\
+NVIC & Nested Vectored Interrupt Controller & 紧密耦合的嵌套向量中断控制器，支持异常优先级的动态硬件仲裁、低延迟嵌套与尾链（Tail-chaining）处理。 \\
+MPU / FPU & Memory Protection Unit / Floating-Point Unit & MPU 实现存储器区域访问权限与属性管控（无虚拟地址映射功能）；FPU 硬件支持 IEEE 754 单精度浮点运算。 \\
+SysTick & System Tick Timer & 内核集成的 24 位自减型系统滴答定时器，专为实时操作系统或裸机系统提供高精度基准时基。 \\
+MSP / PSP & Main Stack Pointer / Process Stack Pointer & 物理分离的堆栈指针寄存器；MSP 供系统复位与特权异常服务程序（ISR）使用，PSP 供线程模式下用户任务使用。 \\
+Bit-banding & Bit-band Architecture & 位带映射机制；将支持区域（SRAM/外设各 1~MB）的单一比特映射至别名区的一个 32 位字地址，实现硬件级原子位操作。 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\subsection{统一编址模型与物理存储器映射}
+Cortex-M4 采用 32 位统一线性编址空间（$4\,\mathrm{GB}$，\texttt{0x00000000}--\texttt{0xFFFFFFFF}）。STM32F407ZGT6 按照 ARM 架构分区规划内部 Flash、SRAM 及外设寄存器布局，其关键物理存储区映射如表~\ref{tab:memmap}~所示。
+
+\begin{table}[H]
+\centering
+\caption{STM32F407ZGT6 存储器物理分区与属性映射}
+\label{tab:memmap}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{2.35cm} >{\ttfamily\footnotesize}p{3.7cm} c p{3.3cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 逻辑分区 & \bfseries 地址范围 & \bfseries 物理容量 & \bfseries 关联总线与拓扑特征 & \bfseries 架构属性与访问限制 \\
+\midrule
+Flash 存储区 & 0x08000000--0x080FFFFF & $1024\,$KB & I-bus / D-bus & 包含中断向量表与代码段；支持 ART 缓存加速访问。 \\
+SRAM1 & 0x20000000--0x2001BFFF & $112\,$KB & 系统总线（S-bus） & 多层总线矩阵主从通用 SRAM，CPU 与 DMA 均可自由访问。 \\
+SRAM2 & 0x2001C000--0x2001FFFF & $16\,$KB & 系统总线（S-bus） & 辅 SRAM，与 SRAM1 连续编址，支持多主设备并发访问。 \\
+CCM Data RAM & 0x10000000--0x1000FFFF & $64\,$KB & 内核专线 D-bus & \textbf{非总线矩阵从设备}；由 CPU 独占，DMA 控制器完全不可达。 \\
+外设寄存器区 & 0x40000000--0x5FFFFFFF & $512\,$MB & AHB1 / AHB2 / APB1 / APB2 & 映射片上各类控制器寄存器；禁止执行代码（XN 属性）。 \\
+系统控制空间 & 0xE000E000--0xE000EFFF & $4\,$KB & PPB 私有外设总线 & 包含 NVIC、SysTick、SCB 等内核私有寄存器；仅限特权级访问。 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\subsubsection*{存储器拓扑的硬件隔离机理分析}
+Core Coupled Memory (CCM) 虽然具备高速随机读写特性，但在物理总线拓扑上被直接挂接于 Cortex-M4 的 D-bus 专用直连通路，未接入芯片的多层 AHB 总线矩阵。这一拓扑设计决定了：
+\begin{enumerate}[label=\textbf{(\arabic*)}]
+  \item \textbf{CPU 零等待访问}：CPU 访问 CCM 时不会与总线矩阵上的主设备（如 DMA1、DMA2、以太网 MAC）发生任何总线争用；
+  \item \textbf{DMA 物理不可达}：通用 DMA 控制器仅作为总线矩阵上的主设备，其寻址范围受限于矩阵从端口。因此，CCM 严禁分配为任何外设（ADC、串口、以太网等）的 DMA 接收与发送缓冲区，仅可用于存放栈帧、操作系统上下文关键数据或高性能算法工作区。
+\end{enumerate}
+
+\subsection{异常模型、向量表物理布局与中断响应时序}
+Cortex-M4 异常系统将系统故障、特权调用与外设中断统筹管理，由可重定位的向量表进行硬件直接寻址。
+
+\subsubsection*{1. 向量表入口计算模型}
+向量表为连续排布的 32 位入口地址序列，基地址由向量表偏移寄存器（\texttt{SCB->VTOR}）指定。向量表第 0 项保存系统复位时的主堆栈指针初始值（Initial MSP），第 1 项为复位异常服务入口（\texttt{Reset\_Handler}）。外部中断号 $\mathrm{IRQn}$（$\ge 0$）与向量表物理偏移地址 $\mathrm{Offset}$ 的映射关系满足：
+\begin{equation}
+\mathrm{Offset} = 4 \times (\mathrm{IRQn} + 16)
+\end{equation}
+例如，STM32F407 的通用定时器 TIM2 对应 $\mathrm{IRQn}=28$，其向量表入口偏移量严格为：
+\begin{equation}
+\mathrm{Offset}_{\mathrm{TIM2}} = 4 \times (28+16) = 176 = \texttt{0x000000B0}
+\end{equation}
+硬件在捕获中断请求后，依据中断向量号直接寻址 VTOR 偏移量加载 ISR 入口地址至 PC 寄存器，规避了软件轮询标志位的性能开销。
+
+\subsubsection*{2. 中断响应硬件上下文保存时序}
+当高优先级异常抢占发生且满足执行条件时，Cortex-M4 硬件微架构在进入 ISR 前自动执行硬件压栈操作。在未启用浮点扩展时，硬件强制在当前使用的堆栈中按序压入 8 个通用寄存器构成基础栈帧：
+\begin{equation}
+\mathrm{Stack\ Frame} = \{\,\mathrm{R0,\ R1,\ R2,\ R3,\ R12,\ LR,\ PC,\ xPSR}\,\}
+\end{equation}
+若开启 FPU 且上下文涉及浮点运算，硬件惰性压栈机制（Lazy Stacking）将动态追加 S0--S15 与 FPSCR 寄存器压栈。ISR 执行完毕后，执行包含特定 EXC\_RETURN 编码的返回指令，硬件触发自动出栈恢复现场。
+
+% ================= 第二部分 =================
+\section{STM32F407 片上总线网络、时钟系统与复位拓扑}
+
+\subsection{多层 AHB 总线矩阵互连架构}
+STM32F407 采用多层 AHB 总线互连矩阵，协调 8 个主端口与 7 个从端口的无阻塞并发访问。其物理端口映射与外设挂接关系如表~\ref{tab:matrix}~所示。
+
+\begin{table}[H]
+\centering
+\caption{STM32F407 多层 AHB 总线矩阵主从端口对应关系}
+\label{tab:matrix}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{3.5cm} p{3.6cm} p{3.3cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 主端口编号与名称 & \bfseries 主端口功能说明 & \bfseries 可访问从端口集合 & \bfseries 典型挂接外设与物理基址 \\
+\midrule
+M1: Cortex-M4 I-bus & 指令取指通路 & S1: Flash ICode & 片上 Flash 代码区（\texttt{0x08000000}） \\
+M2: Cortex-M4 D-bus & 常量与代码区数据访问 & S2: Flash DCode，\textbf{[直连CCM]} & Flash 字面量池、CCM（\texttt{0x10000000}） \\
+M3: Cortex-M4 S-bus & 系统 SRAM 与外设访问 & S3, S4, S5, S6, S7 & 挂接 SRAM1/2、外设总线桥及 FSMC \\
+M4: DMA1 Memory & DMA1 存储器读写端口 & S3: SRAM1, S4: SRAM2, S7: FSMC & 内存缓冲区寻址 \\
+M5: DMA2 Memory & DMA2 存储器读写端口 & S1, S2, S3, S4, S7 & 内存及 Flash 数据流转 \\
+M6: DMA2 Peripheral & DMA2 外设端口 & S5: AHB1 外设, S6: AHB2 外设 & 访问外设 FIFO / 数据寄存器 \\
+M7: Ethernet DMA & 以太网专用控制器 DMA & S3: SRAM1, S4: SRAM2 & 接收与发送描述符及数据帧缓存 \\
+M8: USB OTG HS DMA & USB 高速控制器 DMA & S3: SRAM1, S4: SRAM2 & USB 高速端点数据流传输 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+在外设总线分层结构中，\textbf{AHB 到 APB 桥}映射为总线矩阵从端口 S5 的后端下级节点。主要外设的总线从属关系及使能位如表~\ref{tab:busen}~所示。
+
+\begin{table}[H]
+\centering
+\caption{关键外设总线从属与控制寄存器}
+\label{tab:busen}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{3.4cm} C p{4.1cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 外设模块 & \bfseries 所属外设总线 & \bfseries 外设寄存器基地址 & \bfseries RCC 时钟使能寄存器与控制位 \\
+\midrule
+GPIOA--GPIOI & AHB1（最高 $168\,$MHz） & \texttt{0x40020000}（GPIOA） & \texttt{RCC->AHB1ENR}（位 0 对应 GPIOAEN） \\
+TIM2--TIM7, 12--14 & APB1（最高 $42\,$MHz） & \texttt{0x40000000}（TIM2） & \texttt{RCC->APB1ENR}（位 0 对应 TIM2EN） \\
+USART1, USART6 & APB2（最高 $84\,$MHz） & \texttt{0x40011000}（USART1） & \texttt{RCC->APB2ENR}（位 4 对应 USART1EN） \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\subsection{时钟分配网络与主 PLL 频率推导模型}
+
+\subsubsection*{1. 主 PLL 数学推导与约束方程}
+STM32F407 时钟核心由主锁相环（Main PLL）构成，以 HSI（$16\,\mathrm{MHz}$）或 HSE（$4$--$26\,\mathrm{MHz}$）为基准源。时钟频率推导遵循如下物理级联方程：
+\begin{align}
+f_{\mathrm{VCO\_IN}} &= \frac{f_{\mathrm{OSC}}}{M},
+  && 0.95\,\mathrm{MHz} \le f_{\mathrm{VCO\_IN}} \le 2.10\,\mathrm{MHz}\ \text{（推荐值为 } 1\,\mathrm{MHz}\text{）} \\
+f_{\mathrm{VCO\_OUT}} &= f_{\mathrm{VCO\_IN}} \times N,
+  && 100\,\mathrm{MHz} \le f_{\mathrm{VCO\_OUT}} \le 432\,\mathrm{MHz} \\
+f_{\mathrm{PLL\_SYSCLK}} &= \frac{f_{\mathrm{VCO\_OUT}}}{P},
+  \qquad f_{\mathrm{PLL48\_OUT}} = \frac{f_{\mathrm{VCO\_OUT}}}{Q} \nonumber
+\end{align}
+
+\subsubsection*{2. APB 定时器内部时钟倍频机理}
+当 APB 预分频器分频系数为 1 时，定时器内部时钟频率等于所属 APB 域频率（$\mathrm{CK\_INT}=f_{\mathrm{PCLK}}$）；当 APB 预分频系数大于 1 时，硬件自动启用 $\times 2$ 倍频电路：
+\begin{equation}
+\mathrm{CK\_INT}_{\mathrm{TIM}x} = 2 \times f_{\mathrm{PCLK}x}
+\end{equation}
+在标准 $168\,\mathrm{MHz}$ 工作工况下，各级总线频率与定时器时钟分配严格满足表~\ref{tab:clk168}。
+
+\begin{table}[H]
+\centering
+\caption{标准 168 MHz 配置下各总线域标称参数}
+\label{tab:clk168}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{4.1cm} c >{\footnotesize\ttfamily}p{3.9cm} c c@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 节点参数 & \bfseries 理论分频比 & \bfseries 实际配置寄存器 & \bfseries 节点输出频率 & \bfseries 硬件电气上限（DS8626） \\
+\midrule
+HSE 晶振基准 & 无 & 外部晶振电路 & $8.00\,$MHz & $4.00$--$26.00\,$MHz \\
+PLL-M 分频 & $/8$ & RCC\_PLLCFGR.PLLM & $1.00\,$MHz & $0.95$--$2.10\,$MHz \\
+PLL-N 倍频 & $\times 336$ & RCC\_PLLCFGR.PLLN & $336.00\,$MHz & $100.00$--$432.00\,$MHz \\
+PLL-P 分频 (SYSCLK) & $/2$ & RCC\_PLLCFGR.PLLP & $168.00\,$MHz & 最大 $168.00\,$MHz \\
+AHB 总线 (HCLK) & $/1$ & RCC\_CFGR.HPRE & $168.00\,$MHz & 最大 $168.00\,$MHz \\
+APB1 外设总线 (PCLK1) & $/4$ & RCC\_CFGR.PPRE1 & $42.00\,$MHz & 最大 $42.00\,$MHz \\
+APB1 定时器时钟 (TIMx) & 自动 $\times 2$ & 内部硬件倍频器 & $84.00\,$MHz & 最大 $84.00\,$MHz \\
+APB2 外设总线 (PCLK2) & $/2$ & RCC\_CFGR.PPRE2 & $84.00\,$MHz & 最大 $84.00\,$MHz \\
+Flash 等待周期 & 5 WS & FLASH\_ACR.LATENCY & 5 个等待周期 & $V_{\mathrm{DD}}=2.7$--$3.6\,$V 时需 5 WS \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>={Stealth[length=2mm]},font=\small,
+  src/.style={draw=rulegray!70,fill=gray!8,rounded corners=1.5pt,minimum height=8.5mm,inner sep=4pt,align=center},
+  pll/.style={draw=accent!65,fill=accentbg,rounded corners=1.5pt,minimum height=8.5mm,inner sep=4pt,align=center},
+  arr/.style={->,rulegray!90,thick}]
+  \node[src] (hse) at (0,0)      {HSE\\$8\,\mathrm{MHz}$};
+  \node[src] (hsi) at (2.0,0)    {HSI\\$16\,\mathrm{MHz}$};
+  \node[pll] (mux) at (4.1,0)    {PLL 输入\\选择};
+  \node[pll] (m)   at (6.1,0)    {$\div M=8$\\$1\,\mathrm{MHz}$};
+  \node[pll] (vco) at (8.2,0)    {VCO\\$\times N=336$};
+  \node[pll] (p)   at (10.2,0)   {$\div P=2$};
+  \node[pll] (sys) at (12.4,0)   {SYSCLK\\$168\,\mathrm{MHz}$};
+  \node[src] (hclk) at (14.6,0)  {AHB $\div 1$\\HCLK $168\,\mathrm{MHz}$};
+  \node[pll] (q)   at (8.2,-1.9) {$\div Q=7$\\$48\,\mathrm{MHz}$};
+  \node[draw=none,fill=none,align=center,font=\footnotesize\color{gray!45!black}] (qnote) at (8.2,-2.95) {USB OTG FS $\cdot$ SDIO\\RNG 时钟源};
+  \node[src] (apb1) at (11.9,-1.9) {APB1 $\div 4$\\PCLK1 $42\,\mathrm{MHz}$};
+  \node[src] (apb2) at (14.6,-1.9) {APB2 $\div 2$\\PCLK2 $84\,\mathrm{MHz}$};
+  \node[src] (tim)  at (11.9,-3.5) {定时器 $\times 2$\\$\mathrm{CK\_INT}=84\,\mathrm{MHz}$};
+  \draw[arr] (hse) -- (mux);
+  \draw[arr] (hsi) -- (mux);
+  \draw[arr] (mux) -- (m);
+  \draw[arr] (m)   -- (vco);
+  \draw[arr] (vco) -- (p);
+  \draw[arr] (p)   -- (sys);
+  \draw[arr] (sys) -- (hclk);
+  \draw[arr] (vco) -- (q);
+  \draw[arr] (hclk.south) -- ++(0,-0.45) -| (apb1.north);
+  \draw[arr] (hclk.south) -- ++(0,-0.45) -| (apb2.north);
+  \draw[arr] (apb1) -- (tim);
+\end{tikzpicture}
+\caption{标准 168 MHz 配置的时钟分配示意（数据对应表~\ref{tab:clk168}）}
+\label{fig:clocktree}
+\end{figure}
+
+\subsection{硬件复位拓扑与典型电路分析}
+STM32F407ZGT6 外部复位引脚 NRST 内部集成了弱上拉电阻（典型阻值 $R_{\mathrm{PU}}=40\,\mathrm{k}\Omega$），低电平有效，其外部典型连接如图~\ref{fig:reset}~所示。
+
+\begin{figure}[H]
+\centering
+\begin{circuitikz}[american,font=\small,>={Stealth[length=2mm]}]
+  \draw (0,3.0) node[above=2pt,align=center]{$V_{\mathrm{DD}}$（$3.3\,\mathrm{V}$）}
+        to[short] (0,2.9) to[R] (0,1.4);
+  \node[right=3pt,align=left] at (0.15,2.15) {$R=10\,\mathrm{k}\Omega$\\（外部可选上拉）};
+  \draw (0,1.4) to[nopb] (0,-0.6);
+  \node[left=3pt,align=right] at (-0.15,0.4) {常开按键};
+  \draw (0,-0.6) node[tlground]{};
+  \draw (0,1.4) -- (2.2,1.4);
+  \draw (2.2,1.4) to[C] (2.2,-0.6);
+  \node[right=3pt,align=left] at (2.35,0.4) {$C=100\,\mathrm{nF}$};
+  \draw (2.2,-0.6) node[tlground]{};
+  \draw[->] (2.2,1.4) -- (4.0,1.4);
+  \node[right,align=left] at (4.05,1.4) {至 NRST\\（LQFP144 第 25 脚）};
+\end{circuitikz}
+\caption{STM32F407ZGT6 外部复位电路（外部典型 RC 网络 $R=10\,\mathrm{k}\Omega$、$C=100\,\mathrm{nF}$）}
+\label{fig:reset}
+\end{figure}
+
+外部典型 RC 滤波网络取 $R=10\,\mathrm{k}\Omega$、$C=100\,\mathrm{nF}$。名义时间常数 $\tau = RC = 1\,\mathrm{ms}$，可抑制电源建立瞬态毛刺与按键机械抖动。
+
+\subsubsection*{关键引脚的封装差异与电气约束}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{NRST 引脚映射的封装依赖性}：查 DS8626 Rev 12 Table 7 引脚定义表，STM32F407ZGT6 采用 \textbf{LQFP144 封装，NRST 物理引脚严格位于第 25 脚}（第 14 脚为普通 IO 口 PF4）。在小型化 LQFP100 封装中，NRST 则位于第 14 脚。跨封装原理图迁移时，必须依据封装球位重构网络拓扑。
+  \item \textbf{PDR\_ON 引脚的高电平约束}：在 LQFP144 封装中，第 143 脚为掉电复位监控使能端（PDR\_ON）。依据 DS8626 第 3.15.1 节规定，在使用芯片内部电源复位监控器（POR/PDR）时，\textbf{PDR\_ON 必须强制直连 VDD 并保持恒定高电平}，绝对严禁悬空；若需旁路内部监控电路而采用外部硬件监控芯片时，方允许将 PDR\_ON 接地。
+\end{enumerate}
+
+\subsection{主流微控制器特性横向对比（F407ZGT6 vs L496VET6）}
+针对高性能控制与极低功耗应用两类典型设计场景，表~\ref{tab:compare}~给出了两款主流 Cortex-M4 芯片的技术特征比对。
+
+\begin{table}[H]
+\centering
+\caption{STM32F407ZGT6 与 STM32L496VET6 架构特征参数对比}
+\label{tab:compare}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{2.6cm} p{3.9cm} p{3.9cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 技术指标 & \bfseries STM32F407ZGT6（高性能互联型） & \bfseries STM32L496VET6（超低功耗型） & \bfseries 架构差异与工程选型意义 \\
+\midrule
+内核架构 & Cortex-M4F（带单精度 FPU / DSP） & Cortex-M4F（带单精度 FPU / DSP） & 同属 ARMv7E-M 架构，指令集二进制兼容。 \\
+最高主频 & $168\,$MHz & $80\,$MHz & F407 运算吞吐能力达 1.25 DMIPS/MHz。 \\
+片上 Flash & $1024\,$KB（型号码：G） & $512\,$KB（型号码：E） & L496 支持 Dual-bank 实时安全空中升级（OTA）。 \\
+片上 SRAM & $192\,$KB（$112+16\,$KB SRAM $+\,64\,$KB CCM） & $320\,$KB（$256\,$KB SRAM1 $+\,64\,$KB SRAM2） & L496 片上 SRAM 均接入总线矩阵且带奇偶校验。 \\
+物理封装 & LQFP144（144 引脚，代码：Z） & LQFP100（100 引脚，代码：V） & F407 拥有 114 个可寻址 GPIO（无 GPIOI）。 \\
+供电电压范围 & $1.8$--$3.6\,$V & $1.71$--$3.6\,$V（内部 LDO 模式） & L496 支持供电电压动态阶梯调节（DVFS）。 \\
+高级外设集成 & 以太网 MAC、USB OTG HS（需外置 PHY）、FSMC & USB OTG FS、QSPI、段式 LCD 驱动、LPUART & F407 偏重网络通信；L496 偏重便携人机交互。 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+% ================= 第三部分 =================
+\section{固件系统实现、硬件驱动与时序核验}
+
+\subsection{固件工程架构演进与启动复位时序}
+STM32 固件工程的启动序列依托汇编启动文件（\texttt{startup\_stm32f407xx.s}）引导。启动执行流涉及硬件复位、内核环境初始化及 C 运行时库引导，如图~\ref{fig:boot}~所示。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>={Stealth[length=2.4mm]},font=\small,
+  start/.style={draw=accent!75,fill=accentbg,rounded corners=7pt,minimum height=7.5mm,inner sep=5pt,align=center},
+  stp/.style={draw=rulegray!70,fill=gray!6,rounded corners=1.5pt,minimum height=8.5mm,inner sep=5pt,align=center},
+  lib/.style={stp,align=left},
+  arr/.style={->,accent!85,thick},
+  node distance=4.5mm]
+  \node[start] (rst) {硬件复位上电};
+  \node[stp, below=of rst] (msp) {\textbf{1.} 硬件自动从 \texttt{0x00000000}（VTOR）读取 MSP 初始值（\texttt{DCD \_\_initial\_sp}）};
+  \node[stp, below=of msp] (pc)  {\textbf{2.} 硬件自动从 \texttt{0x00000004} 读取 PC 复位向量（\texttt{DCD Reset\_Handler}）};
+  \node[stp, below=of pc]  (entry) {进入 \texttt{Reset\_Handler} 汇编入口};
+  \node[stp, below=of entry] (sysinit) {\textbf{3.} 调用 \texttt{SystemInit()}：配置 FPU 访问权限 CPACR、重定位 VTOR 向量基址};
+  \node[lib, below=of sysinit] (cmain) {\textbf{4.} 跳转至 Arm 运行时入口 \texttt{\_\_main}\\
+        \phantom{4.}—— 拷贝 \texttt{.data} 段从 Flash 至 SRAM\\
+        \phantom{4.}—— 清零 \texttt{.bss} 段所在的 SRAM 区域\\
+        \phantom{4.}—— 初始化 C 运行库底层环境与堆栈};
+  \node[start, below=of cmain] (main) {5. 跳转至应用程序 \texttt{main()}};
+  \draw[arr] (rst) -- (msp);
+  \draw[arr] (msp) -- (pc);
+  \draw[arr] (pc) -- (entry);
+  \draw[arr] (entry) -- (sysinit);
+  \draw[arr] (sysinit) -- (cmain);
+  \draw[arr] (cmain) -- (main);
+\end{tikzpicture}
+\caption{Cortex-M4 启动与运行环境构建时序流程}
+\label{fig:boot}
+\end{figure}
+
+\subsubsection*{启动流程在库架构下的设计差异}
+\begin{itemize}
+  \item \textbf{SPL 体系}：在 \texttt{SystemInit()} 内部直接调用 \texttt{SetSysClock()} 函数，利用硬编码宏完成主 PLL 配置并将 CPU 提升至最高频率（如 $168\,\mathrm{MHz}$ 或 $84\,\mathrm{MHz}$）；
+  \item \textbf{HAL 体系}：\texttt{SystemInit()} 仅负责开启 CPACR 寄存器的浮点协处理器访问权限，主时钟树配置推迟至 \texttt{main()} 函数中显式调用的 \texttt{SystemClock\_Config()} 内动态执行。
+\end{itemize}
+
+\subsection{GPIO 底层驱动机制与寄存器级原子操作}
+
+\subsubsection*{1. 端口配置模式寄存器（GPIOx\_MODER）的双位掩码规范}
+在 STM32F4 中，每个 GPIO 引脚在 \texttt{MODER} 寄存器中占用连续的 2 位。对引脚 $n$ 配置为复用功能（模式编码二进制 \texttt{10b}）时，移位偏移量为 $2n$。以同时配置 PA2（位宽 [5:4]）和 PA3（位宽 [7:6]）为例，标准原子掩码表达式为：
+\begin{lstlisting}[style=cstyle]
+/* 必须先清除目标引脚对应的双位空间，再写入目标模式值 */
+GPIOA->MODER &= ~((3U << (2 * 2)) | (3U << (2 * 3)));  /* 清除位[5:4]与位[7:6] */
+GPIOA->MODER |=  ((2U << (2 * 2)) | (2U << (2 * 3)));  /* 写入复用模式 10b    */
+\end{lstlisting}
+若移位操作中遗漏乘数 2，将直接破坏低位引脚的已有模式配置。
+
+\subsubsection*{2. 置位/复位寄存器（GPIOx\_BSRR）的单向写命令属性}
+\texttt{GPIOx\_BSRR} 是纯粹的\textbf{单向硬件置位/复位写命令寄存器}。低 16 位写入 1 表示强制置高对应 ODRx，高 16 位写入 1 表示强制拉低对应 ODRx，写入 0 则保持原状不产生动作。
+
+对 BSRR 寄存器执行读操作恒定返回 \texttt{0x00000000}。因此，\textbf{严禁对 BSRR 使用读-改-写运算符（\texttt{|=} 或 \texttt{\&=}）}。
+
+例如，实现 PA4、PA5、PA7 输出拉低，同时 PA6 输出置高的原子写入语句为：
+\begin{lstlisting}[style=cstyle]
+/* 低16位设置PA6(0x0040)；高16位复位PA4,PA5,PA7(0x0010|0x0020|0x0080 = 0x00B0) */
+GPIOA->BSRR = (0x00B0U << 16) | 0x0040U;
+\end{lstlisting}
+由于单次 32 位总线写操作在微架构上是不可中断的原子指令，该语句消除了中断或多任务上下文争用所引发的静态临界区保护开销。
+
+\subsubsection*{3. 输出速度等级的物理意义}
+库函数配置项 \texttt{GPIO\_SPEED\_FREQ\_LOW}（或 \texttt{GPIO\_Speed\_2MHz}、\texttt{GPIO\_Speed\_100MHz}）控制的是内部输出驱动 MOS 管的\textbf{压摆率（Slew Rate）控制电路}，而非软件输出波形的实际翻转频率。压摆率档位的选取主要用于改善信号完整性及高频辐射干扰（EMI），引脚最终的翻转速率取决于软件指令调用开销、外部寄生电容以及总线流水线延迟。
+
+\subsection{节拍定时机制深度比对与边界失效分析}
+
+\subsubsection*{1. SPL 轮询式延时 vs HAL 全局中断时基}
+两种典型库架构下的 SysTick 驱动拓扑在硬件资源使用与时间控制上存在本质分歧，如表~\ref{tab:systick}~所示。
+
+\begin{table}[H]
+\centering
+\caption{SPL 轮询式与 HAL 中断式 SysTick 时基机理深度比对}
+\label{tab:systick}
+\begingroup\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{3.0cm} p{5.9cm} Y@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 比较维度 & \bfseries 普中 SPL 典型例程（\texttt{delay\_ms}） & \bfseries STM32 HAL 框架（\texttt{HAL\_Delay}） \\
+\midrule
+时钟源基准 & 内核时钟 8 分频（HCLK$/8=21\,$MHz） & 默认内核时钟直连（HCLK $=168\,$MHz） \\
+计数器控制模式 & 按需单次装载：每次调用重写 LOAD 并启动计数器 & 持续自由运行：初始化后以 $1\,$kHz 周期自减计数 \\
+等待实现机理 & 独占 CPU 轮询读取 \texttt{CTRL.COUNTFLAG} 状态标志 & \texttt{SysTick\_Handler} 中断累加 \texttt{uwTick}，循环计算毫秒差值 \\
+调用退出状态 & 延时结束时强制清零并\textbf{关闭 SysTick 计数器} & SysTick 计数器与中断持续活跃，维持时基运行 \\
+多任务兼容性 & 阻断式独占，破坏其他基于节拍的超时监控机制 & 非阻断式时钟源，天然支持多任务超时与软件定时器 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\subsubsection*{2. 多速率调度中的计数器回卷异常分析}
+在教学例程中，常采用单一循环配合自增索引实现多速率分频。例如主循环延时 $100\,\mathrm{ms}$，通过判断 \texttt{Index \% 5 == 0} 来实现约 $500\,\mathrm{ms}$ 翻转一次的 $1\,\mathrm{Hz}$ 心跳信号。
+
+当索引变量定义为 16 位无符号整数（\texttt{uint16\_t Index}）时，存在严重的边界溢出隐患：
+\begin{equation}
+\mathrm{Index}_{\max}=65535,\qquad 65535 \bmod 5 = 0 \;\Longrightarrow\; \text{执行翻转}
+\end{equation}
+\begin{equation}
+\text{下一轮自增溢出：}\ \mathrm{Index}_{\mathrm{next}}=0,\qquad 0 \bmod 5 = 0 \;\Longrightarrow\; \text{立即再次翻转}
+\end{equation}
+在回卷临界点处，65535 与 0 均能被 5 整除，导致心跳引脚在仅相隔 $100\,\mathrm{ms}$ 的相邻循环内连续发生两次翻转，产生占空比异常的毛刺脉冲。
+
+\textbf{严谨的工业级重构方案：}改用状态机模数计数器，或基于系统全局时间戳的非阻塞差值调度：
+\begin{lstlisting}[style=cstyle]
+/* 方案 A：环形状态机分频 */
+static uint8_t prescaler = 0;
+if (++prescaler >= 5) {
+    prescaler = 0;
+    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_3);
+}
+
+/* 方案 B：基于无符号整数自然溢出特性的毫秒差值调度（推荐） */
+static uint32_t last_toggle_time = 0;
+uint32_t current_time = HAL_GetTick();
+if (current_time - last_toggle_time >= 500U) {
+    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_3);
+    last_toggle_time = current_time;  /* 依靠无符号补码减法天然免疫 uwTick 溢出 */
+}
+\end{lstlisting}
+
+\subsection{CubeMX 自动化时钟配置的电气合规性评估}
+在利用 STM32CubeMX 生成系统代码时，必须将参数求解置于芯片电气特性限值下进行检验。
+
+\subsubsection*{PLLQ 超频隐患与修复}
+在教学工程原件中，系统主频设为 $168\,\mathrm{MHz}$（$M=8$、$N=336$、$P=2$），主 PLL 的 $Q$ 分频因子被设置为 4。由此推导 $Q$ 支路输出频率：
+\begin{equation}
+f_{\mathrm{PLL48\_OUT}} = \frac{f_{\mathrm{VCO}}}{Q} = \frac{336\,\mathrm{MHz}}{4} = 84.00\,\mathrm{MHz}
+\end{equation}
+查验意法半导体官方芯片数据手册 DS8626 Rev 12 第 106 页 \textbf{Table 36 (Main PLL characteristics)}，参数 $f_{\mathrm{PLL48\_OUT}}$ 明确规定典型值为 $48\,\mathrm{MHz}$，\textbf{硬件允许的最大极限值严格为 $75\,\mathrm{MHz}$}。
+
+将 $Q$ 设置为 4 导致输出达到 $84\,\mathrm{MHz}$，不仅无法满足 USB OTG FS 模块严格的 $48\,\mathrm{MHz}\pm0.25\%$ 容差要求，而且直接超出芯片内部锁相环分频电路的物理电气极限，长期运行将诱发系统失锁或数据传输校验错误。
+
+\textbf{规范化纠正方案：}保持 VCO 输出 $336\,\mathrm{MHz}$ 不变，将 $Q$ 分频系数调整为 7：
+\begin{equation}
+f_{\mathrm{PLL48\_OUT}} = \frac{336\,\mathrm{MHz}}{7} = 48.00\,\mathrm{MHz}
+\end{equation}
+此配置既完全符合 Table 36 的电气极限，又为片上 USB OTG、SDIO 及硬件随机数发生器（RNG）提供了标准合规的时钟源。
+
+\subsection{构建验证与 Keil 软件仿真异常机理诊断}
+
+\subsubsection*{1. 构建日志静态段分析}
+基于 Arm Compiler 5 构建的各参考工程日志均实现 \texttt{0 Error(s), 0 Warning(s)}，目标代码的内存占用分布如表~\ref{tab:build}~所示。
+
+\begin{table}[H]
+\centering
+\caption{参考工程构建符号段内存占用统计（单位：字节）}
+\label{tab:build}
+\begingroup\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{3.1cm} *{6}{C}@{}}
+\toprule
+\rowcolor{gray!12}
+\normalfont\bfseries 评估目标工程 & \makecell{\textbf{Code}\\\scriptsize 代码段} & \makecell{\textbf{RO-data}\\\scriptsize 常量} & \makecell{\textbf{RW-data}\\\scriptsize 初始化变量} & \makecell{\textbf{ZI-data}\\\scriptsize 未初始化变量} & \makecell{\textbf{Flash}\\\scriptsize 实际总占用} & \makecell{\textbf{RAM}\\\scriptsize 实际总占用} \\
+\midrule
+SPL 时钟系统工程 & 1524 & 408 & 0 & 1632 & 1932 & 1632 \\
+SPL SysTick 工程 & 1272 & 424 & 4 & 1636 & 1700 & 1640 \\
+HAL 最小工程 & 3906 & 450 & 16 & 1632 & 4372 & 1648 \\
+CubeMX 骨架工程 & 3142 & 442 & 16 & 1632 & 3600 & 1648 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+在嵌入式存储器评估模型中：
+\begin{itemize}
+  \item 静态 $\text{Flash 占用} = \text{Code} + \text{RO-data} + \text{RW-data}$；
+  \item 静态 $\text{RAM 占用} = \text{RW-data} + \text{ZI-data}$。
+\end{itemize}
+表中数据显示，HAL 固件由于引入了统一的句柄状态封装与对象化抽象，其 Flash 代码空间占用（$\approx 4.3\,\mathrm{KB}$）较 SPL 库实现（$\approx 1.8\,\mathrm{KB}$）扩充了约 2.4 倍，但在现代大容量 Flash 芯片（如 F407ZGT6 的 $1024\,\mathrm{KB}$）中该开销完全可控。
+
+\subsubsection*{2. Keil 软件仿真 Error 65 异常的体系结构成因}
+在 Keil $\mu$Vision 软件仿真会话中，HAL 工程运行至 \texttt{HAL\_Init()} 内部的 Flash 访问控制配置语句附近时异常中止，IDE 调试控制台抛出硬性错误：
+\begin{lstlisting}[style=plain]
+*** error 65: access violation at 0x40023C00 : no 'read' permission
+\end{lstlisting}
+
+\textbf{微架构级成因诊断：}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{外设地址定位}：查 RM0090 Table 1，物理基地址 \texttt{0x40023C00} 属于 \textbf{Flash 接口寄存器（Flash Interface Register）}空间，具体对应 Flash 访问控制寄存器（\texttt{FLASH\_ACR}）；
+  \item \textbf{固件访问时序}：\texttt{HAL\_Init()} 默认尝试配置 \texttt{FLASH\_ACR} 中的 \texttt{PRFTEN}、\texttt{ICEN} 及 \texttt{DCEN} 位以激活指令缓存、数据缓存与预取缓冲；
+  \item \textbf{仿真器虚拟化局限}：Keil 内置的软件仿真器内核仅对 Cortex-M4 内核指令集及内核私有外设（NVIC、SysTick）提供完整模拟，并未对 STM32F407 芯片级的具体片上外设（包括 Flash 控制器、时钟 RCC 树、高级定时器）构建完备的存储器映射模型。仿真器捕获到对未映射地址的非法读写，触发保护机制抛出 Error 65。
+\end{enumerate}
+此现象纯属仿真器环境虚拟化配置受限，并非固件逻辑错误，亦不可推导为目标物理芯片存在缺陷。
+
+% ================= 参考文献 =================
+\clearpage
+\pdfbookmark[1]{参考文献}{ref}
+\begingroup\small
+\begin{thebibliography}{9}
+\setlength{\itemsep}{3pt}
+\bibitem{ds8626} STMicroelectronics. STM32F405xx, STM32F407xx Datasheet --- Production Data (DS8626 Rev 12)[EB/OL]. 2016.
+\bibitem{rm0090} STMicroelectronics. STM32F405/415, STM32F407/417, STM32F427/437 and STM32F429/439 advanced Arm-based 32-bit MCUs Reference Manual (RM0090 Rev 22)[EB/OL]. 2021.
+\bibitem{pm0214} STMicroelectronics. STM32 Cortex-M4 MCUs and MPUs programming manual (PM0214 Rev 10)[EB/OL]. 2020.
+\bibitem{ds11585} STMicroelectronics. STM32L496xx Ultra-low-power Arm Cortex-M4 32-bit MCU+FPU Datasheet (DS11585 Rev 20)[EB/OL]. 2023.
+\bibitem{dui0553} ARM Limited. Cortex-M4 Devices Generic User Guide (ARM DUI 0553B)[EB/OL]. 2010.
+\bibitem{ddi0403} ARM Limited. ARMv7-M Architecture Reference Manual (ARM DDI 0403E.e)[EB/OL]. 2021.
+\end{thebibliography}
+\endgroup
+
+\end{document}

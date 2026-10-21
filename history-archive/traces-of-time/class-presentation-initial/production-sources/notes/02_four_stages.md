@@ -1,0 +1,1 @@
+先把函数放回四个阶段。初始化解决程序从哪里开始，重点看SystemInit和HAL_Init。设置阶段决定时钟频率和滴答周期，对应SystemClock_Config与SysTick_Config。获取阶段有两类函数：一类读取当前配置对应的频率，另一类通过HAL_GetTick读取累计毫秒数。最后是应用，通过Delay或HAL_Delay安排LED动作。这两份例程的外部时钟参数不同，HAL配置八兆赫，标准库配置二十五兆赫，但它们都通过PLL得到一百六十八兆赫。

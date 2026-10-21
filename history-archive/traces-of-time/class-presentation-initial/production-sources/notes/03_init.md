@@ -1,0 +1,1 @@
+复位以后，启动文件先调用SystemInit，再进入C运行时初始化，最后才到main。标准库这份工程在SystemInit里面调用SetSysClock，所以到main时主频已经配置好了。HAL工程的主频设置在main里：第七十三行调用HAL_Init，建立默认时基；第八十行调用SystemClock_Config，设置系统时钟；然后再初始化GPIO。时钟切换会改变计数速度，因此HAL_RCC_ClockConfig在更新SystemCoreClock以后，还会再次调用HAL_InitTick，让滴答周期继续保持一毫秒。

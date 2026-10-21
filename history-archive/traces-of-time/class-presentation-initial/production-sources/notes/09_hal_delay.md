@@ -1,0 +1,1 @@
+HAL时基可以顺着四个函数读下来：HAL_InitTick配置时基，HAL_IncTick累计时间，HAL_GetTick读取毫秒，HAL_Delay比较经过时间。HAL_Delay使用的是累计时间差。它先通过HAL_GetTick记下起点，再把参数保存为wait。默认滴答是一毫秒，代码给wait额外加一个滴答，保证等待不少于请求的时长。随后不断读取当前计数，直到当前值减去起点达到wait，才返回。与此同时，SysTick_Handler持续调用HAL_IncTick，默认每次把uwTick加一。原main调用HAL_Delay一千，因此等待约一秒。标准库是把一个变量减到零，HAL是把经过的时间加到目标；两者都是借助滴答中断推进软件时间。

@@ -1,0 +1,1 @@
+老师提到的Get，可以从单位区分。左边获取的是频率，单位是赫兹。配置完成后，SYSCLK和HCLK都是一亿六千八百万，PCLK1是四千二百万，PCLK2是八千四百万。标准库用RCC_GetClocksFreq一次获得这一组数据。右边HAL_GetTick返回的是uwTick，也就是软件累计的毫秒数，默认每次SysTick中断加一。SystemCoreClock则是HCLK的软件记录；SystemCoreClockUpdate根据寄存器重新计算这个记录，它本身不切换硬件时钟。频率值说明一秒有多少拍，GetTick说明软件时间已经走了多少毫秒。

@@ -1,0 +1,257 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Noto Sans CJK SC}
+\setsansfont{Noto Sans CJK SC}
+\setmonofont{DejaVu Sans Mono}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip=0pt plus 1pt
+\usepackage[margin=0.64in,top=0.62in,bottom=0.62in,headheight=15pt]{geometry}
+\usepackage{graphicx,array,tabularx,colortbl,xcolor,fancyhdr,hyperref,fvextra}
+\hypersetup{colorlinks=true,urlcolor=blue!40!black,linkcolor=black,pdftitle={时钟之迹 课堂讲稿},pdfauthor={}}
+\definecolor{tablehead}{HTML}{DFE9F0}
+\definecolor{tabline}{HTML}{D9D9D9}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small 时钟之迹\quad |\quad 课堂讲稿}\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{2em}
+\hyphenpenalty=10000\exhyphenpenalty=10000
+\renewcommand{\baselinestretch}{1.10}
+\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.20}
+\arrayrulecolor{tabline}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\qtitle}[1]{{\Large\bfseries #1}\par\vspace{4pt}}
+\newcommand{\qsub}[1]{{\bfseries #1}\par}
+\begin{document}
+\pdfbookmark[0]{时钟之迹 课堂讲稿}{page1}
+\qtitle{时钟之迹 课堂讲稿}
+STM32F407ZGT6的时钟配置与延时  彭俊杰  智装备241  2024306100324
+
+\qsub{讨论范围}
+这次沿着教师CH5EX01 HAL和STD的代码，回答四个问题：系统时钟在哪里建立，怎样改变，怎样读取，以及SysTick怎样形成延时。两份工程的板级接线相同，但HSE常量、初始化路径和滴答单位不同。另用普中SPL、独立HAL和CubeMX工程说明移植时容易出现的差异。
+
+\qsub{先确认工程身份}
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.703\hsize}Y|>{\hsize=1.148\hsize}Y|>{\hsize=1.148\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{项目} & \textbf{教师HAL} & \textbf{教师STD} \\ \hline
+LED与流水灯 & PE3、PE4；PB0至PB7 & PE3、PE4；PB0至PB7 \\ \hline
+晶振假设 & 8 MHz & 25 MHz \\ \hline
+PLL参数 & M8 N336 P2 Q4 & M25 N336 P2 Q7 \\ \hline
+滴答周期 & 1 ms & 10 ms \\ \hline
+原件PE3完整周期 & 约2 s，即0.5 Hz & 稳态约1 s，即1 Hz \\ \hline
+\end{tabularx}
+\endgroup\par
+教师HAL原件的Q支路超过规格，后文说明修正方法。这里先保留原值以便逐行对应源文件，不能把修订值写回原件后再称为原始代码。
+
+\qsub{讲解时采用的证据}
+时钟数值与LED节拍由代码、课件和视频画面分别推导。已有六份AC5历史日志为0错0警，但没有实体板，也未在这轮修订后重编目标工程。原Simulation截图停在Flash寄存器访问，不能作为PLL、GPIO或延时波形成功运行的证明。
+
+图解表示调用关系，代码框注明原件节选或伪代码。后续上板时，还要测量晶振、MCO或定时器输出，才能将“配置频率”与“实测频率”对应起来。
+
+
+\clearpage
+\pdfbookmark[0]{一 从复位走到时钟配置}{page2}
+\qtitle{一 从复位走到时钟配置}
+复位后，处理器从向量表取得MSP初值和Reset\_\allowbreak{}Handler入口。启动汇编调用SystemInit，再跳入Arm C运行库\_\allowbreak{}\_\allowbreak{}main，完成数据初始化后进入main。函数名相同，并不保证两种库在SystemInit里做相同的事。
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.488\hsize}Y|>{\hsize=1.256\hsize}Y|>{\hsize=1.256\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{步骤} & \textbf{教师STD调用链} & \textbf{教师HAL调用链} \\ \hline
+启动汇编 & Reset\_\allowbreak{}Handler → SystemInit & Reset\_\allowbreak{}Handler → SystemInit \\ \hline
+SystemInit & 设置FPU、系统配置并调用SetSysClock & 设置FPU、系统配置及向量表位置 \\ \hline
+main前后 & 进入main时已尝试配置主PLL & 进入main后HAL\_\allowbreak{}Init → SystemClock\_\allowbreak{}Config \\ \hline
+外设与循环 & LED\_\allowbreak{}Init → SysTick配置 → 循环 & MX\_\allowbreak{}GPIO\_\allowbreak{}Init → 循环 \\ \hline
+\end{tabularx}
+\endgroup\par
+\qsub{时钟初始化流程图解}
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+Reset
+  -> load initial MSP and Reset_Handler
+  -> SystemInit
+  -> __main: initialize C runtime
+  -> main
+       STD: use clock set by SetSysClock
+       HAL: HAL_Init -> SystemClock_Config
+  -> GPIO initialization
+  -> application loop
+\end{Verbatim}
+HAL\_\allowbreak{}Init先建立基础HAL环境和初始时基。SystemClock\_\allowbreak{}Config调用HAL\_\allowbreak{}RCC\_\allowbreak{}OscConfig配置振荡器与PLL，再通过HAL\_\allowbreak{}RCC\_\allowbreak{}ClockConfig配置SYSCLK、AHB/\allowbreak{}APB分频和Flash等待周期。后者更新SystemCoreClock，并按新的HCLK重新建立HAL时基。
+
+检查失败路径同样重要。教师STD在HSE启动失败后没有得到168 MHz，可能留在默认HSI 16 MHz；HAL原件则进入Error\_\allowbreak{}Handler。任何等待就绪的循环都应考虑外部晶振缺失、参数越界和超时处理。
+
+
+\clearpage
+\pdfbookmark[0]{二 PLL与总线时钟的计算}{page3}
+\qtitle{二 PLL与总线时钟的计算}
+系统时钟SYSCLK可选择HSI、HSE或PLL。以HAL原件的8 MHz输入为例，PLL先经M分频，再经N倍频，最后经P分频送入SYSCLK。
+
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+PLL input = HSE / M = 8 / 8 = 1 MHz
+VCO       = PLL input * N = 1 * 336 = 336 MHz
+SYSCLK    = VCO / P = 336 / 2 = 168 MHz
+HCLK      = SYSCLK / 1 = 168 MHz
+PCLK1     = HCLK / 4 = 42 MHz
+PCLK2     = HCLK / 2 = 84 MHz
+\end{Verbatim}
+F407的HCLK、PCLK1、PCLK2最高分别为168、42、84 MHz。APB分频不为1时，相应定时器通常得到2倍PCLK，因此此例TIM2的内核时钟为84 MHz。GPIO输出翻转速度不能直接等同于AHB频率。
+
+\qsub{原件中必须单独处理的配置}
+教师HAL设置PLLQ=4，Q支路为336/\allowbreak{}4=84 MHz，超过DS8626 Rev12表36的75 MHz上限。独立修订版改为Q7后得到48 MHz，CPU与总线频率不变。即使没有调用USB，也不应把越界支路留作规范配置。
+
+教师STD的25 MHz/\allowbreak{}M25同样得到1 MHz PLL输入。如果实际晶振为8 MHz而M仍为25，输入只有0.32 MHz，不满足PLL要求。53.76 MHz是形式计算值，不保证实际锁定；适配8 MHz板须同步改HSE\_\allowbreak{}VALUE与PLL\_\allowbreak{}M。
+
+\qsub{CubeMX视频中的频率设置}
+CubeMX新建工程视频10分20秒采用25 MHz、M20、N268、P2，所得主频为167.5 MHz。讲解接受这一接近值；它与上传clock168\_\allowbreak{}gpio的8/\allowbreak{}M8/\allowbreak{}N336/\allowbreak{}P2是两个配置，不能改写成同一个168 MHz结果。
+
+供电按芯片手册取VDD 1.8至3.6 V，并匹配稳压等级与Flash等待周期；开发板5 V输入不能直接接到MCU的VDD。
+
+
+\clearpage
+\pdfbookmark[0]{三 软件怎样获取当前频率}{page4}
+\qtitle{三 软件怎样获取当前频率}
+获取接口计算的是频率信息，并非用硬件仪器测量晶振。它们需要正确的RCC寄存器、HSE\_\allowbreak{}VALUE/\allowbreak{}HSI\_\allowbreak{}VALUE常量，以及由程序维护的软件缓存。
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=1.047\hsize}Y|>{\hsize=0.93\hsize}Y|>{\hsize=1.023\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{接口或变量} & \textbf{实际含义} & \textbf{检查重点} \\ \hline
+SystemCoreClock & HCLK的软件缓存 & 切频后是否更新 \\ \hline
+HAL\_\allowbreak{}RCC\_\allowbreak{}GetSysClockFreq & 按RCC与振荡器常量推算SYSCLK & HSE\_\allowbreak{}VALUE是否等于真实输入 \\ \hline
+HAL\_\allowbreak{}RCC\_\allowbreak{}GetHCLKFreq & 直接返回SystemCoreClock & 不能认为每次自动读完整寄存器 \\ \hline
+HAL\_\allowbreak{}RCC\_\allowbreak{}GetPCLK1Freq /\allowbreak{} PCLK2Freq & 用HCLK缓存结合APB分频计算 & 缓存和分频都须正确 \\ \hline
+RCC\_\allowbreak{}GetClocksFreq & 标准库读取配置并填写频率结构 & 仍依赖时钟常量，不是实测 \\ \hline
+\end{tabularx}
+\endgroup\par
+\qsub{一个缓存过期的例子}
+普中时钟工程在SystemInit先配置168 MHz，随后main调用RCC\_\allowbreak{}HSE\_\allowbreak{}Config(8,336,4,7)，把PLLP改成4。实际配置对应84/\allowbreak{}21/\allowbreak{}42 MHz，但代码未调用SystemCoreClockUpdate，缓存仍可能保留168 MHz。如果直接用该旧值配置SysTick，等待时间也会出错。
+
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+/* After a valid direct RCC change: */
+SystemCoreClockUpdate();
+/* Then rebuild the timing base for the new HCLK. */
+\end{Verbatim}
+这段是使用顺序说明，并非对所有切频流程的完整替代。稳妥做法是走库提供的时钟配置流程，并检查返回值和RCC\_\allowbreak{}CFGR.SWS；直接改寄存器还须保证安全的切换顺序、Flash等待周期与分频关系。
+
+课堂提问：变量显示168000000是否证明芯片正在168 MHz运行？不能。变量可能是默认值，也可能依赖错误的HSE常量。应同时核对最后一次有效配置、时钟源状态，并在条件具备时测量输出。
+
+
+\clearpage
+\pdfbookmark[0]{四 SysTick怎样产生滴答}{page5}
+\qtitle{四 SysTick怎样产生滴答}
+SysTick是Cortex-M4内核中的24位递减定时器。选定计数时钟后，一个周期计数N次，LOAD应写N−1，周期为(LOAD+1)/\allowbreak{}fSysTick。CMSIS的SysTick\_\allowbreak{}Config接收的是N，而不是已经减1的LOAD。
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.977\hsize}Y|>{\hsize=0.977\hsize}Y|>{\hsize=1.047\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{实现} & \textbf{计数时钟与周期} & \textbf{N与LOAD} \\ \hline
+教师HAL默认时基 & HCLK168 MHz，1 ms & N168000；LOAD167999 \\ \hline
+教师CH5EX01 STD & HCLK168 MHz，10 ms & N1680000；LOAD1679999 \\ \hline
+若使用HCLK/\allowbreak{}8的1 ms周期 & 21 MHz，1 ms & N21000；LOAD20999 \\ \hline
+\end{tabularx}
+\endgroup\par
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+/* Standalone CMSIS setup, 168 MHz HCLK */
+SysTick_Config(SystemCoreClock / 1000U);
+/* CMSIS writes LOAD = ticks - 1. */
+
+/* Teacher CH5EX01 STD uses a 10 ms tick */
+RCC_GetClocksFreq(&RCC_Clocks);
+SysTick_Config(RCC_Clocks.HCLK_Frequency / 100U);
+\end{Verbatim}
+HAL默认已由HAL\_\allowbreak{}InitTick建立时基，main里不应为了调用HAL\_\allowbreak{}Delay再初始化同一个SysTick。教师HAL的IOC存在HCLK/\allowbreak{}8文字，但实际CMSIS初始化设置CLKSOURCE=HCLK；分析运行逻辑时须沿生成源码与库函数追踪，不能只读IOC的一行。
+
+\qsub{滴答单位由配置决定}
+教师CH5EX01 STD的Delay(1)对应一个10 ms tick，Delay(10)约100 ms。CH5EX02 STD改成HCLK/\allowbreak{}1000后，Delay的单位才变成约1 ms。函数名和旧注释没有办法替代这一步核对。
+
+24位计数器限制单次重载范围。长延时应累计多个滴答；更改HCLK后必须重新计算时基。课件算例中的LOAD168000应纠正为167999。
+
+
+\clearpage
+\pdfbookmark[0]{五 Delay与HAL\_\allowbreak{}Delay在等待什么}{page6}
+\qtitle{五 Delay与HAL\_\allowbreak{}Delay在等待什么}
+\qsub{HAL等待累计毫秒数}
+SysTick\_\allowbreak{}Handler调用HAL\_\allowbreak{}IncTick，使uwTick随中断增长；HAL\_\allowbreak{}GetTick返回这个累计值。HAL\_\allowbreak{}Delay记录起点，用无符号时间差判断是否达到等待值。默认实现通常再加一个tick，以避免等待短于请求值。
+
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+/* HAL delay flow, simplified pseudocode */
+start = HAL_GetTick();
+wait = requested_ms + one_tick;
+while ((uint32_t)(HAL_GetTick() - start) < wait) {
+    /* SysTick IRQ advances uwTick. */
+}
+\end{Verbatim}
+这仍是阻塞等待。如果关闭中断，或在SysTick无法抢占的中断处理程序中等待，uwTick可能不再增长，函数也无法退出。HAL\_\allowbreak{}MAX\_\allowbreak{}DELAY等边界处理应以完整库实现为准。
+
+\qsub{教师STD等待剩余滴答归零}
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+/* Teacher STD delay flow, simplified pseudocode */
+Delay(ticks):
+    TimingDelay = ticks
+    while TimingDelay != 0:
+        wait
+
+SysTick_Handler:
+    if TimingDelay != 0:
+        TimingDelay--
+\end{Verbatim}
+这份STD工程同样依赖周期中断，只是变量表示剩余滴答，CH5EX01每个滴答10 ms。它不同于普中SysTick例程：后者选择HCLK/\allowbreak{}8，重装LOAD、轮询COUNTFLAG，结束后关闭计数器。两种实现不可混称为同一个Delay。
+
+更简单的while(i--)只是按指令空转，受主频、优化与中断影响。若把普中轮询版直接放进HAL工程并关闭SysTick，会破坏HAL延时与超时服务；可改用另一个定时器，而不是让两个模块同时占用SysTick。
+
+
+\clearpage
+\pdfbookmark[0]{六 把滴答换成LED节拍}{page7}
+\qtitle{六 把滴答换成LED节拍}
+1 Hz心跳指完整亮灭周期1 s，因此每隔约500 ms翻转一次输出。教师HAL原件1000 ms翻转对应约0.5 Hz；视频HAL版本100 ms推进流水、每5轮翻转PE3，对应约1 Hz。课件的“心跳”用数字翻转即可表达；真正渐亮渐暗的呼吸灯还需要PWM占空比变化。
+
+\qsub{推荐的独立节拍思路}
+\begin{Verbatim}[fontsize=\scriptsize,breaklines=true]
+/* Pseudocode: independent nominal intervals */
+now = HAL_GetTick();
+if ((uint32_t)(now - last_flow) >= 100U) {
+    last_flow = now;
+    advance_PB0_to_PB7();
+}
+if ((uint32_t)(now - last_heartbeat) >= 500U) {
+    last_heartbeat = now;
+    toggle_PE3();
+}
+\end{Verbatim}
+以上是非阻塞调度思路，不是已经烧录验证的完整工程。循环足够及时运行时，两个输出各按自己的间隔推进；若任务长时间占用CPU，仍会推迟执行。对稳定采样或精确波形应采用硬件定时器，不能把主循环轮询当成零误差时基。
+
+\qsub{版本差异保留在原处}
+\begingroup\small
+\begin{tabularx}{\linewidth}{|>{\hsize=0.93\hsize}Y|>{\hsize=1.326\hsize}Y|>{\hsize=0.744\hsize}Y|}\hline
+\rowcolor{tablehead}
+\textbf{来源} & \textbf{等待与翻转} & \textbf{完整周期} \\ \hline
+课件例5-1要求 & 心跳1 Hz；PB依次循环 & 目标1 s \\ \hline
+教师HAL RAR & 1000 ms一次翻转 & 约2 s \\ \hline
+教师STD RAR & 100 ms一轮，每5轮翻转 & 稳态约1 s \\ \hline
+HAL GPIO视频18分15秒 & 100 ms一轮，每5轮翻转 & 约1 s \\ \hline
+SPL GPIO视频22分15秒 & Delay20，每轮翻转；10 ms tick & 约0.4 s \\ \hline
+\end{tabularx}
+\endgroup\par
+若用循环计数器每5步翻转，宜到5后显式归零，避免无符号计数器自然溢出影响模5分组。软件修改还需保持PB流水和PE3心跳需求独立，不要因修改某个Delay而同时改变所有节拍。
+
+
+\clearpage
+\pdfbookmark[0]{七 构建证据与课堂小结}{page8}
+\qtitle{七 构建证据与课堂小结}
+六份上传的Keil历史日志均为0 Error(s)、0 Warning(s)，采用Arm Compiler 5.06 update 7 build 960。Code大小依次为：普中时钟1524、普中SysTick1272、独立HAL3906、CubeMX3142、教师STD1528、教师HAL3390字节。不能把Code3906的旧截图作为教师HAL3390目标的构建证据。
+
+现有Simulation截图显示独立HAL工程在HAL\_\allowbreak{}Init的Flash缓存使能附近停下，error 65指向0x40023C00读权限。它证明该会话访问受限，不能推出实体板有故障，也不能证明全部SysTick功能没有仿真模型。本次没有取得GPIO波形、PLL锁定或延时误差的运行测量。
+
+\qsub{讲完后应能说明的四点}
+第一，沿最后一次有效调用定位实际时钟配置，区分STD在SystemInit中配置与HAL在main中配置。第二，PLL与总线计算要连同晶振、电压和Flash条件一起检查。第三，getter和SystemCoreClock给的是软件计算信息，正确性依赖常量与缓存维护。第四，先确认滴答单位和等待条件，再解释Delay参数与LED完整周期。
+
+\qsub{主要资料}
+\href{https://drive.google.com/file/d/1SiaXWNtQBBjrw8Dl70PK68exQ3V929ve/view}{教师CH5EX01 HAL原工程}\par
+\href{https://drive.google.com/file/d/1BVRke_0FVb91vsfTokTQznbfqVBA4-GZ/view}{教师CH5EX01 STD原工程}\par
+\href{https://www.st.com/resource/en/datasheet/stm32f407zg.pdf}{STM32F407ZG数据手册 DS8626}\par
+\href{https://www.st.com/resource/en/reference_manual/dm00031020-stm32f405-and-stm32f407-advanced-armbased-32bit-microcontrollers-stmicroelectronics.pdf}{STM32F405和F407参考手册 RM0090}\par
+课程第5章GPIO与SysTick；Arm DUI0553B第4.4节；课程CubeMX新建工程、HAL GPIO、SPL GPIO视频。视频时间戳与原件版本见作业2的材料对照表。
+
+CubeMX自定义逻辑应写在USER CODE BEGIN/\allowbreak{}END保护区内，避免重新生成时被覆盖；生成配置后仍须编写应用循环。下一次具备实物条件时，可输出MCO或定时器信号，测频并核对SysTick误差。
+
+\end{document}

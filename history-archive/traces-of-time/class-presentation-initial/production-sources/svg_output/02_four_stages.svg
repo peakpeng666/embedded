@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="Microsoft YaHei" font-size="24" data-pptx-page-role="content">
+<rect id="background" data-pptx-role="background" width="1280" height="720" fill="#F5F6F2"/>
+<g id="title" data-pptx-bounds="64 42 1152 114" fill="#132E3B"><text x="64" y="64" font-size="16" fill="#167D8D">追踪路线</text><text x="64" y="123" font-size="40" font-weight="bold">四个阶段，一条时间线</text></g>
+<g id="four-phases" data-pptx-bounds="64 203 1152 320">
+<line x1="90" y1="240" x2="1185" y2="240" stroke="#C9D5D2" stroke-width="3"/>
+<circle cx="96" cy="240" r="29" fill="#132E3B"/><text x="96" y="248" font-family="Consolas" text-anchor="middle" fill="#F5F6F2">01</text>
+<circle cx="388" cy="240" r="29" fill="#167D8D"/><text x="388" y="248" font-family="Consolas" text-anchor="middle" fill="#F5F6F2">02</text>
+<circle cx="680" cy="240" r="29" fill="#167D8D"/><text x="680" y="248" font-family="Consolas" text-anchor="middle" fill="#F5F6F2">03</text>
+<circle cx="972" cy="240" r="29" fill="#D66A35"/><text x="972" y="248" font-family="Consolas" text-anchor="middle" fill="#F5F6F2">04</text>
+<text x="68" y="319" font-size="28" font-weight="bold" fill="#132E3B">初始化</text><text x="360" y="319" font-size="28" font-weight="bold" fill="#132E3B">设置</text><text x="652" y="319" font-size="28" font-weight="bold" fill="#132E3B">获取</text><text x="944" y="319" font-size="28" font-weight="bold" fill="#132E3B">应用</text>
+<text x="68" y="366" fill="#61747B">程序从哪里开始</text><text x="360" y="366" fill="#61747B">时钟与滴答多快</text><text x="652" y="366" fill="#61747B">当前频率与时间</text><text x="944" y="366" fill="#61747B">什么时候做动作</text>
+<text x="68" y="430" font-family="Consolas" font-size="20" fill="#1D3440"><tspan x="68" dy="0">SystemInit()</tspan><tspan x="68" dy="31">HAL_Init()</tspan></text>
+<text x="360" y="430" font-family="Consolas" font-size="20" fill="#1D3440"><tspan x="360" dy="0">SystemClock_Config()</tspan><tspan x="360" dy="31">SysTick_Config()</tspan></text>
+<text x="652" y="430" font-family="Consolas" font-size="20" fill="#1D3440"><tspan x="652" dy="0">HAL_RCC_Get…Freq()</tspan><tspan x="652" dy="31">HAL_GetTick()</tspan></text>
+<text x="944" y="430" font-family="Consolas" font-size="20" fill="#1D3440"><tspan x="944" dy="0">Delay()</tspan><tspan x="944" dy="31">HAL_Delay()</tspan></text>
+</g>
+<g id="examples" data-pptx-bounds="64 548 1152 77"><rect x="64" y="548" width="1152" height="77" fill="#E8EEEB"/><text x="88" y="580" font-size="20" fill="#1D3440"><tspan fill="#167D8D" font-weight="bold">CH5EX01HAL</tspan>  外部时钟配置 8 MHz</text><text x="642" y="580" font-size="20" fill="#1D3440"><tspan fill="#D66A35" font-weight="bold">CH5Ex01STD</tspan>  外部时钟配置 25 MHz</text><text x="88" y="610" font-size="16" fill="#61747B">两份实际例程，主频均配置为 168 MHz；先追函数，再核对参数。</text></g>
+<g id="footer" data-pptx-bounds="64 652 1152 29" data-pptx-role="footer" font-size="16" fill="#61747B"><text x="64" y="675">源码：HAL main.c、hal_conf.h；STD Usermain.c、system_stm32f4xx.c、stm32f4xx.h</text><text x="1216" y="675" text-anchor="end">02 / 12</text></g>
+</svg>

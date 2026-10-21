@@ -37,6 +37,7 @@ Listings/
 **/MDK-ARM/*/
 !**/MDK-ARM/DebugConfig/
 !**/MDK-ARM/DebugConfig/**
+**/MDK-ARM/*.lst
 .metadata/
 node_modules/
 __pycache__/

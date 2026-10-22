@@ -21,21 +21,34 @@
 
 GitHub 自动生成的 `Source code (zip)` 仅包含 Git 跟踪文件，不含原固件备份；用于接续时请下载上面命名的交接包。
 
-建议先克隆仓库，再把 Windows 交接包解压覆盖到相同的 `embedded` 目录。交接包不带 `.git`，因此会保留克隆的 Git 历史：
+### 最新 main / full-archive 开发
+
+当前 Git 工程位于仓库内的 `engineering-practice/embedded`，不是仓库根目录。以下命令进入当前工程：
 
 ```powershell
 git clone https://github.com/peakpeng666/embedded.git C:\Projects\embedded
-Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\embedded-windows.zip" -DestinationPath C:\Projects -Force
-cd C:\Projects\embedded
+cd C:\Projects\embedded\engineering-practice\embedded
 ```
 
-解压后先检查交接包：
+若已克隆 `full-archive`，同样进入其 `engineering-practice/embedded` 子目录；两分支的工程相对路径一致。下文 Python、编译、串口命令均在该工程目录执行。
+
+不要把 v1.0.0 旧交接包覆盖到最新仓库根目录或当前工程中。旧包采用根级 `tools/`、`lab1/` 布局，与当前仓库布局不同；叠加会产生两份工程，可能误用旧源码。
+
+### 固定 v1.0.0 恢复 / 旧交接包验证
+
+需要原固件备份或复现旧交接时，将 `embedded-windows.zip` 解压到一个新的独立目录，不与 Git 克隆目录重合：
 
 ```powershell
+Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\embedded-windows.zip" -DestinationPath C:\Projects\embedded-v1.0.0
+cd C:\Projects\embedded-v1.0.0\embedded
 py -3.12 tools\verify_handoff.py
 ```
 
+该目录用于固定 v1.0.0 的备份、验证和恢复；不代表当前 main / full-archive 的 Keil/CubeIDE 新增内容。交接包包含 `HANDOFF_MANIFEST.json`，普通 Git 克隆不含该清单，不应直接在克隆中执行交接包校验。
+
 ## Python 环境
+
+先明确本次操作目标：开发最新版本时回到 `C:\Projects\embedded\engineering-practice\embedded`；验证或恢复旧交接时留在 `C:\Projects\embedded-v1.0.0\embedded`。下面的虚拟环境与构建命令只在所选目录执行，不在两个目录间共用 `.venv`。上面的旧包示例目录仅在解压后确实包含 `embedded\tools\verify_handoff.py` 时适用；若压缩包目录层级不同，先找到同时包含 `HANDOFF_MANIFEST.json` 和 `tools\verify_handoff.py` 的工程目录，再执行校验，不猜测路径继续恢复。
 
 安装 Python 3.12 的 64 位 Windows 版本。重新创建 Windows 虚拟环境，不复用完整 Linux 快照中的 `.venv`：
 
@@ -85,6 +98,8 @@ arm-none-eabi-gcc --version
 
 ## 回退到原 LCD/温湿度演示
 
+仅在上文独立解压并通过清单校验的 v1.0.0 工程目录执行本节恢复命令，不在新 Git 工程目录执行。
+
 Windows 交接包包含 `backups/` 原备份和 `.toolchains/Keil.STM32L4xx_DFP.3.1.0.pack`，路径已经与工具匹配。先关闭串口终端，再执行：
 
 ```powershell
@@ -105,3 +120,4 @@ PDF 已预生成。Windows 重新生成报告时使用系统宋体和 Arial；�
 - [Arm 官方 Windows 安装说明](https://learn.arm.com/install-guides/gcc/arm-gnu/)
 - [pyOCD 安装](https://pyocd.io/docs/installing)
 - [pyOCD USB 后端说明](https://pyocd.io/docs/env_vars.html)
+

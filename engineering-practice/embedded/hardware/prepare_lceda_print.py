@@ -10,9 +10,13 @@ import pymupdf as fitz
 ROOT=Path(__file__).resolve().parents[1]
 src=ROOT/'hardware/lceda/lceda-original-export.pdf'
 dest=ROOT/'output/pdf/Pandora_lceda-EDA_schematic-and-flowcharts.pdf'
+if not src.is_file():
+    raise SystemExit(f'Missing LCEDA PDF input: {src}')
 out=fitz.open()
 with fitz.open(src) as doc:
-    assert len(doc)==4
+    if len(doc) != 4:
+        raise SystemExit('Expected exactly four LCEDA PDF pages; outputs unchanged')
+    dest.parent.mkdir(parents=True, exist_ok=True)
     for i,page in enumerate(doc,1):
         svg=page.get_svg_image(text_as_path=True)
         # Store app-rendered outlines, so Chinese fonts travel with the print file.
@@ -30,3 +34,4 @@ with fitz.open(dest) as doc:
     for i,page in enumerate(doc,1):
         page.get_pixmap(matrix=fitz.Matrix(1.7,1.7)).save(ROOT/f'output/pdf/lceda_{i:02d}_preview.png')
 print(str(dest))
+

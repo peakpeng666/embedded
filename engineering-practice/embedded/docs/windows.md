@@ -48,6 +48,8 @@ py -3.12 tools\verify_handoff.py
 
 ## Python 环境
 
+先明确本次操作目标：开发最新版本时回到 `C:\Projects\embedded\engineering-practice\embedded`；验证或恢复旧交接时留在 `C:\Projects\embedded-v1.0.0\embedded`。下面的虚拟环境与构建命令只在所选目录执行，不在两个目录间共用 `.venv`。上面的旧包示例目录仅在解压后确实包含 `embedded\tools\verify_handoff.py` 时适用；若压缩包目录层级不同，先找到同时包含 `HANDOFF_MANIFEST.json` 和 `tools\verify_handoff.py` 的工程目录，再执行校验，不猜测路径继续恢复。
+
 安装 Python 3.12 的 64 位 Windows 版本。重新创建 Windows 虚拟环境，不复用完整 Linux 快照中的 `.venv`：
 
 ```powershell

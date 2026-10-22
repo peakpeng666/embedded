@@ -76,7 +76,6 @@ class FixTests(unittest.TestCase):
         self.assertIn('不要把 v1.0.0', s)
         self.assertIn('embedded-v1.0.0', s)
 
-    @unittest.skip('Pending hardware README update: existing share-link retention requires confirmation')
     def test_hardware_readme_print_path(self):
         self.assertIn('../../verified-drawings/', (self.root / 'hardware/README.md').read_text())
 

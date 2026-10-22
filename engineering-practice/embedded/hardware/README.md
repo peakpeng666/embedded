@@ -2,7 +2,7 @@
 
 主交付是 `lceda/Pandora_L496_lceda-export.json`，嘉立创 EDA 标准版导出的四页原生工程。元器件、100 脚 MCU、导线、网络标签、流程框和箭头均可编辑。
 
-打印版：`../verified-drawings/Verified_four-page-bound-volume.pdf`，四页 A3 横向。分页 PDF、PNG 和可编辑源文件在同目录。
+打印版：`../../verified-drawings/Verified_four-page-bound-volume.pdf`，四页 A3 横向。分页 PDF、PNG 和可编辑源文件在同目录。
 
 ## 文件
 
@@ -48,6 +48,15 @@ VREF 旁注写 R18，图中对应器件是 R13 / 10R，重绘按器件标注。C
 
 ## 重新生成
 
+以下命令从 `engineering-practice/embedded` 工程目录执行。干净克隆可直接阅读已提交的原生工程和打印成品；完整重生成不是仅靠 Git 文件即可完成：
+
+- `create_official_schematics.py`、`create_lceda_project.py`、`verify_lceda_export.py` 需要本地 `hardware/sources/` 原厂 PDF 与 `STM32L496VETx_ST_CubeMX_pins.xml`。请按 `official_sources.json` 核实来源/哈希，先补齐输入。
+- `prepare_lceda_print.py` 使用已提交的 `hardware/lceda/lceda-original-export.pdf`；脚本会创建 `output/pdf/`。
+- `export_verified_folder.py` 使用相邻 `../verified-drawings/` 内现有原生工程、PDF 和网表，会创建 `logs/` 与 `output/pdf/`。
+- `package_delivery.py` 还需要已生成的两份 PDF、本地 Windows 前后验收日志和相邻 `../keil-board-demos/` 录像/字幕。缺失时会在复制任何交付内容之前列出缺失项并停止。不得用虚构日志替代实板证据。
+
+主机单元测试可离线运行，但不等同于板卡、Keil、CubeIDE 或图纸复测。旧 v1.0.0 交接包应独立解压，不能覆盖新工程来补输入。
+
 ```powershell
 .\.venv\Scripts\python.exe hardware\create_official_schematics.py
 C:\Python312\python.exe hardware\create_lceda_project.py
@@ -57,3 +66,4 @@ C:\Python312\python.exe hardware\verify_lceda_export.py
 ```
 
 摘编与打印转换需要 ReportLab、PyMuPDF 和 Windows 字体；原生 JSON 生成只需要 Python 标准库。
+

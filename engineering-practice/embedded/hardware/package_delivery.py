@@ -29,9 +29,12 @@ if not (ROOT/'hardware/sources').is_dir():
     missing.append(str(ROOT/'hardware/sources'))
 if missing:
     raise SystemExit('Missing local handoff inputs; no delivery files were copied:\n' + '\n'.join(missing))
-DEST.mkdir(exist_ok=True)
 files=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=ROOT)
 files=[ROOT/entry.decode('utf-8') for entry in files.split(b'\0') if entry]
+missing_sources = [str(source) for source in files if not source.is_file()]
+if missing_sources:
+    raise SystemExit('Missing source snapshot inputs; delivery unchanged:\n' + '\n'.join(missing_sources))
+DEST.mkdir(exist_ok=True)
 for source in files:
     if source.is_file():
         target=DEST/'source-snapshot'/source.relative_to(ROOT)

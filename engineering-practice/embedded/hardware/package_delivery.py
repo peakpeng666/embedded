@@ -11,8 +11,25 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 PRACTICE=ROOT.parent
 DEST=PRACTICE/'pandora-delivery'
-DEST.mkdir(exist_ok=True)
 VIDEO=PRACTICE/'keil-board-demos'
+# Validate local-only evidence before modifying an existing delivery folder.
+required_files = [
+ ROOT/'output/pdf/Pandora_lceda-EDA_schematic-and-flowcharts.pdf',
+ ROOT/'output/pdf/STM32L496_minimal-system-and-experiment-circuit_official-drawing.pdf',
+ ROOT/'hardware/lceda/Pandora_L496_lceda-export.json',
+ ROOT/'hardware/critical_review.md',
+ ROOT/'hardware/lceda/verification-results.json',
+ ROOT/'logs/windows_before_keil.json', ROOT/'logs/windows_after_keil.json',
+ VIDEO/'Windows-multi-tool-board-demo.mp4',
+ VIDEO/'Windows-multi-tool-board-demo.srt',
+ VIDEO/'lceda-EDA-schematic-review-demo.mp4',
+]
+missing = [str(path) for path in required_files if not path.is_file()]
+if not (ROOT/'hardware/sources').is_dir():
+    missing.append(str(ROOT/'hardware/sources'))
+if missing:
+    raise SystemExit('Missing local handoff inputs; no delivery files were copied:\n' + '\n'.join(missing))
+DEST.mkdir(exist_ok=True)
 files=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=ROOT)
 files=[ROOT/entry.decode('utf-8') for entry in files.split(b'\0') if entry]
 for source in files:
@@ -77,3 +94,4 @@ with zipfile.ZipFile(archive) as z:
     assert z.testzip() is None
 print(json.dumps({'folder':str(DEST),'archive':str(archive),'files':len(manifest)+1,'archive_bytes':archive.stat().st_size,
                   'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest()},ensure_ascii=False))
+

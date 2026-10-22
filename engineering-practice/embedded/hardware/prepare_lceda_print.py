@@ -10,6 +10,9 @@ import pymupdf as fitz
 ROOT=Path(__file__).resolve().parents[1]
 src=ROOT/'hardware/lceda/lceda-original-export.pdf'
 dest=ROOT/'output/pdf/Pandora_lceda-EDA_schematic-and-flowcharts.pdf'
+if not src.is_file():
+    raise SystemExit(f'Missing LCEDA PDF input: {src}')
+dest.parent.mkdir(parents=True, exist_ok=True)
 out=fitz.open()
 with fitz.open(src) as doc:
     assert len(doc)==4
@@ -30,3 +33,4 @@ with fitz.open(dest) as doc:
     for i,page in enumerate(doc,1):
         page.get_pixmap(matrix=fitz.Matrix(1.7,1.7)).save(ROOT/f'output/pdf/lceda_{i:02d}_preview.png')
 print(str(dest))
+

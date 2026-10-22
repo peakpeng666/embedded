@@ -12,6 +12,12 @@ DEST=ROOT.parent/'verified-drawings'
 EDIT=DEST/'editable-sources'
 RAW=EDIT/'lceda-original-export.pdf'
 NAMES=['01_minimal-system-schematic','02_experiment-circuit','03_main-loop-and-interrupt-flowchart','04_button-debounce-and-rgb-flowchart']
+required = [DEST/'Pandora_L496_Verified.json', RAW, EDIT/'lceda-export-netlist.net']
+missing = [str(path) for path in required if not path.is_file()]
+if missing:
+    raise SystemExit('Missing verified drawing inputs:\n' + '\n'.join(missing))
+(ROOT/'logs').mkdir(parents=True, exist_ok=True)
+(ROOT/'output/pdf').mkdir(parents=True, exist_ok=True)
 project=json.loads((DEST/'Pandora_L496_Verified.json').read_text(encoding='utf-8-sig'))
 assert project['title']=='Pandora_L496_Verified' and len(project['schematics'])==4
 combined=fitz.open()
@@ -46,3 +52,4 @@ for source,target in [
         shutil.copy2(target,ROOT/'logs'/('before_verified_update_'+target.name))
     shutil.copy2(source,target)
 print(str(DEST))
+

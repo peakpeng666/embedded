@@ -12,11 +12,23 @@ DEST=ROOT.parent/'verified-drawings'
 EDIT=DEST/'editable-sources'
 RAW=EDIT/'lceda-original-export.pdf'
 NAMES=['01_minimal-system-schematic','02_experiment-circuit','03_main-loop-and-interrupt-flowchart','04_button-debounce-and-rgb-flowchart']
+required = [DEST/'Pandora_L496_Verified.json', RAW, EDIT/'lceda-export-netlist.net']
+missing = [str(path) for path in required if not path.is_file()]
+if missing:
+    raise SystemExit('Missing verified drawing inputs:\n' + '\n'.join(missing))
 project=json.loads((DEST/'Pandora_L496_Verified.json').read_text(encoding='utf-8-sig'))
-assert project['title']=='Pandora_L496_Verified' and len(project['schematics'])==4
+if (not isinstance(project, dict) or project.get('title') != 'Pandora_L496_Verified'
+        or not isinstance(project.get('schematics'), list)
+        or len(project['schematics']) != 4
+        or any(not isinstance(sheet, dict) or not isinstance(sheet.get('dataStr'), dict) for sheet in project['schematics'])):
+    raise SystemExit('Invalid four-sheet verified project; outputs unchanged')
 combined=fitz.open()
 with fitz.open(RAW) as source:
-    assert len(source)==4
+    if len(source) != 4:
+        raise SystemExit('Expected exactly four verified PDF pages; outputs unchanged')
+    (ROOT/'logs').mkdir(parents=True, exist_ok=True)
+    (ROOT/'output/pdf').mkdir(parents=True, exist_ok=True)
+    (ROOT/'hardware/lceda').mkdir(parents=True, exist_ok=True)
     for i,(page,name) in enumerate(zip(source,NAMES)):
         svg=page.get_svg_image(text_as_path=True)
         (EDIT/f'{name}.svg').write_text(svg,encoding='utf-8')
@@ -46,3 +58,4 @@ for source,target in [
         shutil.copy2(target,ROOT/'logs'/('before_verified_update_'+target.name))
     shutil.copy2(source,target)
 print(str(DEST))
+

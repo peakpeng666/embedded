@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Bundle only this task's source, official references and verified outputs."""
 from datetime import datetime
+import argparse
+import os
 import hashlib
 import json
 from pathlib import Path
@@ -10,11 +12,59 @@ import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 PRACTICE=ROOT.parent
-DEST=PRACTICE/'pandora-delivery'
-DEST.mkdir(exist_ok=True)
+parser = argparse.ArgumentParser(description='Package handoff into a new or empty directory; never reuse an old delivery. See hardware/PACKAGING.md.')
+parser.add_argument('--output-dir', type=Path, help='New or empty output directory (default: ../pandora-delivery). A custom directory uses <directory-name>.zip beside it.')
+args = parser.parse_args()
+DEST = Path(os.path.abspath(args.output_dir)) if args.output_dir else PRACTICE/'pandora-delivery'
+archive = DEST.with_name(DEST.name + '.zip') if args.output_dir else PRACTICE/'Pandora_demos-and-drawings.zip' 
 VIDEO=PRACTICE/'keil-board-demos'
+# Validate local-only evidence before modifying an existing delivery folder.
+required_files = [
+ ROOT/'output/pdf/Pandora_lceda-EDA_schematic-and-flowcharts.pdf',
+ ROOT/'output/pdf/STM32L496_minimal-system-and-experiment-circuit_official-drawing.pdf',
+ ROOT/'hardware/lceda/Pandora_L496_lceda-export.json',
+ ROOT/'hardware/critical_review.md',
+ ROOT/'hardware/lceda/verification-results.json',
+ ROOT/'logs/windows_before_keil.json', ROOT/'logs/windows_after_keil.json',
+ VIDEO/'Windows-multi-tool-board-demo.mp4',
+ VIDEO/'Windows-multi-tool-board-demo.srt',
+ VIDEO/'lceda-EDA-schematic-review-demo.mp4',
+]
+missing = [str(path) for path in required_files if not path.is_file()]
+if not (ROOT/'hardware/sources').is_dir():
+    missing.append(str(ROOT/'hardware/sources'))
+if missing:
+    raise SystemExit('Missing local handoff inputs; no delivery files were copied:\n' + '\n'.join(missing))
 files=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=ROOT)
 files=[ROOT/entry.decode('utf-8') for entry in files.split(b'\0') if entry]
+missing_sources = [str(source) for source in files if not source.is_file()]
+if missing_sources:
+    raise SystemExit('Missing source snapshot inputs; delivery unchanged:\n' + '\n'.join(missing_sources))
+# Reject links/junctions before copying: copy2/copytree otherwise follow them,
+# including links in an existing delivery tree. Never read outside this project
+# and its explicitly selected sibling video directory.
+def check_path(path, boundary):
+    if not path.is_relative_to(boundary):
+        raise SystemExit(f'Unsafe handoff path: {path}')
+    for part in [path, *path.parents]:
+        if part == boundary:
+            break
+        if part.is_symlink() or (hasattr(part, 'is_junction') and part.is_junction()):
+            raise SystemExit(f'Unsafe handoff path (link/junction): {part}')
+
+for path in [*files, *required_files, ROOT/'hardware/sources',
+             *(ROOT/'hardware/sources').rglob('*'),
+             *(ROOT/'output/pdf').glob('lceda_*_preview.png')]:
+    check_path(path, ROOT if path.is_relative_to(ROOT) else PRACTICE)
+for path in [DEST, archive, *DEST.rglob('*')]:
+    check_path(path, Path(path.anchor))
+if any(path.is_relative_to(root) for path in [DEST, archive] for root in [ROOT, VIDEO]):
+    raise SystemExit('Output overlaps handoff inputs; use --output-dir outside embedded and keil-board-demos.')
+if DEST.exists() and (not DEST.is_dir() or any(DEST.iterdir())):
+    raise SystemExit('Output directory is not empty; old delivery unchanged. Use --output-dir with a new directory.')
+if archive.exists():
+    raise SystemExit('Output archive already exists; old archive unchanged. Use --output-dir with a new directory.')
+DEST.mkdir(parents=True, exist_ok=True)
 for source in files:
     if source.is_file():
         target=DEST/'source-snapshot'/source.relative_to(ROOT)
@@ -69,7 +119,6 @@ readme='''潘多拉 Windows 开发与专业图纸交付
 manifest={str(p.relative_to(DEST)).replace('\\','/'):{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
           for p in sorted(DEST.rglob('*')) if p.is_file() and p.name!='file-checksums.json'}
 (DEST/'file-checksums.json').write_text(json.dumps({'created_at':datetime.now().astimezone().isoformat(),'files':manifest},ensure_ascii=False,indent=2),encoding='utf-8')
-archive=PRACTICE/'Pandora_demos-and-drawings.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     for p in sorted(DEST.rglob('*')):
         if p.is_file():z.write(p,Path(DEST.name)/p.relative_to(DEST))
@@ -77,3 +126,4 @@ with zipfile.ZipFile(archive) as z:
     assert z.testzip() is None
 print(json.dumps({'folder':str(DEST),'archive':str(archive),'files':len(manifest)+1,'archive_bytes':archive.stat().st_size,
                   'archive_sha256':hashlib.sha256(archive.read_bytes()).hexdigest()},ensure_ascii=False))
+

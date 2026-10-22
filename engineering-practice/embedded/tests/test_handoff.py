@@ -20,8 +20,8 @@ class FixTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def run_script(self, name):
-        return subprocess.run([sys.executable, str(self.root / 'hardware' / name)], capture_output=True, text=True)
+    def run_script(self, name, *args):
+        return subprocess.run([sys.executable, str(self.root / 'hardware' / name), *map(str, args)], capture_output=True, text=True)
 
     def four_pages(self, p):
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -150,6 +150,110 @@ class FixTests(unittest.TestCase):
         self.assertNotEqual(r.returncode, 0)
         self.assertFalse((self.root / 'output').exists())
         self.assertEqual([x.name for x in p.parent.iterdir()], [p.name])
+
+    def package_ready(self):
+        self.package_inputs()
+        subprocess.run(['git', 'init', str(self.base)], check=True, capture_output=True)
+
+    def test_package_external_symlink_does_not_copy(self):
+        self.package_ready()
+        external = self.base / 'outside.txt'
+        external.write_text('not project data')
+        (self.root / 'linked.txt').symlink_to(external)
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Unsafe handoff path', r.stderr)
+        self.assertFalse((self.root.parent / 'pandora-delivery').exists())
+
+    def test_package_output_symlink_does_not_write(self):
+        self.package_ready()
+        outside = self.base / 'outside-directory'
+        outside.mkdir()
+        (outside / 'sentinel').write_text('preserve')
+        (self.root.parent / 'pandora-delivery').symlink_to(outside, target_is_directory=True)
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Unsafe handoff path', r.stderr)
+        self.assertEqual([p.name for p in outside.iterdir()], ['sentinel'])
+
+    def test_package_archive_symlink_does_not_overwrite(self):
+        self.package_ready()
+        outside = self.base / 'outside-archive.zip'
+        outside.write_bytes(b'preserve')
+        (self.root.parent / 'Pandora_demos-and-drawings.zip').symlink_to(outside)
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Unsafe handoff path', r.stderr)
+        self.assertEqual(outside.read_bytes(), b'preserve')
+        self.assertFalse((self.root.parent / 'pandora-delivery').exists())
+
+    def test_package_ignored_reference_link_does_not_copy(self):
+        self.package_ready()
+        (self.root / '.gitignore').write_text('hardware/sources/')
+        outside = self.base / 'outside-reference.txt'
+        outside.write_text('not project data')
+        (self.root / 'hardware/sources/reference.txt').symlink_to(outside)
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Unsafe handoff path', r.stderr)
+        self.assertFalse((self.root.parent / 'pandora-delivery').exists())
+
+    def test_package_unicode_spaces(self):
+        self.package_ready()
+        source = self.root / '中文 source.txt'
+        source.write_text('fixture', encoding='utf-8')
+        r = self.run_script('package_delivery.py')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual((self.root.parent / 'pandora-delivery/source-snapshot/中文 source.txt').read_text(encoding='utf-8'), 'fixture')
+
+    def test_package_rejects_old_delivery_without_changes(self):
+        self.package_ready()
+        dest = self.root.parent / 'pandora-delivery'
+        dest.mkdir()
+        (dest / 'obsolete.c').write_text('preserve')
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('--output-dir', r.stderr)
+        self.assertEqual([p.name for p in dest.iterdir()], ['obsolete.c'])
+        self.assertEqual((dest / 'obsolete.c').read_text(), 'preserve')
+
+    def test_package_accepts_empty_custom_directory(self):
+        self.package_ready()
+        dest = self.base / '新 交付'
+        dest.mkdir()
+        r = self.run_script('package_delivery.py', '--output-dir', dest)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue((dest / 'file-checksums.json').is_file())
+        self.assertTrue(dest.with_name(dest.name + '.zip').is_file())
+
+    def test_package_does_not_overwrite_existing_zip(self):
+        self.package_ready()
+        archive = self.root.parent / 'Pandora_demos-and-drawings.zip'
+        archive.write_bytes(b'preserve')
+        r = self.run_script('package_delivery.py')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('--output-dir', r.stderr)
+        self.assertEqual(archive.read_bytes(), b'preserve')
+        self.assertFalse((self.root.parent / 'pandora-delivery').exists())
+
+    def test_package_rejects_output_within_source_tree(self):
+        self.package_ready()
+        dest = self.root / 'hardware/sources'
+        r = self.run_script('package_delivery.py', '--output-dir', dest)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Output overlaps', r.stderr)
+        self.assertEqual(list(dest.iterdir()), [])
+
+    def test_package_help_without_local_inputs(self):
+        r = self.run_script('package_delivery.py', '--help')
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn('--output-dir', r.stdout)
+
+    def test_package_relative_parent_output(self):
+        self.package_ready()
+        r = subprocess.run([sys.executable, str(self.root / 'hardware/package_delivery.py'), '--output-dir', '../new output'], cwd=self.root, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue((self.root.parent / 'new output.zip').is_file())
 
     def test_scripts_parse(self):
         for name in ['prepare_lceda_print.py', 'export_verified_folder.py', 'package_delivery.py']:
